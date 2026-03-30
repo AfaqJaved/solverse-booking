@@ -36,7 +36,7 @@ import { UserSchema } from './user.entity';
  * const activated = yield* user.verifyEmail().pipe(Effect.flatMap(u => u.activate()))
  */
 export class User {
-  private constructor(private readonly data: UserData) { }
+  private constructor(private readonly data: UserData) {}
 
   // ── Identity ───────────────────────────────────────────────────────────────
 
