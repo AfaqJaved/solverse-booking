@@ -1,0 +1,39 @@
+{
+  "name": "@solverse/persistence",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" ",
+    "db:generate": "bunx drizzle-kit generate",
+    "db:migrate": "bunx drizzle-kit migrate",
+    "db:studio": "bunx drizzle-kit studio",
+    "lint": "eslint \"{src}/**/*.ts\" --fix"
+  },
+  "main": "./dist/entry.js",
+  "types": "./dist/entry.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/entry.js",
+      "require": "./dist/entry.js",
+      "types": "./dist/entry.d.ts"
+    }
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "eslint": "^9.18.0",
+    "@types/pg": "^8.18.0",
+    "drizzle-kit": "^0.31.9",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@solverse/domain": "workspace:*",
+    "@solverse/eslint-config": "workspace:*",
+    "@solverse/typescript-config": "workspace:*",
+    "dotenv": "^17.3.1",
+    "drizzle-orm": "^0.45.1",
+    "effect": "*",
+    "pg": "^8.20.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "solverse",
+  "private": true,
+  "packageManager": "bun@1.3.9",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "turbo": "^2.8.21"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "workspaces": ["packages/*", "apps/*"],
+  "dependencies": {
+    "effect": "^3.21.0"
+  }
+}
