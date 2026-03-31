@@ -1,0 +1,17 @@
+<script lang="ts">
+	import { Badge } from "$lib/components/ui/badge/index.js";
+	import { CircleCheck as CircleCheckFilledIcon, Loader as LoaderIcon } from "@lucide/svelte";
+	import type { Row } from "@tanstack/table-core";
+	import type { Schema } from "./schemas.js";
+
+	let { row }: { row: Row<Schema> } = $props();
+</script>
+
+<Badge variant="outline" class="text-muted-foreground px-1.5">
+	{#if row.original.status === "Done"}
+		<CircleCheckFilledIcon class="fill-green-500 dark:fill-green-400" />
+	{:else}
+		<LoaderIcon />
+	{/if}
+	{row.original.status}
+</Badge>

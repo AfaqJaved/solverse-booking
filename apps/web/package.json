@@ -20,7 +20,7 @@
 		"@eslint/js": "^10.0.1",
 		"@fontsource-variable/inter": "^5.2.8",
 		"@internationalized/date": "^3.12.0",
-		"@lucide/svelte": "^0.577.0",
+		"@lucide/svelte": "^1.7.0",
 		"@solverse/eslint-config": "workspace:*",
 		"@solverse/typescript-config": "workspace:*",
 		"@sveltejs/adapter-auto": "^7.0.0",

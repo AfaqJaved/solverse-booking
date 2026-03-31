@@ -3,6 +3,29 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--
+			Blocking theme script — must stay here, above %sveltekit.head% and any CSS.
+
+			Why inline and blocking (no defer/async)?
+			The browser executes this synchronously before it paints a single pixel.
+			If we moved this to a component or used onMount, the JS would run AFTER
+			the first paint, causing a brief flash of the wrong theme (FOUC) on every
+			hard refresh.
+
+			Why duplicate logic from ThemeManager?
+			ThemeManager lives in a .svelte.ts module that is only available after the
+			Svelte runtime boots. We need the class applied much earlier, so this tiny
+			vanilla script mirrors the same priority logic:
+			  1. Saved localStorage preference
+			  2. OS color-scheme preference as fallback
+		-->
+		<script>
+			const saved = localStorage.getItem('theme');
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (saved === 'dark' || (saved === null && prefersDark)) {
+				document.documentElement.classList.add('dark');
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
