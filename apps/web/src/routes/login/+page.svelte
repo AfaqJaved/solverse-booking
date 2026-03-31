@@ -1,6 +1,7 @@
 <script lang="ts">
-	import GalleryVerticalEndIcon from "@lucide/svelte/icons/gallery-vertical-end";
-	import LoginForm from "$lib/components/login-form.svelte";
+	import GalleryVerticalEndIcon from '@lucide/svelte/icons/gallery-vertical-end'
+	import LoginForm from '$lib/components/login-form.svelte'
+	import { PUBLIC_TEST_VAR } from '$env/static/public'
 </script>
 
 <div class="grid min-h-svh lg:grid-cols-2">
@@ -8,7 +9,7 @@
 		<div class="flex justify-center gap-2 md:justify-start">
 			<a href="##" class="flex items-center gap-2 font-medium">
 				<div
-					class="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md"
+					class="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground"
 				>
 					<GalleryVerticalEndIcon class="size-4" />
 				</div>
@@ -21,7 +22,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="bg-muted relative hidden lg:block">
+	<!-- <p class="mt-2 text-center text-sm">ENV TEST: {PUBLIC_TEST_VAR}</p> -->
+	<div class="relative hidden bg-muted lg:block">
 		<img
 			src="/placeholder.svg"
 			alt="placeholder"

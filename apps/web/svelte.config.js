@@ -21,6 +21,10 @@ const config = {
     alias: {
       "@/*": "./path/to/lib/*",
     },
+    // this tell to look for .env in the root of monorepo
+    env: {
+      dir: '../../'
+    },
   }
 }
 
