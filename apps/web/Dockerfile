@@ -27,10 +27,6 @@ WORKDIR /app
 # Copy the built output (adapter-node bundles the server)
 COPY --from=builder /app/apps/web/build ./build
 
-ENV NODE_ENV=production
-ENV PORT=3000
-ENV HOST=0.0.0.0
-
 EXPOSE 3000
 
 CMD ["bun", "build/index.js"]

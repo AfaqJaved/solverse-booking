@@ -1,5 +1,5 @@
 {
-  "extends": "@solverse/typescript-config/base.json",
+  "extends": "@solverse/typescript-config/nest.json",
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,

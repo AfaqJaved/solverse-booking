@@ -1,5 +1,5 @@
 import { Data } from 'effect';
-import type { DomainEntityName } from '@solverse/domain';
+import type { DomainEntityName } from '../entities/entity.name';
 
 /**
  * Raised when a database row cannot be mapped to a valid domain object.

@@ -22,6 +22,12 @@ export const userStatusEnum = pgEnum('user_status', [
   'suspended',
 ]);
 
+
+export type UserRow = typeof usersTable.$inferSelect;
+export type UserInsertRow = typeof usersTable.$inferInsert;
+
+
+
 export const usersTable = pgTable('users', {
   /** UUID v4 primary key — matches domain UserId */
   id: uuid('id').primaryKey(),

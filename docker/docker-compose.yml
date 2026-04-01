@@ -1,13 +1,62 @@
 services:
+  postgres:
+    image: postgres:18
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=solverse
+      - POSTGRES_PASSWORD=solverse
+      - POSTGRES_DB=solverse
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U solverse -d solverse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      # Server
+      - NODE_ENV=production
+      - PORT=3001
+      # Database — matches the postgres service above
+      - DATABASE_URL=postgresql://solverse:solverse@postgres:5432/solverse
+      # Set to "true" to run drizzle migrations on startup
+      - RUN_MIGRATIONS=true
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
   web:
     build:
       context: ..
       dockerfile: apps/web/Dockerfile
       args:
-        - PUBLIC_TEST_VAR=afaqtest
+        # Public vars are inlined at build time by SvelteKit (PUBLIC_ prefix)
+        - PUBLIC_API_URL=http://localhost:3001
     ports:
       - "3000:3000"
     environment:
+      # Server
       - NODE_ENV=production
       - PORT=3000
+      - HOST=0.0.0.0
+      # Required by adapter-node for CSRF protection — set to your public URL
+      - ORIGIN=http://localhost:3000
+      # API base URL available server-side at runtime
+      - API_URL=http://api:3001
+    depends_on:
+      - api
     restart: unless-stopped
+
+
+volumes:
+  postgres_data:

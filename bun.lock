@@ -23,6 +23,8 @@
         "@nestjs/core": "^11.0.1",
         "@nestjs/platform-express": "^11.0.1",
         "@solverse/domain": "workspace:*",
+        "@solverse/persistence": "workspace:*",
+        "dotenv": "^17.3.1",
         "effect": "*",
         "reflect-metadata": "^0.2.2",
         "rxjs": "^7.8.1",
@@ -157,6 +159,8 @@
       "name": "@solverse/persistence",
       "version": "0.0.0",
       "dependencies": {
+        "@nestjs/common": "^11.0.1",
+        "@nestjs/core": "^11.0.1",
         "@solverse/domain": "workspace:*",
         "@solverse/eslint-config": "workspace:*",
         "@solverse/typescript-config": "workspace:*",
