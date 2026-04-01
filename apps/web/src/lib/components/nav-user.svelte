@@ -1,21 +1,21 @@
 <script lang="ts">
-	import * as Avatar from "$lib/components/ui/avatar/index.js";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import { useSidebar } from "$lib/components/ui/sidebar/index.js";
-	import { Switch } from "$lib/components/ui/switch/index.js";
-	import BadgeCheckIcon from "@lucide/svelte/icons/badge-check";
-	import BellIcon from "@lucide/svelte/icons/bell";
-	import ChevronsUpDownIcon from "@lucide/svelte/icons/chevrons-up-down";
-	import CreditCardIcon from "@lucide/svelte/icons/credit-card";
-	import LogOutIcon from "@lucide/svelte/icons/log-out";
-	import MoonIcon from "@lucide/svelte/icons/moon";
-	import SparklesIcon from "@lucide/svelte/icons/sparkles";
-	import SunIcon from "@lucide/svelte/icons/sun";
-	import { theme } from "$lib/stores/theme.svelte";
+	import * as Avatar from '$lib/components/ui/avatar/index.js'
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js'
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js'
+	import { useSidebar } from '$lib/components/ui/sidebar/index.js'
+	import { Switch } from '$lib/components/ui/switch/index.js'
+	import BadgeCheckIcon from '@lucide/svelte/icons/badge-check'
+	import BellIcon from '@lucide/svelte/icons/bell'
+	import ChevronsUpDownIcon from '@lucide/svelte/icons/chevrons-up-down'
+	import CreditCardIcon from '@lucide/svelte/icons/credit-card'
+	import LogOutIcon from '@lucide/svelte/icons/log-out'
+	import MoonIcon from '@lucide/svelte/icons/moon'
+	import SparklesIcon from '@lucide/svelte/icons/sparkles'
+	import SunIcon from '@lucide/svelte/icons/sun'
+	import { theme } from '$lib/stores/theme.svelte'
 
-	let { user }: { user: { name: string; email: string; avatar: string } } = $props();
-	const sidebar = useSidebar();
+	let { user }: { user: { name: string; email: string; avatar: string } } = $props()
+	const sidebar = useSidebar()
 </script>
 
 <Sidebar.Menu>
@@ -42,7 +42,7 @@
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Content
 				class="w-(--bits-dropdown-menu-anchor-width) min-w-56 rounded-lg"
-				side={sidebar.isMobile ? "bottom" : "right"}
+				side={sidebar.isMobile ? 'bottom' : 'right'}
 				align="end"
 				sideOffset={4}
 			>
@@ -67,14 +67,20 @@
 				</DropdownMenu.Group>
 				<DropdownMenu.Separator />
 				<DropdownMenu.Group>
-					<DropdownMenu.Item class="flex items-center justify-between" onSelect={(e) => { e.preventDefault(); theme.toggle(); }}>
+					<DropdownMenu.Item
+						class="flex items-center justify-between"
+						onSelect={(e) => {
+							e.preventDefault()
+							theme.toggle()
+						}}
+					>
 						<div class="flex items-center gap-2">
 							{#if theme.isDark}
 								<MoonIcon class="size-4" />
 							{:else}
 								<SunIcon class="size-4" />
 							{/if}
-							<span>{theme.isDark ? "Dark mode" : "Light mode"}</span>
+							<span>{theme.isDark ? 'Dark mode' : 'Light mode'}</span>
 						</div>
 						<Switch checked={theme.isDark} class="pointer-events-none" />
 					</DropdownMenu.Item>

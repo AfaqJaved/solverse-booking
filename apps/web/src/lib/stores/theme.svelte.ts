@@ -1,6 +1,6 @@
 // Key used to persist the user's explicit theme choice in localStorage.
 // Keeping it in one place avoids typo bugs across files (app.html also reads this same key).
-const STORAGE_KEY = 'theme';
+const STORAGE_KEY = 'theme'
 
 /**
  * ThemeManager — single source of truth for dark/light mode.
@@ -15,7 +15,7 @@ const STORAGE_KEY = 'theme';
  */
 class ThemeManager {
 	// Reactive field — any component reading `theme.isDark` re-renders when it changes.
-	isDark = $state(false);
+	isDark = $state(false)
 
 	/**
 	 * Call once in the root layout's onMount.
@@ -29,28 +29,28 @@ class ThemeManager {
 	 * override it just because they switched their OS setting.
 	 */
 	init() {
-		const saved = localStorage.getItem(STORAGE_KEY);
-		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+		const saved = localStorage.getItem(STORAGE_KEY)
+		const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
 		if (saved !== null) {
 			// User has previously made an explicit choice — honour it.
-			this.isDark = saved === 'dark';
+			this.isDark = saved === 'dark'
 		} else {
 			// No saved preference yet — mirror the OS setting.
-			this.isDark = mediaQuery.matches;
+			this.isDark = mediaQuery.matches
 
 			// Keep following OS changes dynamically for as long as the user hasn't
 			// saved a preference. The guard inside the listener re-checks localStorage
 			// because the user may toggle (and therefore save) at any point after init.
 			mediaQuery.addEventListener('change', (e) => {
 				if (localStorage.getItem(STORAGE_KEY) === null) {
-					this.isDark = e.matches;
-					this.applyTheme(this.isDark);
+					this.isDark = e.matches
+					this.applyTheme(this.isDark)
 				}
-			});
+			})
 		}
 
-		this.applyTheme(this.isDark);
+		this.applyTheme(this.isDark)
 	}
 
 	/**
@@ -63,9 +63,9 @@ class ThemeManager {
 	 *   - The OS change listener will stop overriding the theme (see init).
 	 */
 	toggle() {
-		this.isDark = !this.isDark;
-		localStorage.setItem(STORAGE_KEY, this.isDark ? 'dark' : 'light');
-		this.applyTheme(this.isDark);
+		this.isDark = !this.isDark
+		localStorage.setItem(STORAGE_KEY, this.isDark ? 'dark' : 'light')
+		this.applyTheme(this.isDark)
 	}
 
 	/**
@@ -74,8 +74,8 @@ class ThemeManager {
 	 * as defined by `@custom-variant dark (&:is(.dark *))` in layout.css.
 	 */
 	applyTheme(dark: boolean) {
-		document.documentElement.classList.toggle('dark', dark);
+		document.documentElement.classList.toggle('dark', dark)
 	}
 }
 
-export const theme = new ThemeManager();
+export const theme = new ThemeManager()

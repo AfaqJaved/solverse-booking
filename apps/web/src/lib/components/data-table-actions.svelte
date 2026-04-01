@@ -1,11 +1,11 @@
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import { Button } from "$lib/components/ui/button/index.js";
-	import { MoreVertical as DotsVerticalIcon } from "@lucide/svelte";
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js'
+	import { Button } from '$lib/components/ui/button/index.js'
+	import { MoreVertical as DotsVerticalIcon } from '@lucide/svelte'
 </script>
 
 <DropdownMenu.Root>
-	<DropdownMenu.Trigger class="data-[state=open]:bg-muted text-muted-foreground flex size-8">
+	<DropdownMenu.Trigger class="flex size-8 text-muted-foreground data-[state=open]:bg-muted">
 		{#snippet child({ props })}
 			<Button variant="ghost" size="icon" {...props}>
 				<DotsVerticalIcon />
