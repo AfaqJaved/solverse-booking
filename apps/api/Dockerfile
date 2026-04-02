@@ -28,11 +28,13 @@ COPY --from=builder /app/node_modules ./node_modules
 # Per-package node_modules (bun workspace packages may have their own)
 COPY --from=builder /app/packages/domain/node_modules ./packages/domain/node_modules
 COPY --from=builder /app/packages/persistence/node_modules ./packages/persistence/node_modules
+COPY --from=builder /app/packages/shared/node_modules ./packages/shared/node_modules
 COPY --from=builder /app/apps/api/node_modules ./apps/api/node_modules
 
 # Built workspace packages
 COPY --from=builder /app/packages/domain ./packages/domain
 COPY --from=builder /app/packages/persistence ./packages/persistence
+COPY --from=builder /app/packages/shared ./packages/shared
 
 # Compiled API — keep original path so Bun resolves apps/api/node_modules correctly
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
