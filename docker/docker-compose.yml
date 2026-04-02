@@ -24,6 +24,7 @@ services:
     #   - "${API_PORT}:${API_PORT}"
     environment:
       - NODE_ENV=${NODE_ENV}
+      - JWT_SECRET=${JWT_SECRET}
       - PORT=${API_PORT}
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       - RUN_MIGRATIONS=${RUN_MIGRATIONS}
