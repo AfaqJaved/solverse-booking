@@ -1,17 +1,17 @@
 services:
   postgres:
     image: postgres:18
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     environment:
-      - POSTGRES_USER=solverse
-      - POSTGRES_PASSWORD=solverse
-      - POSTGRES_DB=solverse
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U solverse -d solverse"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -20,16 +20,13 @@ services:
     build:
       context: ..
       dockerfile: apps/api/Dockerfile
-    ports:
-      - "3001:3001"
+    # ports:
+    #   - "${API_PORT}:${API_PORT}"
     environment:
-      # Server
-      - NODE_ENV=production
-      - PORT=3001
-      # Database — matches the postgres service above
-      - DATABASE_URL=postgresql://solverse:solverse@postgres:5432/solverse
-      # Set to "true" to run drizzle migrations on startup
-      - RUN_MIGRATIONS=true
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${API_PORT}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - RUN_MIGRATIONS=${RUN_MIGRATIONS}
     depends_on:
       postgres:
         condition: service_healthy
@@ -40,23 +37,21 @@ services:
       context: ..
       dockerfile: apps/web/Dockerfile
       args:
-        # Public vars are inlined at build time by SvelteKit (PUBLIC_ prefix)
-        - PUBLIC_API_URL=http://localhost:3001
-    ports:
-      - "3000:3000"
+        - PUBLIC_API_URL=${PUBLIC_API_URL}
+    # ports:
+    #   - "${WEB_PORT}:${WEB_PORT}"
     environment:
-      # Server
-      - NODE_ENV=production
-      - PORT=3000
-      - HOST=0.0.0.0
-      # Required by adapter-node for CSRF protection — set to your public URL
-      - ORIGIN=http://localhost:3000
-      # API base URL available server-side at runtime
-      - API_URL=http://api:3001
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${WEB_PORT}
     depends_on:
       - api
     restart: unless-stopped
-
+    networks:
+      - nginx
 
 volumes:
   postgres_data:
+
+networks:
+  nginx:
+    external: true

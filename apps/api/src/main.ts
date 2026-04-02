@@ -55,7 +55,7 @@ async function bootstrap() {
     await migrate()
   }
 
-  const app = await NestFactory.create(SolverseApiModule)
+  const app = await NestFactory.create(SolverseApiModule, { cors: true })
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
   app.useGlobalFilters(new GlobalExceptionFilter())
   await app.listen(process.env.PORT ?? 3000)
