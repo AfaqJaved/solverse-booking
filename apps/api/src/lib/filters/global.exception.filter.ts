@@ -8,8 +8,7 @@ import {
 } from '@nestjs/common'
 import { Cause, Option, Runtime } from 'effect'
 import { Request, Response } from 'express'
-import { ApiErrorResponse } from '../response/entry'
-import { ApplicationError } from './application.errors'
+import { ApiErrorResponse } from '@solverse/shared'
 import { isApplicationError } from './is.application.error'
 import { resolveHttpStatus } from './resolve.http.status'
 

@@ -1,11 +1,8 @@
 import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common'
 import { Effect } from 'effect'
 import { UserUsecaseFactory } from './usecases/user.usecases.factory'
-
-class LoginDto {
-  userNameOrEmail!: string
-  password!: string
-}
+import { LoginDto } from './dto/login.dto'
+import { ApiResponse, UserApi } from '@solverse/shared'
 
 @Controller('users')
 export class UserController {
@@ -13,12 +10,15 @@ export class UserController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  public async login(@Body() body: LoginDto) {
-    const program = this.userUsecaseFactory.loginUserUsecase.execute({
-      userNameOrEmail: body.userNameOrEmail,
-      password: body.password,
-    })
-
-    return await Effect.runPromise(program)
+  public async login(
+    @Body() body: LoginDto,
+  ): Promise<ApiResponse<UserApi.Login.Response>> {
+    const result = await Effect.runPromise(
+      this.userUsecaseFactory.loginUserUsecase.execute({
+        userNameOrEmail: body.userNameOrEmail,
+        password: body.password,
+      }),
+    )
+    return ApiResponse.ok(result)
   }
 }

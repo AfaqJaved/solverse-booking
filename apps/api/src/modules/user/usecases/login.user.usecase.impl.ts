@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common'
 import {
   DatabaseFailure,
-  EmailNotVerifiedError,
   LoginUserUsecase,
+  User,
+  UserId,
   UserInactiveError,
   UserInvalidCredentialsError,
   UserNotFoundError,
+  UserRole,
   UserSuspendedError,
 } from '@solverse/domain'
 import { RepositoryFactory } from '@solverse/persistence'
 import { Effect, Option } from 'effect'
 import { JwtSignError, JwtUtils } from '../../../lib/jwt/entry'
+import { HashError, HashUtils } from '../../../lib/hash/entry'
 
 @Injectable()
 export class LoginUserUsecaseImpl implements LoginUserUsecase {
@@ -30,6 +33,7 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
     | UserInvalidCredentialsError
     | DatabaseFailure
     | JwtSignError
+    | HashError
   > {
     return Effect.gen(this, function* () {
       const maybeUser =
@@ -46,7 +50,7 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
         )
       }
 
-      const user = maybeUser.value
+      const user: User = maybeUser.value
       const raw = user.toRaw()
 
       if (raw.status === 'suspended') {
@@ -66,9 +70,7 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
           }),
         )
 
-      const isPasswordValid = yield* Effect.promise(() =>
-        Bun.password.verify(password, raw.password),
-      )
+      const isPasswordValid = yield* HashUtils.verify(password, raw.password)
 
       if (!isPasswordValid) {
         return yield* Effect.fail(
@@ -79,7 +81,10 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
         )
       }
 
-      const token = yield* JwtUtils.createToken(
+      const token = yield* JwtUtils.createToken<{
+        userId: UserId
+        role: UserRole
+      }>(
         { userId: raw.id, role: raw.role },
         { expiresIn: '1h', issuer: 'solverse' },
       )

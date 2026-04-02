@@ -1,0 +1,29 @@
+{
+  "name": "@solverse/shared",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" ",
+    "lint": "eslint \"{src}/**/*.ts\" --fix"
+  },
+  "main": "./dist/entry.js",
+  "types": "./dist/entry.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/entry.js",
+      "require": "./dist/entry.js",
+      "types": "./dist/entry.d.ts"
+    }
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "eslint": "^9.18.0",
+    "typescript": "^5.8.2"
+  },
+   "dependencies": {
+    "@solverse/typescript-config": "workspace:*",
+    "@solverse/eslint-config": "workspace:*"
+  }
+}
