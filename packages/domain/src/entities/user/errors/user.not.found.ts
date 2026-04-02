@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Raised when a user lookup by ID yields no result.
@@ -6,7 +6,7 @@ import { Schema } from 'effect';
  */
 export class UserNotFoundError extends Schema.TaggedError<UserNotFoundError>()(
   'UserNotFoundError',
-  { userId: Schema.String },
+  { message: Schema.String, cause: Schema.String },
 ) {
-  readonly sendToFrontend = true;
+  readonly sendToFrontEnd = true
 }

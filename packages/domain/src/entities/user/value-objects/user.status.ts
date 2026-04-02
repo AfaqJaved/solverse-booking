@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Lifecycle status of a user account.
@@ -13,5 +13,5 @@ export const UserStatus = Schema.Literal(
   'active',
   'inactive',
   'suspended',
-);
-export type UserStatus = typeof UserStatus.Type;
+)
+export type UserStatus = typeof UserStatus.Type

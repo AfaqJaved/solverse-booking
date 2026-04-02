@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Branded hashed password value object.
@@ -13,6 +13,6 @@ import { Schema } from 'effect';
 export const HashedPassword = Schema.String.pipe(
   Schema.minLength(1),
   Schema.brand('HashedPassword'),
-);
+)
 
-export type HashedPassword = typeof HashedPassword.Type;
+export type HashedPassword = typeof HashedPassword.Type

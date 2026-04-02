@@ -1,27 +1,24 @@
-import { Controller, Get, NotFoundException, InternalServerErrorException } from "@nestjs/common";
-import { RepositoryFactory } from "@solverse/persistence";
-import { Effect, Option } from "effect";
-import { Schema } from "effect";
-import { UserId } from "@solverse/domain";
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common'
+import { Effect } from 'effect'
+import { UserUsecaseFactory } from './usecases/user.usecases.factory'
+
+class LoginDto {
+  userNameOrEmail!: string
+  password!: string
+}
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly repositoryFactory: RepositoryFactory) { }
+  constructor(private readonly userUsecaseFactory: UserUsecaseFactory) {}
 
-  @Get(':id')
-  public async getUser() {
-    const userId = Schema.decodeUnknownSync(UserId)("36d2406c-968b-4812-884e-2acbe7db65bc");
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  public async login(@Body() body: LoginDto) {
+    const program = this.userUsecaseFactory.loginUserUsecase.execute({
+      userNameOrEmail: body.userNameOrEmail,
+      password: body.password,
+    })
 
-    const result = await Effect.runPromise(
-      this.repositoryFactory.userRepository.findById(userId).pipe(
-        Effect.mapError(() => new InternalServerErrorException('Database error'))
-      )
-    );
-
-    if (Option.isNone(result)) {
-      throw new NotFoundException(`User  not found`);
-    }
-
-    return result.value;
+    return await Effect.runPromise(program)
   }
 }

@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Raised when an action requires a verified email but the user has not
@@ -6,7 +6,10 @@ import { Schema } from 'effect';
  */
 export class EmailNotVerifiedError extends Schema.TaggedError<EmailNotVerifiedError>()(
   'EmailNotVerifiedError',
-  { userId: Schema.String },
+  {
+    message: Schema.String,
+    cause: Schema.String,
+  },
 ) {
-  readonly sendToFrontend = true;
+  readonly sendToFrontEnd = true
 }

@@ -1,19 +1,16 @@
-import { Effect } from 'effect';
-import { User } from '@solverse/domain';
-import type { UserRow, UserInsertRow } from '../schema/user.table';
-import { PersistenceMappingError } from '@solverse/domain';
-import { Injectable } from '@nestjs/common';
+import { Effect } from 'effect'
+import { User } from '@solverse/domain'
+import type { UserRow, UserInsertRow } from '../schema/user.table'
+import { PersistenceMappingError } from '@solverse/domain'
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class UserPersistenceMapper {
-
   /**
    * Maps a raw database row to a validated User domain aggregate.
    * Fails with UserPersistenceMappingError if the row data doesn't satisfy domain invariants.
    */
-  toDomain(
-    row: UserRow,
-  ): Effect.Effect<User, PersistenceMappingError, never> {
+  toDomain(row: UserRow): Effect.Effect<User, PersistenceMappingError, never> {
     return User.fromRaw({
       id: row.id,
       username: row.username,
@@ -35,12 +32,11 @@ export class UserPersistenceMapper {
       Effect.mapError(
         (cause) =>
           new PersistenceMappingError({
-            entity: "User",
-            message: 'Failed to map database row to User domain object',
+            message: 'Failed to map User domain to persistence',
             cause,
           }),
       ),
-    );
+    )
   }
 
   /**
@@ -48,7 +44,7 @@ export class UserPersistenceMapper {
    * Always succeeds — domain data is guaranteed valid by the aggregate invariants.
    */
   toPersistence(user: User): UserInsertRow {
-    const data = user.toRaw();
+    const data = user.toRaw()
     return {
       id: data.id,
       username: data.username,
@@ -67,6 +63,6 @@ export class UserPersistenceMapper {
       updatedAt: data.updatedAt,
       lastLoginAt: data.lastLoginAt ?? null,
       suspendedReason: data.suspendedReason ?? null,
-    };
+    }
   }
 }

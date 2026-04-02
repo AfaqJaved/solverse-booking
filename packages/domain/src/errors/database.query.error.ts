@@ -1,12 +1,11 @@
-import { Data } from 'effect';
+import { Data } from 'effect'
 
 /**
  * Raised when a database query fails to execute.
  */
 export class DatabaseQueryError extends Data.TaggedError('DatabaseQueryError')<{
-  message: string;
-  query: string | undefined;
-  cause: unknown;
+  message: string
+  cause: unknown
 }> {
-  readonly sendToFrontend = false;
+  readonly sendToFrontEnd = false
 }

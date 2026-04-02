@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Branded IANA timezone identifier value object.
@@ -15,15 +15,15 @@ export const Timezone = Schema.String.pipe(
   Schema.filter(
     (tz) => {
       try {
-        Intl.DateTimeFormat(undefined, { timeZone: tz });
-        return true;
+        Intl.DateTimeFormat(undefined, { timeZone: tz })
+        return true
       } catch {
-        return false;
+        return false
       }
     },
     { message: () => 'Invalid IANA timezone' },
   ),
   Schema.brand('Timezone'),
-);
+)
 
-export type Timezone = typeof Timezone.Type;
+export type Timezone = typeof Timezone.Type

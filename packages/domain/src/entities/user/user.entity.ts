@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 import {
   UserId,
   Email,
@@ -10,7 +10,7 @@ import {
   NotificationPreferences,
   Username,
   HashedPassword,
-} from './entry';
+} from './entry'
 
 /**
  * Effect Schema for the raw User data shape.
@@ -52,7 +52,7 @@ export const UserSchema = Schema.Struct({
   lastLoginAt: Schema.NullOr(Schema.DateFromSelf),
   /** Human-readable reason provided when the account was suspended, or null */
   suspendedReason: Schema.NullOr(Schema.String),
-});
+})
 
 /** Plain data type inferred from `UserSchema` — used internally by the aggregate. */
-export type UserData = typeof UserSchema.Type;
+export type UserData = typeof UserSchema.Type

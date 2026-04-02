@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Raised when a status transition is not permitted by domain rules.
@@ -9,7 +9,7 @@ import { Schema } from 'effect';
  */
 export class InvalidUserTransitionError extends Schema.TaggedError<InvalidUserTransitionError>()(
   'InvalidUserTransitionError',
-  { from: Schema.String, to: Schema.String },
+  { message: Schema.String, cause: Schema.String },
 ) {
-  readonly sendToFrontend = false;
+  readonly sendToFrontEnd = true
 }

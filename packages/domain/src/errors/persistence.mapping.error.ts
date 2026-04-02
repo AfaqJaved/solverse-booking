@@ -1,5 +1,4 @@
-import { Data } from 'effect';
-import type { DomainEntityName } from '../entities/entity.name';
+import { Data } from 'effect'
 
 /**
  * Raised when a database row cannot be mapped to a valid domain object.
@@ -7,10 +6,6 @@ import type { DomainEntityName } from '../entities/entity.name';
  */
 export class PersistenceMappingError extends Data.TaggedError(
   'PersistenceMappingError',
-)<{
-  entity: DomainEntityName;
-  message: string;
-  cause: unknown;
-}> {
-  readonly sendToFrontend = false;
+)<{ message: string; cause: unknown }> {
+  readonly sendToFrontEnd = false
 }

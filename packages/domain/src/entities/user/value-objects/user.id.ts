@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Branded UUID v4 string that uniquely identifies a User.
@@ -14,6 +14,6 @@ export const UserId = Schema.String.pipe(
     /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
   ),
   Schema.brand('UserId'),
-);
+)
 
-export type UserId = typeof UserId.Type;
+export type UserId = typeof UserId.Type

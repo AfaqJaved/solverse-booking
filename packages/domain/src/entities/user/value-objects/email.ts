@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Branded, lowercase-normalized email address value object.
@@ -14,5 +14,5 @@ export const Email = Schema.String.pipe(
   Schema.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
   Schema.lowercased(),
   Schema.brand('Email'),
-);
-export type Email = typeof Email.Type;
+)
+export type Email = typeof Email.Type

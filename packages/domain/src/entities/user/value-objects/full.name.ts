@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Branded value object representing a user's full name.
@@ -13,9 +13,9 @@ import { Schema } from 'effect';
 export const FullName = Schema.Struct({
   firstName: Schema.String.pipe(Schema.minLength(1), Schema.maxLength(50)),
   lastName: Schema.String.pipe(Schema.minLength(1), Schema.maxLength(50)),
-}).pipe(Schema.brand('FullName'));
+}).pipe(Schema.brand('FullName'))
 
-export type FullName = typeof FullName.Type;
+export type FullName = typeof FullName.Type
 
 /**
  * Returns a human-readable display name in "First Last" format.
@@ -24,4 +24,4 @@ export type FullName = typeof FullName.Type;
  * getDisplayName({ firstName: "John", lastName: "Doe" }) // "John Doe"
  */
 export const getDisplayName = (name: FullName): string =>
-  `${name.firstName} ${name.lastName}`;
+  `${name.firstName} ${name.lastName}`

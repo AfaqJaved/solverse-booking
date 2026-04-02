@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Branded E.164 phone number value object.
@@ -13,6 +13,6 @@ import { Schema } from 'effect';
 export const PhoneNumber = Schema.String.pipe(
   Schema.pattern(/^\+[1-9]\d{7,14}$/),
   Schema.brand('PhoneNumber'),
-);
+)
 
-export type PhoneNumber = typeof PhoneNumber.Type;
+export type PhoneNumber = typeof PhoneNumber.Type

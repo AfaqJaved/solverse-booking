@@ -24,10 +24,11 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@solverse/domain": "workspace:*",
-    "reflect-metadata": "^0.2.2",
+    "@solverse/persistence": "workspace:*",
     "dotenv": "^17.3.1",
     "effect": "*",
-    "@solverse/persistence": "workspace:*",
+    "jsonwebtoken": "^9.0.3",
+    "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
@@ -36,8 +37,12 @@
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
+    "@solverse/eslint-config": "workspace:*",
+    "@solverse/jest-config": "workspace:*",
+    "@solverse/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.18.0",
@@ -53,9 +58,6 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "@solverse/eslint-config": "workspace:*",
-    "@solverse/jest-config": "workspace:*",
-    "@solverse/typescript-config": "workspace:*",
     "typescript-eslint": "^8.20.0"
   },
   "jest": {

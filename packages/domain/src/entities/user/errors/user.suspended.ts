@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Raised when an action is attempted on a suspended user that requires
@@ -6,7 +6,8 @@ import { Schema } from 'effect';
  */
 export class UserSuspendedError extends Schema.TaggedError<UserSuspendedError>()(
   'UserSuspendedError',
-  { userId: Schema.String, reason: Schema.String },
+
+  { message: Schema.String, cause: Schema.String },
 ) {
-  readonly sendToFrontend = true;
+  readonly sendToFrontEnd = true
 }

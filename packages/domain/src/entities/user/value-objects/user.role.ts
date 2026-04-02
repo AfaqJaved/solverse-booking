@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Role assigned to a user — determines access scope across the platform.
@@ -19,5 +19,5 @@ export const UserRole = Schema.Literal(
   'superAdmin',
   'businessOwner',
   'locationOwner',
-);
-export type UserRole = typeof UserRole.Type;
+)
+export type UserRole = typeof UserRole.Type

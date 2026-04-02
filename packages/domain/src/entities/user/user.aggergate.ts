@@ -1,5 +1,5 @@
-import { Effect, Schema } from 'effect';
-import type { ParseError } from 'effect/ParseResult';
+import { Effect, Schema } from 'effect'
+import type { ParseError } from 'effect/ParseResult'
 import {
   Email,
   NotificationPreferences,
@@ -11,15 +11,15 @@ import {
   Timezone,
   Username,
   HashedPassword,
-} from './entry';
+} from './entry'
 import {
   UserSuspendedError,
   InvalidUserTransitionError,
   EmailNotVerifiedError,
   UserAlreadyActiveError,
-} from './entry';
-import type { UserData } from './user.entity';
-import { UserSchema } from './user.entity';
+} from './entry'
+import type { UserData } from './user.entity'
+import { UserSchema } from './user.entity'
 
 /**
  * User aggregate root for the appointment scheduling domain.
@@ -42,37 +42,37 @@ export class User {
 
   /** Unique identifier for this user. */
   get id(): UserId {
-    return this.data.id;
+    return this.data.id
   }
 
   /** Verified, lowercase email address. */
   get email(): Email {
-    return this.data.email;
+    return this.data.email
   }
 
   /** Role assigned to this user (superAdmin | businessOwner | locationOwner). */
   get role(): 'superAdmin' | 'businessOwner' | 'locationOwner' {
-    return this.data.role;
+    return this.data.role
   }
 
   /** Current lifecycle status of the account. */
   get status(): UserStatus {
-    return this.data.status;
+    return this.data.status
   }
 
   /** IANA timezone used for scheduling appointments in local time. */
   get timezone(): Timezone {
-    return this.data.timezone;
+    return this.data.timezone
   }
 
   /** Full name formatted as "First Last". */
   get displayName(): string {
-    return getDisplayName(this.data.name);
+    return getDisplayName(this.data.name)
   }
 
   /** Whether the user has confirmed their email address. */
   get isEmailVerified(): boolean {
-    return this.data.emailVerified;
+    return this.data.emailVerified
   }
 
   // ── Factory ────────────────────────────────────────────────────────────────
@@ -87,16 +87,16 @@ export class User {
    * @param params - Required fields to initialize the user
    */
   static create(params: {
-    id: UserId;
-    username: Username;
-    password: HashedPassword;
-    name: FullName;
-    email: Email;
-    role: UserData['role'];
-    timezone: Timezone;
-    phone?: PhoneNumber;
+    id: UserId
+    username: Username
+    password: HashedPassword
+    name: FullName
+    email: Email
+    role: UserData['role']
+    timezone: Timezone
+    phone?: PhoneNumber
   }): User {
-    const now = new Date();
+    const now = new Date()
     return new User({
       id: params.id,
       username: params.username,
@@ -114,7 +114,7 @@ export class User {
       updatedAt: now,
       lastLoginAt: null,
       suspendedReason: null,
-    });
+    })
   }
 
   /**
@@ -128,7 +128,7 @@ export class User {
   static fromRaw(raw: unknown): Effect.Effect<User, ParseError, never> {
     return Schema.decodeUnknown(UserSchema)(raw).pipe(
       Effect.map((data) => new User(data)),
-    );
+    )
   }
 
   // ── Behavior ───────────────────────────────────────────────────────────────
@@ -141,11 +141,11 @@ export class User {
    */
   verifyEmail(): Effect.Effect<User, UserAlreadyActiveError> {
     if (this.data.emailVerified) {
-      return Effect.succeed(this);
+      return Effect.succeed(this)
     }
     return Effect.succeed(
       new User({ ...this.data, emailVerified: true, updatedAt: new Date() }),
-    );
+    )
   }
 
   /**
@@ -161,19 +161,24 @@ export class User {
     InvalidUserTransitionError | EmailNotVerifiedError
   > {
     if (!this.data.emailVerified) {
-      return Effect.fail(new EmailNotVerifiedError({ userId: this.data.id }));
+      return Effect.fail(
+        new EmailNotVerifiedError({
+          message: `Email not verified for the user ${this.data.email}`,
+          cause: `Email not verified for the user ${this.data.email}`,
+        }),
+      )
     }
     if (this.data.status === 'active') {
-      return Effect.fail(
-        new InvalidUserTransitionError({
-          from: this.data.status,
-          to: 'active',
+      Effect.fail(
+        new UserAlreadyActiveError({
+          message: `User already is active`,
+          cause: `User already is active`,
         }),
-      );
+      )
     }
     return Effect.succeed(
       new User({ ...this.data, status: 'active', updatedAt: new Date() }),
-    );
+    )
   }
 
   /**
@@ -188,22 +193,22 @@ export class User {
     if (this.data.status === 'inactive') {
       return Effect.fail(
         new InvalidUserTransitionError({
-          from: this.data.status,
-          to: 'inactive',
+          message: `User can not perform this actions since it is inactive`,
+          cause: `User can not perform this actions since it is inactive`,
         }),
-      );
+      )
     }
     if (this.data.status === 'suspended') {
       return Effect.fail(
         new InvalidUserTransitionError({
-          from: this.data.status,
-          to: 'inactive',
+          message: `User can not perform this actions since it is suspended`,
+          cause: `User can not perform this actions since it is suspended`,
         }),
-      );
+      )
     }
     return Effect.succeed(
       new User({ ...this.data, status: 'inactive', updatedAt: new Date() }),
-    );
+    )
   }
 
   /**
@@ -219,10 +224,10 @@ export class User {
     if (this.data.status === 'suspended') {
       return Effect.fail(
         new InvalidUserTransitionError({
-          from: this.data.status,
-          to: 'suspended',
+          message: `User can not perform this actions since it is suspended`,
+          cause: `User can not perform this actions since it is suspended`,
         }),
-      );
+      )
     }
     return Effect.succeed(
       new User({
@@ -231,7 +236,7 @@ export class User {
         suspendedReason: reason,
         updatedAt: new Date(),
       }),
-    );
+    )
   }
 
   /**
@@ -248,10 +253,10 @@ export class User {
     if (this.data.status !== 'inactive' && this.data.status !== 'suspended') {
       return Effect.fail(
         new InvalidUserTransitionError({
-          from: this.data.status,
-          to: 'active',
+          message: `User can not perform this actions since it is already active `,
+          cause: `User can not perform this actions since it is already active`,
         }),
-      );
+      )
     }
     return Effect.succeed(
       new User({
@@ -260,7 +265,7 @@ export class User {
         suspendedReason: null,
         updatedAt: new Date(),
       }),
-    );
+    )
   }
 
   /**
@@ -280,7 +285,7 @@ export class User {
         status: 'pending_verification',
         updatedAt: new Date(),
       }),
-    );
+    )
   }
 
   /**
@@ -289,7 +294,7 @@ export class User {
    * @param phone - A valid E.164 phone number, or `null` to remove it
    */
   updatePhone(phone: PhoneNumber | null): User {
-    return new User({ ...this.data, phone, updatedAt: new Date() });
+    return new User({ ...this.data, phone, updatedAt: new Date() })
   }
 
   /**
@@ -299,7 +304,7 @@ export class User {
    * @param timezone - A valid IANA timezone identifier
    */
   updateTimezone(timezone: Timezone): User {
-    return new User({ ...this.data, timezone, updatedAt: new Date() });
+    return new User({ ...this.data, timezone, updatedAt: new Date() })
   }
 
   /**
@@ -316,7 +321,7 @@ export class User {
         ...prefs,
       },
       updatedAt: new Date(),
-    });
+    })
   }
 
   /**
@@ -324,7 +329,7 @@ export class User {
    * Should be called by the application layer after successful authentication.
    */
   recordLogin(): User {
-    return new User({ ...this.data, lastLoginAt: new Date() });
+    return new User({ ...this.data, lastLoginAt: new Date() })
   }
 
   // ── Serialization ──────────────────────────────────────────────────────────
@@ -334,6 +339,6 @@ export class User {
    * Use `User.fromRaw` to reconstitute back into an aggregate.
    */
   toRaw(): UserData {
-    return this.data;
+    return this.data
   }
 }

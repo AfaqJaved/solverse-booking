@@ -7,26 +7,23 @@ import {
   timestamp,
   uuid,
   varchar,
-} from 'drizzle-orm/pg-core';
+} from 'drizzle-orm/pg-core'
 
 export const userRoleEnum = pgEnum('user_role', [
   'superAdmin',
   'businessOwner',
   'locationOwner',
-]);
+])
 
 export const userStatusEnum = pgEnum('user_status', [
   'pending_verification',
   'active',
   'inactive',
   'suspended',
-]);
+])
 
-
-export type UserRow = typeof usersTable.$inferSelect;
-export type UserInsertRow = typeof usersTable.$inferInsert;
-
-
+export type UserRow = typeof usersTable.$inferSelect
+export type UserInsertRow = typeof usersTable.$inferInsert
 
 export const usersTable = pgTable('users', {
   /** UUID v4 primary key — matches domain UserId */
@@ -82,4 +79,4 @@ export const usersTable = pgTable('users', {
 
   /** Human-readable reason provided when the account was suspended */
   suspendedReason: text('suspended_reason'),
-});
+})

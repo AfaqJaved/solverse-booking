@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Controls which channels the user opts into for receiving notifications
@@ -13,5 +13,5 @@ export const NotificationPreferences = Schema.Struct({
   email: Schema.Boolean,
   sms: Schema.Boolean,
   push: Schema.Boolean,
-});
-export type NotificationPreferences = typeof NotificationPreferences.Type;
+})
+export type NotificationPreferences = typeof NotificationPreferences.Type

@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Branded username value object.
@@ -12,6 +12,6 @@ import { Schema } from 'effect';
 export const Username = Schema.String.pipe(
   Schema.pattern(/^[a-z0-9][a-z0-9_-]{1,28}[a-z0-9]$|^[a-z0-9]{3}$/),
   Schema.brand('Username'),
-);
+)
 
-export type Username = typeof Username.Type;
+export type Username = typeof Username.Type

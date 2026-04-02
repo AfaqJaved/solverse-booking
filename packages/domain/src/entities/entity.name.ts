@@ -1,1 +1,1 @@
-export type DomainEntityName = 'User';
+export type DomainEntityName = 'User'

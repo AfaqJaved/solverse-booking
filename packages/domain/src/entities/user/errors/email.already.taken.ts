@@ -1,4 +1,4 @@
-import { Schema } from 'effect';
+import { Schema } from 'effect'
 
 /**
  * Raised when attempting to register or change to an email address
@@ -6,7 +6,10 @@ import { Schema } from 'effect';
  */
 export class EmailAlreadyTakenError extends Schema.TaggedError<EmailAlreadyTakenError>()(
   'EmailAlreadyTakenError',
-  { email: Schema.String },
+  {
+    message: Schema.String,
+    cause: Schema.String,
+  },
 ) {
-  readonly sendToFrontend = true;
+  readonly sendToFrontEnd = true
 }
