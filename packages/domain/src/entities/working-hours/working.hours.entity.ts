@@ -1,5 +1,5 @@
 import { Schema } from 'effect'
-import { AuditSchema, TimeOfDay } from 'entities/common/entry'
+import { AuditSchema, TimeOfDay } from '../common/entry'
 import { BusinessId } from '../business/entry'
 import { WorkingHoursId, DayOfWeek } from './entry'
 

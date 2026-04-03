@@ -1,6 +1,6 @@
 import { Schema } from 'effect'
 import { BusinessId } from '../business/entry'
-import { AuditSchema } from 'entities/common/entry'
+import { AuditSchema } from '../common/entry'
 import {
   ServiceId,
   ServiceName,

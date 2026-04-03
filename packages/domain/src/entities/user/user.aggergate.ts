@@ -17,9 +17,7 @@ import {
 } from './entry'
 import type { UserData } from './user.entity'
 import { UserSchema } from './user.entity'
-import { Email } from 'entities/common/email'
-import { PhoneNumber } from 'entities/common/phone.number'
-import { Timezone } from 'entities/common/timezone'
+import { Email, PhoneNumber, Timezone } from '../common/entry'
 
 /**
  * User aggregate root for the appointment scheduling domain.

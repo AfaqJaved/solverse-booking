@@ -8,9 +8,7 @@ import {
   Username,
   HashedPassword,
 } from './entry'
-import { AuditSchema, Timezone } from 'entities/common/entry'
-import { Email } from 'entities/common/email'
-import { PhoneNumber } from 'entities/common/phone.number'
+import { AuditSchema, Timezone, Email, PhoneNumber } from '../common/entry'
 
 /**
  * Effect Schema for the raw User data shape.

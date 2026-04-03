@@ -1,6 +1,6 @@
 import { Schema } from 'effect'
 import { UserId } from '../user/entry'
-import { AuditSchema, Timezone } from 'entities/common/entry'
+import { AuditSchema, Timezone, Email, PhoneNumber } from '../common/entry'
 import {
   BusinessId,
   BusinessName,
@@ -9,8 +9,6 @@ import {
   BusinessStatus,
   BusinessCurrency,
 } from './entry'
-import { Email } from 'entities/common/email'
-import { PhoneNumber } from 'entities/common/phone.number'
 
 /**
  * Effect Schema for the raw Business data shape.

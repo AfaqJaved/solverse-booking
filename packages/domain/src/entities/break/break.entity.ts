@@ -1,7 +1,7 @@
 import { Schema } from 'effect'
-import { AuditSchema, TimeOfDay } from 'entities/common/entry'
 import { WorkingHoursId } from '../working-hours/entry'
 import { BreakId } from './entry'
+import { TimeOfDay, AuditSchema } from '../common/entry'
 
 export const BreakSchema = Schema.Struct({
   id: BreakId,

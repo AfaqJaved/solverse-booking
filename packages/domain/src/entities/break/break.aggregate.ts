@@ -5,7 +5,7 @@ import { WorkingHoursId } from '../working-hours/entry'
 import { BreakId } from './entry'
 import type { BreakData } from './break.entity'
 import { BreakSchema } from './break.entity'
-import { TimeOfDay } from 'entities/common/time.of.day'
+import { TimeOfDay } from '../common/entry'
 
 export class Break {
   private constructor(private readonly data: BreakData) {}

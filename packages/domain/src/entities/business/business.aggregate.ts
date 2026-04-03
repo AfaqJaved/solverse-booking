@@ -1,9 +1,7 @@
 import { Effect, Schema } from 'effect'
 import type { ParseError } from 'effect/ParseResult'
 import { UserId } from '../user/entry'
-import { Timezone } from 'entities/common/entry'
-import { Email } from 'entities/common/email'
-import { PhoneNumber } from 'entities/common/phone.number'
+import { Timezone, Email, PhoneNumber } from '../common/entry'
 import {
   BusinessId,
   BusinessName,
@@ -325,10 +323,7 @@ export class Business {
         }),
       )
     }
-    if (
-      this.data.status !== 'inactive' &&
-      this.data.status !== 'suspended'
-    ) {
+    if (this.data.status !== 'inactive' && this.data.status !== 'suspended') {
       return Effect.fail(
         new InvalidBusinessTransitionError({
           message: `Business "${this.data.name}" is not inactive or suspended`,
@@ -357,9 +352,7 @@ export class Business {
    * @param deletedBy - Actor performing the deletion
    * @fails `BusinessDeletedError` — if already soft-deleted
    */
-  softDelete(
-    deletedBy: UserId,
-  ): Effect.Effect<Business, BusinessDeletedError> {
+  softDelete(deletedBy: UserId): Effect.Effect<Business, BusinessDeletedError> {
     if (this.data.isDeleted) {
       return Effect.fail(
         new BusinessDeletedError({

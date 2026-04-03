@@ -5,7 +5,7 @@ import { BusinessId } from '../business/entry'
 import { WorkingHoursId, DayOfWeek } from './entry'
 import type { WorkingHoursData } from './working.hours.entity'
 import { WorkingHoursSchema } from './working.hours.entity'
-import { TimeOfDay } from 'entities/common/time.of.day'
+import { TimeOfDay } from '../common/entry'
 
 /**
  * WorkingHours aggregate root.
