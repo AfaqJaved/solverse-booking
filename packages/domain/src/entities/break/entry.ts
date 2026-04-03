@@ -1,0 +1,5 @@
+export * from './value-objects/entry'
+export * from './errors/entry'
+export * from './break.entity'
+export * from './break.aggregate'
+export * from './repository/break.repository'

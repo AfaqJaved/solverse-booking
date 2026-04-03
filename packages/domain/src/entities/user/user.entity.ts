@@ -1,16 +1,16 @@
 import { Schema } from 'effect'
 import {
   UserId,
-  Email,
-  PhoneNumber,
   FullName,
-  Timezone,
   UserRole,
   UserStatus,
   NotificationPreferences,
   Username,
   HashedPassword,
 } from './entry'
+import { AuditSchema, Timezone } from 'entities/common/entry'
+import { Email } from 'entities/common/email'
+import { PhoneNumber } from 'entities/common/phone.number'
 
 /**
  * Effect Schema for the raw User data shape.
@@ -44,14 +44,12 @@ export const UserSchema = Schema.Struct({
   emailVerified: Schema.Boolean,
   /** Per-channel notification opt-in preferences */
   notificationPreferences: NotificationPreferences,
-  /** Timestamp when the account was first created */
-  createdAt: Schema.DateFromSelf,
-  /** Timestamp of the most recent update to any field */
-  updatedAt: Schema.DateFromSelf,
   /** Timestamp of the user's most recent successful login, or null if never logged in */
   lastLoginAt: Schema.NullOr(Schema.DateFromSelf),
   /** Human-readable reason provided when the account was suspended, or null */
   suspendedReason: Schema.NullOr(Schema.String),
+  /** Shared audit trail fields (createdAt/By, updatedAt/By, deletedAt/By, isDeleted) */
+  ...AuditSchema.fields,
 })
 
 /** Plain data type inferred from `UserSchema` — used internally by the aggregate. */

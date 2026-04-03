@@ -1,0 +1,5 @@
+export * from './service.id'
+export * from './service.name'
+export * from './service.duration'
+export * from './service.price'
+export * from './service.status'

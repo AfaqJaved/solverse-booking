@@ -1,14 +1,11 @@
 import { Effect, Schema } from 'effect'
 import type { ParseError } from 'effect/ParseResult'
 import {
-  Email,
   NotificationPreferences,
   UserStatus,
   UserId,
-  PhoneNumber,
   getDisplayName,
   FullName,
-  Timezone,
   Username,
   HashedPassword,
 } from './entry'
@@ -20,6 +17,9 @@ import {
 } from './entry'
 import type { UserData } from './user.entity'
 import { UserSchema } from './user.entity'
+import { Email } from 'entities/common/email'
+import { PhoneNumber } from 'entities/common/phone.number'
+import { Timezone } from 'entities/common/timezone'
 
 /**
  * User aggregate root for the appointment scheduling domain.
@@ -111,7 +111,12 @@ export class User {
       emailVerified: false,
       notificationPreferences: { email: true, sms: false, push: true },
       createdAt: now,
+      createdBy: params.id,
       updatedAt: now,
+      updatedBy: params.id,
+      deletedAt: null,
+      deletedBy: null,
+      isDeleted: false,
       lastLoginAt: null,
       suspendedReason: null,
     })

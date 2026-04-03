@@ -1,1 +1,0 @@
-export type DomainEntityName = 'User'

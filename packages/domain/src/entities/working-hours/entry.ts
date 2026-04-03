@@ -1,0 +1,5 @@
+export * from './value-objects/entry'
+export * from './errors/entry'
+export * from './working.hours.entity'
+export * from './working.hours.aggregate'
+export * from './repository/working.hours.repository'

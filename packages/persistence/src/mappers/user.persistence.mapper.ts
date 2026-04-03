@@ -32,7 +32,7 @@ export class UserPersistenceMapper {
       Effect.mapError(
         (cause) =>
           new PersistenceMappingError({
-            message: 'Failed to map User domain to persistence',
+            message: 'Failed to map User (Persistence -> Domain aggregate )',
             cause,
           }),
       ),

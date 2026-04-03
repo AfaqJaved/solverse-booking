@@ -8,6 +8,34 @@
       "when": 1775005685166,
       "tag": "0000_user_table",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1775216267036,
+      "tag": "0001_business_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1775218466054,
+      "tag": "0002_service_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1775219451377,
+      "tag": "0003_working_hours_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1743638400000,
+      "tag": "0004_break_table",
+      "breakpoints": true
     }
   ]
 }
