@@ -1,5 +1,5 @@
 import { Effect, Option } from 'effect'
-import { UserId, User } from 'entry'
+import { UserId, User } from '../entry'
 import { DatabaseFailure } from '../../../errors/entry'
 
 export const IUserRepository = Symbol('IUserRepository')

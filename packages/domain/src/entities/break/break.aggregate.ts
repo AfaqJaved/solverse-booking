@@ -20,6 +20,10 @@ export class Break {
     return this.data.workingHoursId
   }
 
+  get label(): string {
+    return this.data.label
+  }
+
   get startTime(): TimeOfDay {
     return this.data.startTime
   }
@@ -37,6 +41,7 @@ export class Break {
   static create(params: {
     id: BreakId
     workingHoursId: WorkingHoursId
+    label: string
     startTime: TimeOfDay
     endTime: TimeOfDay
     createdBy: UserId
@@ -45,6 +50,7 @@ export class Break {
     return new Break({
       id: params.id,
       workingHoursId: params.workingHoursId,
+      label: params.label,
       startTime: params.startTime,
       endTime: params.endTime,
       createdAt: now,

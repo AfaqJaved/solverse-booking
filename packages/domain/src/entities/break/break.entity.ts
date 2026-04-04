@@ -6,6 +6,7 @@ import { TimeOfDay, AuditSchema } from '../common/entry'
 export const BreakSchema = Schema.Struct({
   id: BreakId,
   workingHoursId: WorkingHoursId,
+  label: Schema.String.pipe(Schema.maxLength(100)),
   startTime: TimeOfDay,
   endTime: TimeOfDay,
   ...AuditSchema.fields,

@@ -12,6 +12,8 @@ export const breaksTable = pgTable('breaks', {
     .notNull()
     .references(() => workingHoursTable.id),
 
+  label: varchar('label', { length: 100 }).notNull(),
+
   startTime: varchar('start_time', { length: 5 }).notNull(),
 
   endTime: varchar('end_time', { length: 5 }).notNull(),

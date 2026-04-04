@@ -11,6 +11,7 @@ export class BreakPersistenceMapper {
     return Break.fromRaw({
       id: row.id,
       workingHoursId: row.workingHoursId,
+      label: row.label,
       startTime: row.startTime,
       endTime: row.endTime,
       createdAt: row.createdAt,
@@ -36,6 +37,7 @@ export class BreakPersistenceMapper {
     return {
       id: data.id,
       workingHoursId: data.workingHoursId,
+      label: data.label,
       startTime: data.startTime,
       endTime: data.endTime,
       createdAt: data.createdAt,

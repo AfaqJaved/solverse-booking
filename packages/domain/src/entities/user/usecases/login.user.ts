@@ -1,6 +1,7 @@
 import { Effect } from 'effect'
-import { UserNotFoundError, UserSuspendedError, UserInactiveError } from 'entry'
+import { UserNotFoundError, UserSuspendedError, UserInactiveError } from '../entry'
 import { UserInvalidCredentialsError } from '../errors/user.invalid.credintionals'
+import { DatabaseFailure } from '../../../errors/entry'
 
 export const ILoginUserUsecase = Symbol('ILoginUserUsecase')
 
@@ -17,5 +18,6 @@ export interface LoginUserUsecase {
     | UserSuspendedError
     | UserInactiveError
     | UserInvalidCredentialsError
+    | DatabaseFailure
   >
 }

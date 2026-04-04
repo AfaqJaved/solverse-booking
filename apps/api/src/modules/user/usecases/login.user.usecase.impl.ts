@@ -12,8 +12,8 @@ import {
 } from '@solverse/domain'
 import { RepositoryFactory } from '@solverse/persistence'
 import { Effect, Option } from 'effect'
-import { JwtSignError, JwtUtils } from '../../../lib/jwt/entry'
-import { HashError, HashUtils } from '../../../lib/hash/entry'
+import { JwtUtils } from '../../../lib/jwt/entry'
+import { HashUtils } from '../../../lib/hash/entry'
 
 @Injectable()
 export class LoginUserUsecaseImpl implements LoginUserUsecase {
@@ -32,8 +32,6 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
     | UserInactiveError
     | UserInvalidCredentialsError
     | DatabaseFailure
-    | JwtSignError
-    | HashError
   > {
     return Effect.gen(this, function* () {
       const maybeUser =
@@ -70,7 +68,7 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
           }),
         )
 
-      const isPasswordValid = yield* HashUtils.verify(password, raw.password)
+      const isPasswordValid = yield* HashUtils.verify(password, raw.password).pipe(Effect.orDie)
 
       if (!isPasswordValid) {
         return yield* Effect.fail(
@@ -87,7 +85,7 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
       }>(
         { userId: raw.id, role: raw.role },
         { expiresIn: '1h', issuer: 'solverse' },
-      )
+      ).pipe(Effect.orDie)
 
       return { token }
     })
