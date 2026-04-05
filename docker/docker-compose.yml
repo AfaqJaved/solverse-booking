@@ -45,7 +45,7 @@ services:
       - NODE_ENV=${NODE_ENV}
       - PORT=${WEB_PORT}
     depends_on:
-      - api
+      - solverse-api
     restart: unless-stopped
     networks:
       - nginx
