@@ -32,6 +32,8 @@ services:
       postgres:
         condition: service_healthy
     restart: unless-stopped
+    networks:
+      - nginx
 
   solverse-web:
     build:
