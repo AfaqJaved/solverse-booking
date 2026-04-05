@@ -18,7 +18,10 @@
 		>
 			<Checkbox id="day-{day.day}" bind:checked={day.isOpen} class="shrink-0" />
 
-			<label for="day-{day.day}" class="w-24 shrink-0 cursor-pointer select-none text-sm font-medium">
+			<label
+				for="day-{day.day}"
+				class="w-24 shrink-0 cursor-pointer text-sm font-medium select-none"
+			>
 				{day.label}
 			</label>
 

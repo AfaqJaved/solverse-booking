@@ -84,7 +84,13 @@
 	</div>
 
 	{#if !showForm}
-		<Button variant="outline" size="sm" type="button" onclick={() => (showForm = true)} class="mt-2">
+		<Button
+			variant="outline"
+			size="sm"
+			type="button"
+			onclick={() => (showForm = true)}
+			class="mt-2"
+		>
 			<PlusIcon class="size-3.5" />
 			Add Another
 		</Button>
@@ -104,7 +110,9 @@
 		<!-- Row 1: Name + Duration + Price in one line -->
 		<div class="grid grid-cols-2 gap-3">
 			<Field.Field class="col-span-2 sm:col-span-1">
-				<Field.Label for="svc-name">Service Name <span class="text-destructive">*</span></Field.Label>
+				<Field.Label for="svc-name"
+					>Service Name <span class="text-destructive">*</span></Field.Label
+				>
 				<Input id="svc-name" placeholder="e.g. Haircut, Consultation" bind:value={draft.name} />
 			</Field.Field>
 			<Field.Field>
@@ -123,7 +131,10 @@
 		<!-- Row 2: Price (currency + amount) + Description -->
 		<div class="grid grid-cols-2 gap-3">
 			<Field.Field>
-				<Field.Label for="svc-price">Price <span class="text-muted-foreground text-xs font-normal">(optional)</span></Field.Label>
+				<Field.Label for="svc-price"
+					>Price <span class="text-xs font-normal text-muted-foreground">(optional)</span
+					></Field.Label
+				>
 				<div class="flex gap-1.5">
 					<Select.Root bind:value={draft.currency} type="single">
 						<Select.Trigger class="w-20 shrink-0">{currencyLabel}</Select.Trigger>
@@ -133,11 +144,21 @@
 							{/each}
 						</Select.Content>
 					</Select.Root>
-					<Input id="svc-price" type="number" min="0" step="0.01" placeholder="0.00" bind:value={draft.price} />
+					<Input
+						id="svc-price"
+						type="number"
+						min="0"
+						step="0.01"
+						placeholder="0.00"
+						bind:value={draft.price}
+					/>
 				</div>
 			</Field.Field>
 			<Field.Field>
-				<Field.Label for="svc-desc">Description <span class="text-muted-foreground text-xs font-normal">(optional)</span></Field.Label>
+				<Field.Label for="svc-desc"
+					>Description <span class="text-xs font-normal text-muted-foreground">(optional)</span
+					></Field.Label
+				>
 				<Input id="svc-desc" placeholder="Short description" bind:value={draft.description} />
 			</Field.Field>
 		</div>
@@ -148,7 +169,9 @@
 				Add Service
 			</Button>
 			{#if services.length > 0}
-				<Button type="button" variant="ghost" size="sm" onclick={() => (showForm = false)}>Cancel</Button>
+				<Button type="button" variant="ghost" size="sm" onclick={() => (showForm = false)}
+					>Cancel</Button
+				>
 			{/if}
 		</div>
 	</Field.Group>

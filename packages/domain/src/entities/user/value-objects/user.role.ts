@@ -15,6 +15,7 @@ import { Schema } from 'effect'
  *                      Scoped strictly to their assigned location.
  *                      Cannot manage other locations or business-level settings.
  */
+export type UserRoleType = 'superAdmin' | 'businessOwner' | 'locationOwner'
 export const UserRole = Schema.Literal(
   'superAdmin',
   'businessOwner',

@@ -13,7 +13,10 @@ export class HashUtils {
     })
   }
 
-  static verify(plain: string, hashed: string): Effect.Effect<boolean, HashError> {
+  static verify(
+    plain: string,
+    hashed: string,
+  ): Effect.Effect<boolean, HashError> {
     return Effect.tryPromise({
       try: () => bcrypt.compare(plain, hashed),
       catch: (cause) =>

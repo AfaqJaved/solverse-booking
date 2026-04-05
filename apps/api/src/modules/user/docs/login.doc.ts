@@ -58,7 +58,10 @@ export const LoginDoc = () =>
             type: 'string',
             example: 'UserInactiveError | UserSuspendedError',
           },
-          message: { type: 'string', example: 'User account has been suspended' },
+          message: {
+            type: 'string',
+            example: 'User account has been suspended',
+          },
           path: { type: 'string', example: '/users/login' },
           timestamp: { type: 'string', format: 'date-time' },
         },

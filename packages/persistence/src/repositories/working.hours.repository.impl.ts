@@ -31,7 +31,9 @@ export class WorkingHoursRepositoryImpl implements WorkingHoursRepository {
       )
       return yield* Effect.all(
         rows.map((row) =>
-          this.persistenceMapperFactory.workingHoursPersistenceMapper.toDomain(row),
+          this.persistenceMapperFactory.workingHoursPersistenceMapper.toDomain(
+            row,
+          ),
         ),
       )
     })
@@ -56,7 +58,9 @@ export class WorkingHoursRepositoryImpl implements WorkingHoursRepository {
       )
       if (!row) return Option.none()
       const workingHours =
-        yield* this.persistenceMapperFactory.workingHoursPersistenceMapper.toDomain(row)
+        yield* this.persistenceMapperFactory.workingHoursPersistenceMapper.toDomain(
+          row,
+        )
       return Option.some(workingHours)
     })
   }
@@ -64,7 +68,9 @@ export class WorkingHoursRepositoryImpl implements WorkingHoursRepository {
   save(workingHours: WorkingHours): Effect.Effect<void, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const row =
-        this.persistenceMapperFactory.workingHoursPersistenceMapper.toPersistence(workingHours)
+        this.persistenceMapperFactory.workingHoursPersistenceMapper.toPersistence(
+          workingHours,
+        )
       yield* dbEffect(
         db
           .insert(workingHoursTable)
@@ -79,7 +85,9 @@ export class WorkingHoursRepositoryImpl implements WorkingHoursRepository {
   ): Effect.Effect<void, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const rows = workingHoursArr.map((wh) =>
-        this.persistenceMapperFactory.workingHoursPersistenceMapper.toPersistence(wh),
+        this.persistenceMapperFactory.workingHoursPersistenceMapper.toPersistence(
+          wh,
+        ),
       )
       yield* Effect.all(
         rows.map((row) =>

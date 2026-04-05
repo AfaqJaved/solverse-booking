@@ -4,4 +4,3 @@ export * from './user.aggergate'
 export * from './user.entity'
 export * from './respository/user.repository'
 export * from './usecases/entry'
-

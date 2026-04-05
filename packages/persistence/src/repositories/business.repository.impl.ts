@@ -32,7 +32,9 @@ export class BusinessRepositoryImpl implements BusinessRepository {
       )
       if (!row) return Option.none()
       const business =
-        yield* this.persistenceMapperFactory.businessPersistenceMapper.toDomain(row)
+        yield* this.persistenceMapperFactory.businessPersistenceMapper.toDomain(
+          row,
+        )
       return Option.some(business)
     })
   }
@@ -50,14 +52,14 @@ export class BusinessRepositoryImpl implements BusinessRepository {
       )
       if (!row) return Option.none()
       const business =
-        yield* this.persistenceMapperFactory.businessPersistenceMapper.toDomain(row)
+        yield* this.persistenceMapperFactory.businessPersistenceMapper.toDomain(
+          row,
+        )
       return Option.some(business)
     })
   }
 
-  findByOwnerId(
-    ownerId: UserId,
-  ): Effect.Effect<Business[], DatabaseFailure> {
+  findByOwnerId(ownerId: UserId): Effect.Effect<Business[], DatabaseFailure> {
     return Effect.gen(this, function* () {
       const rows = yield* dbEffect(
         db
@@ -73,9 +75,7 @@ export class BusinessRepositoryImpl implements BusinessRepository {
     })
   }
 
-  slugExists(
-    slug: BusinessSlug,
-  ): Effect.Effect<boolean, DatabaseFailure> {
+  slugExists(slug: BusinessSlug): Effect.Effect<boolean, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const [row] = yield* dbEffect(
         db
@@ -91,7 +91,9 @@ export class BusinessRepositoryImpl implements BusinessRepository {
   save(business: Business): Effect.Effect<void, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const row =
-        this.persistenceMapperFactory.businessPersistenceMapper.toPersistence(business)
+        this.persistenceMapperFactory.businessPersistenceMapper.toPersistence(
+          business,
+        )
       yield* dbEffect(
         db
           .insert(businessesTable)

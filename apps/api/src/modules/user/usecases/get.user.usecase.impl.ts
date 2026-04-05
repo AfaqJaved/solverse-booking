@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common'
 import {
   DatabaseFailure,
   GetUserUsecase,
-  SafeUserData,
+  InvalidInputError,
+  User,
   UserNotFoundError,
   UserId,
 } from '@solverse/domain'
 import { RepositoryFactory } from '@solverse/persistence'
 import { Effect, Option } from 'effect'
+import { decodeOrFail } from '../../../lib/utils/decode.or.fail'
 
 @Injectable()
 export class GetUserUsecaseImpl implements GetUserUsecase {
@@ -16,38 +18,24 @@ export class GetUserUsecaseImpl implements GetUserUsecase {
   execute({
     userId,
   }: {
-    userId: UserId
-  }): Effect.Effect<SafeUserData, UserNotFoundError | DatabaseFailure> {
+    userId: string
+  }): Effect.Effect<User, InvalidInputError | UserNotFoundError | DatabaseFailure> {
     return Effect.gen(this, function* () {
+      const decodedUserId = yield* decodeOrFail(UserId)(userId)
+
       const maybeUser =
-        yield* this.repositoryFactory.userRepository.findById(userId)
+        yield* this.repositoryFactory.userRepository.findById(decodedUserId)
 
       if (Option.isNone(maybeUser)) {
         return yield* Effect.fail(
           new UserNotFoundError({
-            message: `User not found: ${userId}`,
-            cause: `User not found: ${userId}`,
+            message: `User not found: ${decodedUserId}`,
+            cause: `User not found: ${decodedUserId}`,
           }),
         )
       }
 
-      const raw = maybeUser.value.toRaw()
-
-      return {
-        id: raw.id,
-        username: raw.username,
-        name: raw.name,
-        email: raw.email,
-        phone: raw.phone,
-        role: raw.role,
-        status: raw.status,
-        timezone: raw.timezone,
-        avatarUrl: raw.avatarUrl,
-        emailVerified: raw.emailVerified,
-        notificationPreferences: raw.notificationPreferences,
-        lastLoginAt: raw.lastLoginAt,
-        createdAt: raw.createdAt,
-      }
+      return maybeUser.value
     })
   }
 }

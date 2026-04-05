@@ -31,7 +31,9 @@ export class ServiceRepositoryImpl implements ServiceRepository {
       )
       if (!row) return Option.none()
       const service =
-        yield* this.persistenceMapperFactory.servicePersistenceMapper.toDomain(row)
+        yield* this.persistenceMapperFactory.servicePersistenceMapper.toDomain(
+          row,
+        )
       return Option.some(service)
     })
   }
@@ -57,7 +59,9 @@ export class ServiceRepositoryImpl implements ServiceRepository {
   save(service: Service): Effect.Effect<void, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const row =
-        this.persistenceMapperFactory.servicePersistenceMapper.toPersistence(service)
+        this.persistenceMapperFactory.servicePersistenceMapper.toPersistence(
+          service,
+        )
       yield* dbEffect(
         db
           .insert(servicesTable)
@@ -69,9 +73,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
 
   delete(id: ServiceId): Effect.Effect<void, DatabaseFailure> {
     return Effect.gen(this, function* () {
-      yield* dbEffect(
-        db.delete(servicesTable).where(eq(servicesTable.id, id)),
-      )
+      yield* dbEffect(db.delete(servicesTable).where(eq(servicesTable.id, id)))
     })
   }
 }

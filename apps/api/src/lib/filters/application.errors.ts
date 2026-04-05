@@ -11,6 +11,7 @@ import {
   UserInvalidCredentialsError,
   UserNotFoundError,
   UserSuspendedError,
+  InvalidInputError,
 } from '@solverse/domain'
 import {
   JwtExpiredError,
@@ -22,6 +23,7 @@ import {
 
 export type ApplicationError = { sendToFrontEnd: boolean } & (
   | UserNotFoundError
+  | InvalidInputError
   | EmailAlreadyTakenError
   | UserAlreadyActiveError
   | UserSuspendedError

@@ -34,7 +34,13 @@
 		if (!addingFor || !draftLabel.trim()) return
 		breaks = [
 			...breaks,
-			{ id: crypto.randomUUID(), day: addingFor, label: draftLabel, startTime: draftStart, endTime: draftEnd }
+			{
+				id: crypto.randomUUID(),
+				day: addingFor,
+				label: draftLabel,
+				startTime: draftStart,
+				endTime: draftEnd
+			}
 		]
 		addingFor = null
 	}
@@ -64,7 +70,9 @@
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-2">
 						<span class="text-sm font-medium">{day.label}</span>
-						<Badge variant="secondary" class="font-mono text-xs">{day.openTime} – {day.closeTime}</Badge>
+						<Badge variant="secondary" class="font-mono text-xs"
+							>{day.openTime} – {day.closeTime}</Badge
+						>
 					</div>
 					{#if addingFor !== day.day}
 						<Button variant="outline" size="xs" type="button" onclick={() => openForm(day.day)}>
@@ -77,7 +85,9 @@
 				<!-- Break list -->
 				<div class="mt-1.5 space-y-1">
 					{#each breaksForDay(day.day) as brk (brk.id)}
-						<div class="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-3 py-1.5">
+						<div
+							class="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-3 py-1.5"
+						>
 							<CoffeeIcon class="size-3.5 shrink-0 text-muted-foreground" />
 							{#if brk.label}
 								<span class="text-sm font-medium">{brk.label}</span>
@@ -104,7 +114,12 @@
 				<!-- Inline add form -->
 				{#if addingFor === day.day}
 					<div class="mt-1.5 space-y-2 rounded-lg border border-border bg-muted/20 p-2.5">
-						<Input placeholder="Label (e.g. Lunch, Prayer)" bind:value={draftLabel} class="h-8" required />
+						<Input
+							placeholder="Label (e.g. Lunch, Prayer)"
+							bind:value={draftLabel}
+							class="h-8"
+							required
+						/>
 						<div class="flex items-end gap-2">
 							<div class="flex-1 space-y-1">
 								<label class="text-xs font-medium text-muted-foreground">From</label>
@@ -115,8 +130,12 @@
 								<Input type="time" bind:value={draftEnd} class="h-8" />
 							</div>
 							<div class="flex gap-1.5">
-								<Button type="button" size="sm" onclick={confirmAdd} disabled={!draftLabel.trim()}>Add</Button>
-								<Button type="button" variant="ghost" size="sm" onclick={() => (addingFor = null)}>Cancel</Button>
+								<Button type="button" size="sm" onclick={confirmAdd} disabled={!draftLabel.trim()}
+									>Add</Button
+								>
+								<Button type="button" variant="ghost" size="sm" onclick={() => (addingFor = null)}
+									>Cancel</Button
+								>
 							</div>
 						</div>
 					</div>

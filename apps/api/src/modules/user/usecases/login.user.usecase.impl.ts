@@ -68,7 +68,10 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
           }),
         )
 
-      const isPasswordValid = yield* HashUtils.verify(password, raw.password).pipe(Effect.orDie)
+      const isPasswordValid = yield* HashUtils.verify(
+        password,
+        raw.password,
+      ).pipe(Effect.orDie)
 
       if (!isPasswordValid) {
         return yield* Effect.fail(

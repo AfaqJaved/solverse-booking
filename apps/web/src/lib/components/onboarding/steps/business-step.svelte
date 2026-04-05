@@ -47,7 +47,9 @@
 	<!-- Row 1: Name + Booking URL -->
 	<div class="grid grid-cols-2 gap-3">
 		<Field.Field>
-			<Field.Label for="business-name">Business Name <span class="text-destructive">*</span></Field.Label>
+			<Field.Label for="business-name"
+				>Business Name <span class="text-destructive">*</span></Field.Label
+			>
 			<Input
 				id="business-name"
 				placeholder="Sunrise Barbershop"
@@ -73,13 +75,16 @@
 
 	<!-- Row 2: Description -->
 	<Field.Field>
-		<Field.Label for="business-description">Description <span class="text-muted-foreground text-xs font-normal">(optional)</span></Field.Label>
+		<Field.Label for="business-description"
+			>Description <span class="text-xs font-normal text-muted-foreground">(optional)</span
+			></Field.Label
+		>
 		<textarea
 			id="business-description"
 			placeholder="Briefly describe your business..."
 			rows={2}
 			bind:value={data.description}
-			class="w-full min-w-0 resize-none rounded-lg border border-input bg-transparent px-2.5 py-1.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50"
+			class="w-full min-w-0 resize-none rounded-lg border border-input bg-transparent px-2.5 py-1.5 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50"
 		></textarea>
 	</Field.Field>
 
@@ -91,7 +96,12 @@
 		</Field.Field>
 		<Field.Field>
 			<Field.Label for="business-email">Email</Field.Label>
-			<Input id="business-email" type="email" placeholder="hello@business.com" bind:value={data.email} />
+			<Input
+				id="business-email"
+				type="email"
+				placeholder="hello@business.com"
+				bind:value={data.email}
+			/>
 		</Field.Field>
 	</div>
 

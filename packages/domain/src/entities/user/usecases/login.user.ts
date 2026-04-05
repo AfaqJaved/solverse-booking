@@ -1,5 +1,9 @@
 import { Effect } from 'effect'
-import { UserNotFoundError, UserSuspendedError, UserInactiveError } from '../entry'
+import {
+  UserNotFoundError,
+  UserSuspendedError,
+  UserInactiveError,
+} from '../entry'
 import { UserInvalidCredentialsError } from '../errors/user.invalid.credintionals'
 import { DatabaseFailure } from '../../../errors/entry'
 

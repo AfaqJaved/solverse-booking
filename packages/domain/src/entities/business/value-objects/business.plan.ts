@@ -8,6 +8,11 @@ import { Schema } from 'effect'
  * - `pro`        — multiple locations, unlimited staff, advanced analytics
  * - `enterprise` — custom limits, SLA, dedicated support
  */
-export const BusinessPlan = Schema.Literal('free', 'starter', 'pro', 'enterprise')
+export const BusinessPlan = Schema.Literal(
+  'free',
+  'starter',
+  'pro',
+  'enterprise',
+)
 
 export type BusinessPlan = typeof BusinessPlan.Type

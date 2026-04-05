@@ -1,6 +1,9 @@
 import { Effect } from 'effect'
 import { WorkingHours } from '@solverse/domain'
-import type { WorkingHoursRow, WorkingHoursInsertRow } from '../schema/working.hours.table'
+import type {
+  WorkingHoursRow,
+  WorkingHoursInsertRow,
+} from '../schema/working.hours.table'
 import { PersistenceMappingError } from '@solverse/domain'
 import { Injectable } from '@nestjs/common'
 

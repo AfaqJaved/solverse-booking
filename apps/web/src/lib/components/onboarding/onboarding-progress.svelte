@@ -16,7 +16,7 @@
 	<ol class="flex items-start">
 		{#each steps as step, i}
 			{#if i > 0}
-				<li class="relative mt-4 h-px flex-1 min-w-4" aria-hidden="true">
+				<li class="relative mt-4 h-px min-w-4 flex-1" aria-hidden="true">
 					<div
 						class={cn(
 							'h-full transition-colors duration-300',
@@ -45,7 +45,7 @@
 				</div>
 				<span
 					class={cn(
-						'hidden max-w-[80px] text-center text-[11px] font-medium leading-tight sm:block',
+						'hidden max-w-[80px] text-center text-[11px] leading-tight font-medium sm:block',
 						i === currentStep ? 'text-foreground' : 'text-muted-foreground'
 					)}
 				>

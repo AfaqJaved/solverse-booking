@@ -124,11 +124,11 @@
 	let canAdvance = $derived(
 		currentStep === 0
 			? owner.firstName.trim().length > 0 &&
-				owner.lastName.trim().length > 0 &&
-				owner.username.trim().length > 0 &&
-				owner.email.trim().length > 0 &&
-				owner.password.length >= 8 &&
-				owner.password === owner.confirmPassword
+					owner.lastName.trim().length > 0 &&
+					owner.username.trim().length > 0 &&
+					owner.email.trim().length > 0 &&
+					owner.password.length >= 8 &&
+					owner.password === owner.confirmPassword
 			: currentStep === 1
 				? business.name.trim().length > 0
 				: true
@@ -196,14 +196,18 @@
 				{#if !isLast}
 					<div class="flex items-center gap-3">
 						{#if step.icon}
-							<div class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+							<div
+								class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10"
+							>
 								<step.icon class="size-5 text-primary" />
 							</div>
 						{/if}
 						<div>
 							<h2 class="text-lg font-semibold tracking-tight">{step.description}</h2>
 							{#if step.skippable}
-								<p class="text-xs text-muted-foreground">Optional — set up later from your dashboard.</p>
+								<p class="text-xs text-muted-foreground">
+									Optional — set up later from your dashboard.
+								</p>
 							{/if}
 						</div>
 					</div>

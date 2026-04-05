@@ -33,7 +33,9 @@
 	<!-- Row 1: First + Last name -->
 	<div class="grid grid-cols-2 gap-3">
 		<Field.Field>
-			<Field.Label for="owner-first-name">First Name <span class="text-destructive">*</span></Field.Label>
+			<Field.Label for="owner-first-name"
+				>First Name <span class="text-destructive">*</span></Field.Label
+			>
 			<Input
 				id="owner-first-name"
 				placeholder="Jane"
@@ -44,7 +46,9 @@
 			/>
 		</Field.Field>
 		<Field.Field>
-			<Field.Label for="owner-last-name">Last Name <span class="text-destructive">*</span></Field.Label>
+			<Field.Label for="owner-last-name"
+				>Last Name <span class="text-destructive">*</span></Field.Label
+			>
 			<Input
 				id="owner-last-name"
 				placeholder="Smith"
@@ -58,7 +62,9 @@
 	<!-- Row 2: Username + Email -->
 	<div class="grid grid-cols-2 gap-3">
 		<Field.Field>
-			<Field.Label for="owner-username">Username <span class="text-destructive">*</span></Field.Label>
+			<Field.Label for="owner-username"
+				>Username <span class="text-destructive">*</span></Field.Label
+			>
 			<Input
 				id="owner-username"
 				placeholder="jane_smith"
@@ -84,7 +90,9 @@
 
 	<!-- Row 3: Phone -->
 	<Field.Field>
-		<Field.Label for="owner-phone">Phone <span class="text-muted-foreground text-xs font-normal">(optional)</span></Field.Label>
+		<Field.Label for="owner-phone"
+			>Phone <span class="text-xs font-normal text-muted-foreground">(optional)</span></Field.Label
+		>
 		<Input
 			id="owner-phone"
 			type="tel"
@@ -97,7 +105,9 @@
 	<!-- Row 4: Password + Confirm -->
 	<div class="grid grid-cols-2 gap-3">
 		<Field.Field>
-			<Field.Label for="owner-password">Password <span class="text-destructive">*</span></Field.Label>
+			<Field.Label for="owner-password"
+				>Password <span class="text-destructive">*</span></Field.Label
+			>
 			<div class="relative">
 				<Input
 					id="owner-password"
@@ -124,7 +134,9 @@
 			{/if}
 		</Field.Field>
 		<Field.Field>
-			<Field.Label for="owner-confirm-password">Confirm Password <span class="text-destructive">*</span></Field.Label>
+			<Field.Label for="owner-confirm-password"
+				>Confirm Password <span class="text-destructive">*</span></Field.Label
+			>
 			<div class="relative">
 				<Input
 					id="owner-confirm-password"

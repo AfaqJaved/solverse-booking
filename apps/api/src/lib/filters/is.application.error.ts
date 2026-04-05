@@ -1,4 +1,5 @@
 import {
+  InvalidInputError,
   UserNotFoundError,
   EmailAlreadyTakenError,
   UserAlreadyActiveError,
@@ -23,6 +24,7 @@ import { ApplicationError } from './application.errors'
 
 export function isApplicationError(error: unknown): error is ApplicationError {
   return (
+    error instanceof InvalidInputError ||
     error instanceof UserNotFoundError ||
     error instanceof EmailAlreadyTakenError ||
     error instanceof UserAlreadyActiveError ||

@@ -1,5 +1,6 @@
 import { HttpStatus } from '@nestjs/common'
 import {
+  InvalidInputError,
   UserNotFoundError,
   EmailAlreadyTakenError,
   UserAlreadyActiveError,
@@ -16,6 +17,7 @@ import {
 import { ApplicationError } from './application.errors'
 
 export function resolveHttpStatus(error: ApplicationError): HttpStatus {
+  if (error instanceof InvalidInputError) return HttpStatus.BAD_REQUEST
   if (error instanceof UserNotFoundError) return HttpStatus.NOT_FOUND
   if (error instanceof EmailAlreadyTakenError) return HttpStatus.CONFLICT
   if (error instanceof UserAlreadyActiveError) return HttpStatus.CONFLICT

@@ -51,7 +51,9 @@ export const businessesTable = pgTable('businesses', {
   timezone: varchar('timezone', { length: 100 }).notNull(),
 
   /** Current lifecycle status of the business */
-  status: businessStatusEnum('status').notNull().default('pending_verification'),
+  status: businessStatusEnum('status')
+    .notNull()
+    .default('pending_verification'),
 
   /** Subscription plan governing feature access and usage limits */
   plan: businessPlanEnum('plan').notNull().default('free'),

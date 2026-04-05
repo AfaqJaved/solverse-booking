@@ -1,21 +1,21 @@
 import { Effect } from 'effect'
-import { DatabaseFailure } from '../../../errors/entry'
+import { DatabaseFailure, InvalidInputError } from '../../../errors/entry'
 import { EmailAlreadyTakenError } from '../errors/entry'
-import type { UserId, FullName, Username } from '../value-objects/entry'
-import type { Email, PhoneNumber, Timezone } from '../../common/entry'
-import type { UserData } from '../user.entity'
+import { UserRoleType } from 'entry'
 
 export const IRegisterUserUsecase = Symbol('IRegisterUserUsecase')
 
 export interface RegisterUserUsecase {
   execute(params: {
-    id: UserId
-    username: Username
+    username: string
     password: string
-    name: FullName
-    email: Email
-    role: UserData['role']
-    timezone: Timezone
-    phone?: PhoneNumber
-  }): Effect.Effect<{ id: UserId }, EmailAlreadyTakenError | DatabaseFailure>
+    name: { firstName: string; lastName: string }
+    email: string
+    role: UserRoleType
+    timezone: string
+    phone?: string
+  }): Effect.Effect<
+    { id: string },
+    InvalidInputError | EmailAlreadyTakenError | DatabaseFailure
+  >
 }

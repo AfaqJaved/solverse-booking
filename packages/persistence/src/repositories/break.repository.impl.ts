@@ -39,7 +39,9 @@ export class BreakRepositoryImpl implements BreakRepository {
   save(breakEntity: Break): Effect.Effect<void, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const row =
-        this.persistenceMapperFactory.breakPersistenceMapper.toPersistence(breakEntity)
+        this.persistenceMapperFactory.breakPersistenceMapper.toPersistence(
+          breakEntity,
+        )
       yield* dbEffect(
         db
           .insert(breaksTable)
@@ -51,9 +53,7 @@ export class BreakRepositoryImpl implements BreakRepository {
 
   delete(id: BreakId): Effect.Effect<void, DatabaseFailure> {
     return Effect.gen(this, function* () {
-      yield* dbEffect(
-        db.delete(breaksTable).where(eq(breaksTable.id, id)),
-      )
+      yield* dbEffect(db.delete(breaksTable).where(eq(breaksTable.id, id)))
     })
   }
 }

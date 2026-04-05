@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common'
 import {
   DatabaseFailure,
+  InvalidInputError,
+  PhoneNumber,
+  Timezone,
   UpdateProfileUsecase,
   UserNotFoundError,
   UserId,
-  NotificationPreferences,
-  Timezone,
-  PhoneNumber,
 } from '@solverse/domain'
 import { RepositoryFactory } from '@solverse/persistence'
 import { Effect, Option } from 'effect'
+import { decodeOrFail } from '../../../lib/utils/decode.or.fail'
 
 @Injectable()
 export class UpdateProfileUsecaseImpl implements UpdateProfileUsecase {
@@ -21,32 +22,40 @@ export class UpdateProfileUsecaseImpl implements UpdateProfileUsecase {
     phone,
     notificationPreferences,
   }: {
-    userId: UserId
-    timezone?: Timezone
-    phone?: PhoneNumber
-    notificationPreferences?: Partial<NotificationPreferences>
-  }): Effect.Effect<void, UserNotFoundError | DatabaseFailure> {
+    userId: string
+    timezone?: string
+    phone?: string | null
+    notificationPreferences?: { email?: boolean; sms?: boolean; push?: boolean }
+  }): Effect.Effect<void, InvalidInputError | UserNotFoundError | DatabaseFailure> {
     return Effect.gen(this, function* () {
+      const decodedUserId = yield* decodeOrFail(UserId)(userId)
+      const decodedTimezone = timezone != null
+        ? yield* decodeOrFail(Timezone)(timezone)
+        : undefined
+      const decodedPhone = phone != null
+        ? yield* decodeOrFail(PhoneNumber)(phone)
+        : phone
+
       const maybeUser =
-        yield* this.repositoryFactory.userRepository.findById(userId)
+        yield* this.repositoryFactory.userRepository.findById(decodedUserId)
 
       if (Option.isNone(maybeUser)) {
         return yield* Effect.fail(
           new UserNotFoundError({
-            message: `User not found: ${userId}`,
-            cause: `User not found: ${userId}`,
+            message: `User not found: ${decodedUserId}`,
+            cause: `User not found: ${decodedUserId}`,
           }),
         )
       }
 
       let user = maybeUser.value
 
-      if (timezone !== undefined) {
-        user = user.updateTimezone(timezone)
+      if (decodedTimezone !== undefined) {
+        user = user.updateTimezone(decodedTimezone)
       }
 
-      if (phone !== undefined) {
-        user = user.updatePhone(phone ?? null)
+      if (decodedPhone !== undefined) {
+        user = user.updatePhone(decodedPhone ?? null)
       }
 
       if (notificationPreferences !== undefined) {

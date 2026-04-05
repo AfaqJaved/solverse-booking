@@ -1,25 +1,29 @@
 import { Injectable } from '@nestjs/common'
 import {
   DatabaseFailure,
+  Email,
   EmailAlreadyTakenError,
   FullName,
+  InvalidInputError,
+  PhoneNumber,
   RegisterUserUsecase,
+  Timezone,
   User,
   UserId,
+  UserRole,
+  UserRoleType,
   Username,
-  UserData,
 } from '@solverse/domain'
 import { RepositoryFactory } from '@solverse/persistence'
-import { Effect, Option } from 'effect'
+import { Effect, Option, Schema } from 'effect'
 import { HashUtils } from '../../../lib/hash/entry'
-import type { Email, PhoneNumber, Timezone, UserRole } from '@solverse/domain'
+import { decodeOrFail } from '../../../lib/utils/decode.or.fail'
 
 @Injectable()
 export class RegisterUserUsecaseImpl implements RegisterUserUsecase {
   constructor(private readonly repositoryFactory: RepositoryFactory) {}
 
   execute({
-    id,
     username,
     password,
     name,
@@ -28,56 +32,66 @@ export class RegisterUserUsecaseImpl implements RegisterUserUsecase {
     timezone,
     phone,
   }: {
-    id: UserId
-    username: Username
+    username: string
     password: string
-    name: FullName
-    email: Email
-    role: UserRole
-    timezone: Timezone
-    phone?: PhoneNumber
-  }): Effect.Effect<{ id: UserId }, EmailAlreadyTakenError | DatabaseFailure> {
+    name: { firstName: string; lastName: string }
+    email: string
+    role: UserRoleType
+    timezone: string
+    phone?: string
+  }): Effect.Effect<
+    { id: string },
+    InvalidInputError | EmailAlreadyTakenError | DatabaseFailure
+  > {
     return Effect.gen(this, function* () {
+      const id = yield* decodeOrFail(UserId)(crypto.randomUUID())
+      const decodedUsername = yield* decodeOrFail(Username)(username)
+      const decodedEmail = yield* decodeOrFail(Email)(email)
+      const decodedName = yield* decodeOrFail(FullName)(name)
+      const decodedTimezone = yield* decodeOrFail(Timezone)(timezone)
+      const decodedRole = yield* decodeOrFail(UserRole)(role)
+      const decodedPhone =
+        phone != null ? yield* decodeOrFail(PhoneNumber)(phone) : undefined
+
       const existingByEmail =
-        yield* this.repositoryFactory.userRepository.findByEmail(email)
+        yield* this.repositoryFactory.userRepository.findByEmail(decodedEmail)
 
       if (Option.isSome(existingByEmail)) {
         return yield* Effect.fail(
           new EmailAlreadyTakenError({
-            message: `Email ${email} is already taken`,
-            cause: `Email ${email} is already taken`,
+            message: `Email ${decodedEmail} is already taken`,
+            cause: `Email ${decodedEmail} is already taken`,
           }),
         )
       }
 
       const existingByUsername =
         yield* this.repositoryFactory.userRepository.findByUsernameOrEmail(
-          username,
+          decodedUsername,
         )
 
       if (Option.isSome(existingByUsername)) {
         return yield* Effect.fail(
           new EmailAlreadyTakenError({
-            message: `Username ${username} is already taken`,
-            cause: `Username ${username} is already taken`,
+            message: `Username ${decodedUsername} is already taken`,
+            cause: `Username ${decodedUsername} is already taken`,
           }),
         )
       }
 
-      // Hash failures are infrastructure defects — die rather than expose to domain
       const hashedPassword = yield* HashUtils.hash(password).pipe(Effect.orDie)
 
       const user = User.create({
         id,
-        username,
+        username: decodedUsername,
         password: hashedPassword as Parameters<
           typeof User.create
         >[0]['password'],
-        name,
-        email,
-        role,
-        timezone,
-        phone,
+        name: decodedName,
+        email: decodedEmail,
+        role: decodedRole,
+        timezone: decodedTimezone,
+        phone: decodedPhone,
       })
 
       yield* this.repositoryFactory.userRepository.save(user)
