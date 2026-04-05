@@ -16,7 +16,7 @@ services:
       timeout: 5s
       retries: 5
 
-  api:
+  solverse-api:
     build:
       context: ..
       dockerfile: apps/api/Dockerfile
@@ -33,7 +33,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-  web:
+  solverse-web:
     build:
       context: ..
       dockerfile: apps/web/Dockerfile
