@@ -1,6 +1,6 @@
 {
-  "id": "0ae02675-4659-4430-9e30-555d55d1fa9d",
-  "prevId": "c376519a-feeb-4d44-a226-9a0a8450cece",
+  "id": "aaafa9a0-356f-4dfc-ba31-2b69721a3411",
+  "prevId": "b135ddcc-cf53-417f-9d2d-99e777f259b4",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -91,20 +91,6 @@
           "notNull": true,
           "default": "'{\"email\":true,\"sms\":false,\"push\":true}'::jsonb"
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
         "last_login_at": {
           "name": "last_login_at",
           "type": "timestamp",
@@ -116,6 +102,51 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_by": {
+          "name": "deleted_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_deleted": {
+          "name": "is_deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         }
       },
       "indexes": {},
@@ -293,45 +324,6 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
-        },
-        "businesses_created_by_users_id_fk": {
-          "name": "businesses_created_by_users_id_fk",
-          "tableFrom": "businesses",
-          "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "businesses_updated_by_users_id_fk": {
-          "name": "businesses_updated_by_users_id_fk",
-          "tableFrom": "businesses",
-          "tableTo": "users",
-          "columnsFrom": [
-            "updated_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "businesses_deleted_by_users_id_fk": {
-          "name": "businesses_deleted_by_users_id_fk",
-          "tableFrom": "businesses",
-          "tableTo": "users",
-          "columnsFrom": [
-            "deleted_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -476,45 +468,6 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
-        },
-        "services_created_by_users_id_fk": {
-          "name": "services_created_by_users_id_fk",
-          "tableFrom": "services",
-          "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "services_updated_by_users_id_fk": {
-          "name": "services_updated_by_users_id_fk",
-          "tableFrom": "services",
-          "tableTo": "users",
-          "columnsFrom": [
-            "updated_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "services_deleted_by_users_id_fk": {
-          "name": "services_deleted_by_users_id_fk",
-          "tableFrom": "services",
-          "tableTo": "users",
-          "columnsFrom": [
-            "deleted_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -619,45 +572,6 @@
           "tableTo": "businesses",
           "columnsFrom": [
             "business_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "working_hours_created_by_users_id_fk": {
-          "name": "working_hours_created_by_users_id_fk",
-          "tableFrom": "working_hours",
-          "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "working_hours_updated_by_users_id_fk": {
-          "name": "working_hours_updated_by_users_id_fk",
-          "tableFrom": "working_hours",
-          "tableTo": "users",
-          "columnsFrom": [
-            "updated_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "working_hours_deleted_by_users_id_fk": {
-          "name": "working_hours_deleted_by_users_id_fk",
-          "tableFrom": "working_hours",
-          "tableTo": "users",
-          "columnsFrom": [
-            "deleted_by"
           ],
           "columnsTo": [
             "id"

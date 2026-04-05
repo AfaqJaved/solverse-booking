@@ -11,7 +11,7 @@ export class UserPersistenceMapper {
    * Fails with UserPersistenceMappingError if the row data doesn't satisfy domain invariants.
    */
   toDomain(row: UserRow): Effect.Effect<User, PersistenceMappingError, never> {
-    return User.fromRaw({
+    return User.fromSchema({
       id: row.id,
       username: row.username,
       password: row.password,
@@ -25,14 +25,19 @@ export class UserPersistenceMapper {
       emailVerified: row.emailVerified,
       notificationPreferences: row.notificationPreferences,
       createdAt: row.createdAt,
+      createdBy: row.createdBy ?? null,
       updatedAt: row.updatedAt,
+      updatedBy: row.updatedBy ?? null,
+      deletedAt: row.deletedAt ?? null,
+      deletedBy: row.deletedBy ?? null,
+      isDeleted: row.isDeleted ?? false,
       lastLoginAt: row.lastLoginAt ?? null,
       suspendedReason: row.suspendedReason ?? null,
     }).pipe(
       Effect.mapError(
         (cause) =>
           new PersistenceMappingError({
-            message: 'Failed to map User (Persistence -> Domain aggregate )',
+            message: 'Failed to map User (Persistence -> )',
             cause,
           }),
       ),

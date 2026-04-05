@@ -14,10 +14,15 @@ CREATE TABLE "users" (
 	"avatar_url" text,
 	"email_verified" boolean DEFAULT false NOT NULL,
 	"notification_preferences" jsonb DEFAULT '{"email":true,"sms":false,"push":true}'::jsonb NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"last_login_at" timestamp,
 	"suspended_reason" text,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"created_by" uuid,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"updated_by" uuid,
+	"deleted_at" timestamp,
+	"deleted_by" uuid,
+	"is_deleted" boolean DEFAULT false NOT NULL,
 	CONSTRAINT "users_username_unique" UNIQUE("username"),
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );

@@ -8,6 +8,7 @@ import {
   Param,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { Effect } from 'effect'
@@ -28,6 +29,8 @@ import { DeactivateUserDoc } from './docs/deactivate-user.doc'
 import { ReactivateUserDoc } from './docs/reactivate-user.doc'
 import { SuspendUserDoc } from './docs/suspend-user.doc'
 import { UserMapper } from './mapper/user.mapper'
+import { RoleGuard } from '../security/role.guard'
+import { Roles } from '../security/decorator/roles.decorator'
 
 @ApiTags('Users')
 @Controller('users')
@@ -82,6 +85,8 @@ export class UserController {
 
   @Get(':userId')
   @GetUserDoc()
+  @UseGuards(RoleGuard)
+  @Roles('superAdmin')
   public async getUser(
     @Param('userId') userId: string,
   ): Promise<ApiResponse<UserApi.GetUser.Response>> {

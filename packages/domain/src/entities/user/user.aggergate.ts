@@ -136,6 +136,20 @@ export class User {
     )
   }
 
+  /**
+   * Reconstitutes a User from known typed data (e.g. a mapped persistence row).
+   *
+   * Decodes and validates a typed encoded value against `UserSchema`. Prefer this
+   * over `fromRaw` when the input type is already known.
+   *
+   * @returns `Effect<User, ParseError>` — fails with a structured parse error if validation fails
+   */
+  static fromSchema(
+    raw: Schema.Schema.Encoded<typeof UserSchema>,
+  ): Effect.Effect<User, ParseError, never> {
+    return Schema.decode(UserSchema)(raw).pipe(Effect.map((data) => new User(data)))
+  }
+
   // ── Behavior ───────────────────────────────────────────────────────────────
 
   /**

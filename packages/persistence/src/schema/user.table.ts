@@ -8,6 +8,7 @@ import {
   uuid,
   varchar,
 } from 'drizzle-orm/pg-core'
+import { auditColumns } from './audit.columns'
 
 export const userRoleEnum = pgEnum('user_role', [
   'superAdmin',
@@ -68,15 +69,12 @@ export const usersTable = pgTable('users', {
     .notNull()
     .default({ email: true, sms: false, push: true }),
 
-  /** Timestamp when the account was first created */
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-
-  /** Timestamp of the most recent update to any field */
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-
   /** Timestamp of the user's most recent successful login, null if never */
   lastLoginAt: timestamp('last_login_at'),
 
   /** Human-readable reason provided when the account was suspended */
   suspendedReason: text('suspended_reason'),
+
+  // ── Audit fields ────────────────────────────────────────────────────────
+  ...auditColumns,
 })

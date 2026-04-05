@@ -2,12 +2,11 @@ import {
   boolean,
   pgEnum,
   pgTable,
-  timestamp,
   uuid,
   varchar,
 } from 'drizzle-orm/pg-core'
-import { usersTable } from './user.table'
 import { businessesTable } from './business.table'
+import { auditColumns } from './audit.columns'
 
 export const dayOfWeekEnum = pgEnum('day_of_week', [
   'monday',
@@ -44,25 +43,5 @@ export const workingHoursTable = pgTable('working_hours', {
   closeTime: varchar('close_time', { length: 5 }),
 
   // ── Audit fields ────────────────────────────────────────────────────────
-
-  /** Timestamp when the record was first created */
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-
-  /** FK → users.id — actor who created the record */
-  createdBy: uuid('created_by').references(() => usersTable.id),
-
-  /** Timestamp of the most recent update to any field */
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-
-  /** FK → users.id — actor who last updated the record */
-  updatedBy: uuid('updated_by').references(() => usersTable.id),
-
-  /** Timestamp when the record was soft-deleted, null if not deleted */
-  deletedAt: timestamp('deleted_at'),
-
-  /** FK → users.id — actor who soft-deleted the record */
-  deletedBy: uuid('deleted_by').references(() => usersTable.id),
-
-  /** Whether the record has been soft-deleted */
-  isDeleted: boolean('is_deleted').notNull().default(false),
+  ...auditColumns,
 })

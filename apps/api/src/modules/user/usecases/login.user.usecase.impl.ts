@@ -14,6 +14,7 @@ import { RepositoryFactory } from '@solverse/persistence'
 import { Effect, Option } from 'effect'
 import { JwtUtils } from '../../../lib/jwt/entry'
 import { HashUtils } from '../../../lib/hash/entry'
+import { LoginJwtPayload } from 'src/lib/jwt/payload/login.jwt.payload'
 
 @Injectable()
 export class LoginUserUsecaseImpl implements LoginUserUsecase {
@@ -82,10 +83,7 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
         )
       }
 
-      const token = yield* JwtUtils.createToken<{
-        userId: UserId
-        role: UserRole
-      }>(
+      const token = yield* JwtUtils.createToken<LoginJwtPayload>(
         { userId: raw.id, role: raw.role },
         { expiresIn: '1h', issuer: 'solverse' },
       ).pipe(Effect.orDie)

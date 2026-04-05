@@ -1,6 +1,6 @@
 {
-  "id": "b2361da8-0ca1-4aab-b2cb-f618cce1446f",
-  "prevId": "f47a6efb-8de4-4946-81e3-0b1486238adf",
+  "id": "7dbf5a0c-7561-4e79-931f-1c8216c46dbd",
+  "prevId": "f5031819-8639-4a84-be31-bb90151d3f95",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -91,20 +91,6 @@
           "notNull": true,
           "default": "'{\"email\":true,\"sms\":false,\"push\":true}'::jsonb"
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
         "last_login_at": {
           "name": "last_login_at",
           "type": "timestamp",
@@ -116,6 +102,51 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_by": {
+          "name": "deleted_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_deleted": {
+          "name": "is_deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         }
       },
       "indexes": {},
@@ -287,45 +318,6 @@
           "tableTo": "users",
           "columnsFrom": [
             "owner_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "businesses_created_by_users_id_fk": {
-          "name": "businesses_created_by_users_id_fk",
-          "tableFrom": "businesses",
-          "tableTo": "users",
-          "columnsFrom": [
-            "created_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "businesses_updated_by_users_id_fk": {
-          "name": "businesses_updated_by_users_id_fk",
-          "tableFrom": "businesses",
-          "tableTo": "users",
-          "columnsFrom": [
-            "updated_by"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "businesses_deleted_by_users_id_fk": {
-          "name": "businesses_deleted_by_users_id_fk",
-          "tableFrom": "businesses",
-          "tableTo": "users",
-          "columnsFrom": [
-            "deleted_by"
           ],
           "columnsTo": [
             "id"
