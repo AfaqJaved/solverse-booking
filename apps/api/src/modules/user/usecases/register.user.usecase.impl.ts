@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import {
   DatabaseFailure,
-  Email,
+  UserEmail,
   EmailAlreadyTakenError,
   FullName,
   InvalidInputError,
-  PhoneNumber,
+  UserPhoneNumber,
   RegisterUserUsecase,
-  Timezone,
+  UserTimezone,
   User,
   UserId,
   UserRole,
@@ -46,12 +46,12 @@ export class RegisterUserUsecaseImpl implements RegisterUserUsecase {
     return Effect.gen(this, function* () {
       const id = yield* decodeOrFail(UserId)(crypto.randomUUID())
       const decodedUsername = yield* decodeOrFail(Username)(username)
-      const decodedEmail = yield* decodeOrFail(Email)(email)
+      const decodedEmail = yield* decodeOrFail(UserEmail)(email)
       const decodedName = yield* decodeOrFail(FullName)(name)
-      const decodedTimezone = yield* decodeOrFail(Timezone)(timezone)
+      const decodedTimezone = yield* decodeOrFail(UserTimezone)(timezone)
       const decodedRole = yield* decodeOrFail(UserRole)(role)
       const decodedPhone =
-        phone != null ? yield* decodeOrFail(PhoneNumber)(phone) : undefined
+        phone != null ? yield* decodeOrFail(UserPhoneNumber)(phone) : undefined
 
       const existingByEmail =
         yield* this.repositoryFactory.userRepository.findByEmail(decodedEmail)

@@ -1,7 +1,9 @@
 import { Effect, Schema } from 'effect'
 import type { ParseError } from 'effect/ParseResult'
 import { UserId } from '../user/entry'
-import { Timezone, Email, PhoneNumber } from '../common/entry'
+import { BusinessEmail } from './value-objects/email'
+import { BusinessPhoneNumber } from './value-objects/phone.number'
+import { BusinessTimezone } from './value-objects/timezone'
 import {
   BusinessId,
   BusinessName,
@@ -61,17 +63,17 @@ export class Business {
   }
 
   /** Primary contact email for the business. */
-  get email(): Email {
+  get email(): BusinessEmail {
     return this.data.email
   }
 
   /** Optional E.164-formatted contact phone number. */
-  get phone(): PhoneNumber | null {
+  get phone(): BusinessPhoneNumber | null {
     return this.data.phone
   }
 
   /** Default IANA timezone — used when no location overrides it. */
-  get timezone(): Timezone {
+  get timezone(): BusinessTimezone {
     return this.data.timezone
   }
 
@@ -112,10 +114,10 @@ export class Business {
     ownerId: UserId
     name: BusinessName
     slug: BusinessSlug
-    email: Email
-    timezone: Timezone
+    email: BusinessEmail
+    timezone: BusinessTimezone
     currency: BusinessCurrency
-    phone?: PhoneNumber
+    phone?: BusinessPhoneNumber
     plan?: BusinessPlan
   }): Business {
     const now = new Date()
@@ -462,9 +464,9 @@ export class Business {
       description: string | null
       website: string | null
       logoUrl: string | null
-      phone: PhoneNumber | null
-      timezone: Timezone
-      email: Email
+      phone: BusinessPhoneNumber | null
+      timezone: BusinessTimezone
+      email: BusinessEmail
       currency: BusinessCurrency
     }>,
     updatedBy: UserId,

@@ -1,5 +1,6 @@
-import { Effect, Schema } from 'effect'
+import { Effect, ParseResult, Schema } from 'effect'
 import { InvalidInputError } from '@solverse/domain'
+import { ArrayFormatterIssue, ParseError } from 'effect/ParseResult'
 
 /**
  * Decodes a value through an Effect Schema, converting any ParseError
@@ -11,9 +12,13 @@ export const decodeOrFail =
   <A, I>(schema: Schema.Schema<A, I>) =>
   (input: I): Effect.Effect<A, InvalidInputError> =>
     Schema.decode(schema)(input).pipe(
-      Effect.catchTag('ParseError', (e) =>
-        Effect.fail(
-          new InvalidInputError({ message: e.message, cause: e.message }),
-        ),
-      ),
+      Effect.catchTag('ParseError', (e: ParseError) => {
+        console.log('ParseError:', e)
+        const message = ParseResult.ArrayFormatter.formatErrorSync(e)
+          .map((issue: ArrayFormatterIssue) => {
+            return issue.message
+          })
+          .join('; ')
+        return Effect.fail(new InvalidInputError({ message, cause: message }))
+      }),
     )

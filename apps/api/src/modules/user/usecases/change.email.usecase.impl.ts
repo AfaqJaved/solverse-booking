@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import {
   ChangeEmailUsecase,
   DatabaseFailure,
-  Email,
+  UserEmail,
   EmailAlreadyTakenError,
   InvalidInputError,
   UserNotFoundError,
@@ -28,7 +28,7 @@ export class ChangeEmailUsecaseImpl implements ChangeEmailUsecase {
   > {
     return Effect.gen(this, function* () {
       const decodedUserId = yield* decodeOrFail(UserId)(userId)
-      const decodedEmail = yield* decodeOrFail(Email)(newEmail)
+      const decodedEmail = yield* decodeOrFail(UserEmail)(newEmail)
 
       const maybeUser =
         yield* this.repositoryFactory.userRepository.findById(decodedUserId)

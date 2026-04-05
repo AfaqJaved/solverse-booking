@@ -10,8 +10,8 @@ import { Schema } from 'effect'
  * Invalid: "" (empty), single character, > 100 characters
  */
 export const ServiceName = Schema.String.pipe(
-  Schema.minLength(2),
-  Schema.maxLength(100),
+  Schema.minLength(2, { message: () => '@Solverse/Service: name must be at least 2 characters' }),
+  Schema.maxLength(100, { message: () => '@Solverse/Service: name must be at most 100 characters' }),
   Schema.brand('ServiceName'),
 )
 

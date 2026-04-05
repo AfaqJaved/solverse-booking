@@ -11,13 +11,13 @@ import { Schema } from 'effect'
  */
 export const NotificationPreferences = Schema.Struct({
   email: Schema.Boolean.annotations({
-    message: () => 'email notification preference must be a boolean',
+    message: () => '@Solverse/User: notificationPreferences.email must be a boolean',
   }),
   sms: Schema.Boolean.annotations({
-    message: () => 'sms notification preference must be a boolean',
+    message: () => '@Solverse/User: notificationPreferences.sms must be a boolean',
   }),
   push: Schema.Boolean.annotations({
-    message: () => 'push notification preference must be a boolean',
+    message: () => '@Solverse/User: notificationPreferences.push must be a boolean',
   }),
 })
 export type NotificationPreferences = typeof NotificationPreferences.Type

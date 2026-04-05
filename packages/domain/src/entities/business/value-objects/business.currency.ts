@@ -9,7 +9,10 @@ import { Schema } from 'effect'
  * Invalid: "usd" (lowercase), "US" (too short), "USDD" (too long)
  */
 export const BusinessCurrency = Schema.String.pipe(
-  Schema.pattern(/^[A-Z]{3}$/),
+  Schema.pattern(/^[A-Z]{3}$/, {
+    message: () =>
+      '@Solverse/Business: currency must be a valid ISO 4217 code — exactly 3 uppercase letters (e.g. "USD", "EUR")',
+  }),
   Schema.brand('BusinessCurrency'),
 )
 

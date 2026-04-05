@@ -1,6 +1,6 @@
 require('dotenv').config({ path: '../../.env' })
 import { NestFactory } from '@nestjs/core'
-import { INestApplication, ValidationPipe } from '@nestjs/common'
+import { INestApplication } from '@nestjs/common'
 import { SolverseApiModule } from './app.module'
 import { runMigrations } from '@solverse/persistence'
 import { Config, Effect } from 'effect'
@@ -78,8 +78,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(SolverseApiModule, { cors: true })
   await installSwagger(app)
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
-  app.useGlobalFilters(new GlobalExceptionFilter())
+app.useGlobalFilters(new GlobalExceptionFilter())
   await app.listen(process.env.PORT ?? 3000)
 }
 

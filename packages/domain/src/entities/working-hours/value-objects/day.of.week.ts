@@ -5,7 +5,7 @@ import { Schema } from 'effect'
  *
  * Uses full lowercase names to avoid ambiguity with numeric representations.
  */
-export const DayOfWeek = Schema.Literal(
+const VALID_DAYS_OF_WEEK: readonly string[] = [
   'monday',
   'tuesday',
   'wednesday',
@@ -13,6 +13,25 @@ export const DayOfWeek = Schema.Literal(
   'friday',
   'saturday',
   'sunday',
+]
+
+export type DayOfWeekType =
+  | 'monday'
+  | 'tuesday'
+  | 'wednesday'
+  | 'thursday'
+  | 'friday'
+  | 'saturday'
+  | 'sunday'
+
+export const DayOfWeek = Schema.String.pipe(
+  Schema.filter(
+    (s): s is DayOfWeekType => VALID_DAYS_OF_WEEK.includes(s),
+    {
+      message: () =>
+        '@Solverse/WorkingHours: dayOfWeek must be one of "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", or "sunday"',
+    },
+  ),
 )
 
 export type DayOfWeek = typeof DayOfWeek.Type

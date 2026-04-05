@@ -8,11 +8,23 @@ import { Schema } from 'effect'
  * - `pro`        — multiple locations, unlimited staff, advanced analytics
  * - `enterprise` — custom limits, SLA, dedicated support
  */
-export const BusinessPlan = Schema.Literal(
+const VALID_BUSINESS_PLANS: readonly string[] = [
   'free',
   'starter',
   'pro',
   'enterprise',
+]
+
+export type BusinessPlanType = 'free' | 'starter' | 'pro' | 'enterprise'
+
+export const BusinessPlan = Schema.String.pipe(
+  Schema.filter(
+    (s): s is BusinessPlanType => VALID_BUSINESS_PLANS.includes(s),
+    {
+      message: () =>
+        '@Solverse/Business: plan must be one of "free", "starter", "pro", or "enterprise"',
+    },
+  ),
 )
 
 export type BusinessPlan = typeof BusinessPlan.Type

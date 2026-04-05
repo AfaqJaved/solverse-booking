@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common'
 import {
   DatabaseFailure,
   InvalidInputError,
-  PhoneNumber,
-  Timezone,
+  UserPhoneNumber,
+  UserTimezone,
   UpdateProfileUsecase,
   UserNotFoundError,
   UserId,
@@ -30,10 +30,10 @@ export class UpdateProfileUsecaseImpl implements UpdateProfileUsecase {
     return Effect.gen(this, function* () {
       const decodedUserId = yield* decodeOrFail(UserId)(userId)
       const decodedTimezone = timezone != null
-        ? yield* decodeOrFail(Timezone)(timezone)
+        ? yield* decodeOrFail(UserTimezone)(timezone)
         : undefined
       const decodedPhone = phone != null
-        ? yield* decodeOrFail(PhoneNumber)(phone)
+        ? yield* decodeOrFail(UserPhoneNumber)(phone)
         : phone
 
       const maybeUser =

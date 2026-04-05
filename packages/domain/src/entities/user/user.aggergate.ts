@@ -17,7 +17,9 @@ import {
 } from './entry'
 import type { UserData } from './user.entity'
 import { UserSchema } from './user.entity'
-import { Email, PhoneNumber, Timezone } from '../common/entry'
+import { UserEmail } from './value-objects/email'
+import { UserPhoneNumber } from './value-objects/phone.number'
+import { UserTimezone } from './value-objects/timezone'
 
 /**
  * User aggregate root for the appointment scheduling domain.
@@ -44,7 +46,7 @@ export class User {
   }
 
   /** Verified, lowercase email address. */
-  get email(): Email {
+  get email(): UserEmail {
     return this.data.email
   }
 
@@ -59,7 +61,7 @@ export class User {
   }
 
   /** IANA timezone used for scheduling appointments in local time. */
-  get timezone(): Timezone {
+  get timezone(): UserTimezone {
     return this.data.timezone
   }
 
@@ -89,10 +91,10 @@ export class User {
     username: Username
     password: HashedPassword
     name: FullName
-    email: Email
+    email: UserEmail
     role: UserData['role']
-    timezone: Timezone
-    phone?: PhoneNumber
+    timezone: UserTimezone
+    phone?: UserPhoneNumber
   }): User {
     const now = new Date()
     return new User({
@@ -279,7 +281,7 @@ export class User {
    *
    * @param newEmail - The new validated email address
    */
-  changeEmail(newEmail: Email): Effect.Effect<User, never> {
+  changeEmail(newEmail: UserEmail): Effect.Effect<User, never> {
     return Effect.succeed(
       new User({
         ...this.data,
@@ -296,7 +298,7 @@ export class User {
    *
    * @param phone - A valid E.164 phone number, or `null` to remove it
    */
-  updatePhone(phone: PhoneNumber | null): User {
+  updatePhone(phone: UserPhoneNumber | null): User {
     return new User({ ...this.data, phone, updatedAt: new Date() })
   }
 
@@ -306,7 +308,7 @@ export class User {
    *
    * @param timezone - A valid IANA timezone identifier
    */
-  updateTimezone(timezone: Timezone): User {
+  updateTimezone(timezone: UserTimezone): User {
     return new User({ ...this.data, timezone, updatedAt: new Date() })
   }
 

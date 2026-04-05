@@ -12,7 +12,7 @@ import { Schema } from 'effect'
 export const Username = Schema.String.pipe(
   Schema.pattern(/^[a-z0-9][a-z0-9_-]{1,28}[a-z0-9]$|^[a-z0-9]{3}$/, {
     message: () =>
-      'Expected a valid username: 3–30 lowercase alphanumeric characters, underscores or hyphens allowed but not at start or end (e.g. "john_doe")',
+      '@Solverse/User: username must be 3–30 lowercase alphanumeric characters; underscores or hyphens allowed but not at start or end (e.g. "john_doe")',
   }),
   Schema.brand('Username'),
 )

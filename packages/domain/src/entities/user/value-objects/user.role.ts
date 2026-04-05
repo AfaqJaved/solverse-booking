@@ -16,11 +16,15 @@ import { Schema } from 'effect'
  *                      Cannot manage other locations or business-level settings.
  */
 export type UserRoleType = 'superAdmin' | 'businessOwner' | 'locationOwner'
-export const UserRole = Schema.Literal(
-  'superAdmin',
-  'businessOwner',
-  'locationOwner',
-).annotations({
-  message: () => 'Expected a valid user role: "superAdmin", "businessOwner", or "locationOwner"',
-})
+
+const VALID_ROLES: readonly string[] = ['superAdmin', 'businessOwner', 'locationOwner']
+
+export const UserRole = Schema.String.pipe(
+  Schema.filter(
+    (s): s is UserRoleType => VALID_ROLES.includes(s),
+    {
+      message: () => '@Solverse/User: role must be one of "superAdmin", "businessOwner", or "locationOwner"',
+    },
+  ),
+)
 export type UserRole = typeof UserRole.Type

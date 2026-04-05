@@ -10,9 +10,12 @@ import { Schema } from 'effect'
  * Valid:   "john.doe@example.com", "user+tag@mail.co.uk", "admin@solverse.io"
  * Invalid: "plainstring", "missing@domain", "@nodomain.com", "spaces @x.com"
  */
-export const Email = Schema.String.pipe(
-  Schema.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+export const UserEmail = Schema.String.pipe(
+  Schema.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, {
+    message: () =>
+      '@Solverse/User: email must be a valid lowercase email address (e.g. "user@example.com")',
+  }),
   Schema.lowercased(),
-  Schema.brand('Email'),
+  Schema.brand('UserEmail'),
 )
-export type Email = typeof Email.Type
+export type UserEmail = typeof UserEmail.Type

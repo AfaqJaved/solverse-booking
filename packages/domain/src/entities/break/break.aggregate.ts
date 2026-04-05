@@ -5,7 +5,7 @@ import { WorkingHoursId } from '../working-hours/entry'
 import { BreakId } from './entry'
 import type { BreakData } from './break.entity'
 import { BreakSchema } from './break.entity'
-import { TimeOfDay } from '../common/entry'
+import { BreakTimeOfDay } from './value-objects/time.of.day'
 
 export class Break {
   private constructor(private readonly data: BreakData) {}
@@ -24,11 +24,11 @@ export class Break {
     return this.data.label
   }
 
-  get startTime(): TimeOfDay {
+  get startTime(): BreakTimeOfDay {
     return this.data.startTime
   }
 
-  get endTime(): TimeOfDay {
+  get endTime(): BreakTimeOfDay {
     return this.data.endTime
   }
 
@@ -42,8 +42,8 @@ export class Break {
     id: BreakId
     workingHoursId: WorkingHoursId
     label: string
-    startTime: TimeOfDay
-    endTime: TimeOfDay
+    startTime: BreakTimeOfDay
+    endTime: BreakTimeOfDay
     createdBy: UserId
   }): Break {
     const now = new Date()
@@ -72,8 +72,8 @@ export class Break {
   // ── Behaviour ──────────────────────────────────────────────────────────────
 
   updateTimes(
-    startTime: TimeOfDay,
-    endTime: TimeOfDay,
+    startTime: BreakTimeOfDay,
+    endTime: BreakTimeOfDay,
     updatedBy: UserId,
   ): Break {
     return new Break({

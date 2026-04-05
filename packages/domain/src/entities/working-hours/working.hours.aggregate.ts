@@ -5,7 +5,7 @@ import { BusinessId } from '../business/entry'
 import { WorkingHoursId, DayOfWeek } from './entry'
 import type { WorkingHoursData } from './working.hours.entity'
 import { WorkingHoursSchema } from './working.hours.entity'
-import { TimeOfDay } from '../common/entry'
+import { WorkingHoursTimeOfDay } from './value-objects/time.of.day'
 
 /**
  * WorkingHours aggregate root.
@@ -43,11 +43,11 @@ export class WorkingHours {
     return this.data.isOpen
   }
 
-  get openTime(): TimeOfDay | null {
+  get openTime(): WorkingHoursTimeOfDay | null {
     return this.data.openTime
   }
 
-  get closeTime(): TimeOfDay | null {
+  get closeTime(): WorkingHoursTimeOfDay | null {
     return this.data.closeTime
   }
 
@@ -69,8 +69,8 @@ export class WorkingHours {
     businessId: BusinessId
     dayOfWeek: DayOfWeek
     isOpen: boolean
-    openTime?: TimeOfDay | null
-    closeTime?: TimeOfDay | null
+    openTime?: WorkingHoursTimeOfDay | null
+    closeTime?: WorkingHoursTimeOfDay | null
     createdBy: UserId
   }): WorkingHours {
     const now = new Date()
@@ -113,8 +113,8 @@ export class WorkingHours {
    * @param updatedBy - Actor making the change
    */
   setOpen(
-    openTime: TimeOfDay,
-    closeTime: TimeOfDay,
+    openTime: WorkingHoursTimeOfDay,
+    closeTime: WorkingHoursTimeOfDay,
     updatedBy: UserId,
   ): WorkingHours {
     return new WorkingHours({

@@ -12,7 +12,10 @@ import { Schema } from 'effect'
  * Invalid: "-acme" (leading hyphen), "Acme" (uppercase), "a b" (spaces)
  */
 export const BusinessSlug = Schema.String.pipe(
-  Schema.pattern(/^[a-z0-9][a-z0-9-]{1,48}[a-z0-9]$|^[a-z0-9]{3}$/),
+  Schema.pattern(/^[a-z0-9][a-z0-9-]{1,48}[a-z0-9]$|^[a-z0-9]{3}$/, {
+    message: () =>
+      '@Solverse/Business: slug must be 3–50 lowercase alphanumeric characters; hyphens allowed but not at start or end (e.g. "acme-salon")',
+  }),
   Schema.brand('BusinessSlug'),
 )
 
