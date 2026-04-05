@@ -1,5 +1,5 @@
 services:
-  postgres:
+  postgres-solverse:
     image: postgres:18
     # ports:
     #   - "5432:5432"
@@ -31,7 +31,7 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       - RUN_MIGRATIONS=${RUN_MIGRATIONS}
     depends_on:
-      postgres:
+      postgres-solverse:
         condition: service_healthy
     restart: unless-stopped
     networks:
