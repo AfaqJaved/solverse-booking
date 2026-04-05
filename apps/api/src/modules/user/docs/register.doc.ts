@@ -1,6 +1,7 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common'
 import {
   ApiBody,
+  ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiOperation,
@@ -44,6 +45,18 @@ export const RegisterDoc = () =>
             type: 'string',
             example: 'Email john@example.com is already taken',
           },
+          path: { type: 'string', example: '/users/register' },
+          timestamp: { type: 'string', format: 'date-time' },
+        },
+      },
+    }),
+    ApiBadRequestResponse({
+      description: 'Invalid input fields',
+      schema: {
+        properties: {
+          statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
+          error: { type: 'string', example: 'InvalidInputError' },
+          message: { type: 'string', example: 'Invalid input: email must be a valid email address' },
           path: { type: 'string', example: '/users/register' },
           timestamp: { type: 'string', format: 'date-time' },
         },

@@ -54,11 +54,11 @@ export const ReactivateUserDoc = () =>
       },
     }),
     ApiBadRequestResponse({
-      description: 'Invalid state transition',
+      description: 'Invalid input or invalid state transition',
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidUserTransitionError' },
+          error: { type: 'string', example: 'InvalidInputError | InvalidUserTransitionError' },
           message: {
             type: 'string',
             example: 'Cannot reactivate a user in current state',

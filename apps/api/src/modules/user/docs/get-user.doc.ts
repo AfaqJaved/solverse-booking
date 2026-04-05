@@ -1,5 +1,6 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common'
 import {
+  ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -75,6 +76,18 @@ export const GetUserDoc = () =>
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'UserNotFoundError' },
           message: { type: 'string', example: 'User not found: <userId>' },
+          path: { type: 'string', example: '/users/:userId' },
+          timestamp: { type: 'string', format: 'date-time' },
+        },
+      },
+    }),
+    ApiBadRequestResponse({
+      description: 'Invalid userId format',
+      schema: {
+        properties: {
+          statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
+          error: { type: 'string', example: 'InvalidInputError' },
+          message: { type: 'string', example: 'Invalid input: userId must be a valid UUID' },
           path: { type: 'string', example: '/users/:userId' },
           timestamp: { type: 'string', format: 'date-time' },
         },

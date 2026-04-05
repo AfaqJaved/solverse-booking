@@ -11,7 +11,7 @@ import { Schema } from 'effect'
  * Invalid: "mypassword123" (plaintext should never be stored)
  */
 export const HashedPassword = Schema.String.pipe(
-  Schema.minLength(1),
+  Schema.minLength(1, { message: () => 'HashedPassword must not be empty' }),
   Schema.brand('HashedPassword'),
 )
 

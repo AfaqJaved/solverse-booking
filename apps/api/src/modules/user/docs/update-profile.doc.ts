@@ -1,6 +1,7 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common'
 import {
   ApiBody,
+  ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -33,6 +34,18 @@ export const UpdateProfileDoc = () =>
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'UserNotFoundError' },
           message: { type: 'string', example: 'User not found: <userId>' },
+          path: { type: 'string', example: '/users/:userId/profile' },
+          timestamp: { type: 'string', format: 'date-time' },
+        },
+      },
+    }),
+    ApiBadRequestResponse({
+      description: 'Invalid input fields',
+      schema: {
+        properties: {
+          statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
+          error: { type: 'string', example: 'InvalidInputError' },
+          message: { type: 'string', example: 'Invalid input: timezone must be a valid IANA timezone' },
           path: { type: 'string', example: '/users/:userId/profile' },
           timestamp: { type: 'string', format: 'date-time' },
         },

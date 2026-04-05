@@ -1,6 +1,7 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common'
 import {
   ApiBody,
+  ApiBadRequestResponse,
   ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -46,6 +47,18 @@ export const ChangeEmailDoc = () =>
             type: 'string',
             example: 'Email newemail@example.com is already taken',
           },
+          path: { type: 'string', example: '/users/:userId/email' },
+          timestamp: { type: 'string', format: 'date-time' },
+        },
+      },
+    }),
+    ApiBadRequestResponse({
+      description: 'Invalid userId or email format',
+      schema: {
+        properties: {
+          statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
+          error: { type: 'string', example: 'InvalidInputError' },
+          message: { type: 'string', example: 'Invalid input: newEmail must be a valid email address' },
           path: { type: 'string', example: '/users/:userId/email' },
           timestamp: { type: 'string', format: 'date-time' },
         },

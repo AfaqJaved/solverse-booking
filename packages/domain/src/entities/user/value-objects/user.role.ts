@@ -20,5 +20,7 @@ export const UserRole = Schema.Literal(
   'superAdmin',
   'businessOwner',
   'locationOwner',
-)
+).annotations({
+  message: () => 'Expected a valid user role: "superAdmin", "businessOwner", or "locationOwner"',
+})
 export type UserRole = typeof UserRole.Type

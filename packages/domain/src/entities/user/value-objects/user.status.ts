@@ -13,5 +13,8 @@ export const UserStatus = Schema.Literal(
   'active',
   'inactive',
   'suspended',
-)
+).annotations({
+  message: () =>
+    'Expected a valid user status: "pending_verification", "active", "inactive", or "suspended"',
+})
 export type UserStatus = typeof UserStatus.Type

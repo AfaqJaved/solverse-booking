@@ -11,8 +11,14 @@ import { Schema } from 'effect'
  *          { firstName: "A".repeat(51), lastName: "X" } (exceeds max length)
  */
 export const FullName = Schema.Struct({
-  firstName: Schema.String.pipe(Schema.minLength(1), Schema.maxLength(50)),
-  lastName: Schema.String.pipe(Schema.minLength(1), Schema.maxLength(50)),
+  firstName: Schema.String.pipe(
+    Schema.minLength(1, { message: () => 'firstName must not be empty' }),
+    Schema.maxLength(50, { message: () => 'firstName must be at most 50 characters' }),
+  ),
+  lastName: Schema.String.pipe(
+    Schema.minLength(1, { message: () => 'lastName must not be empty' }),
+    Schema.maxLength(50, { message: () => 'lastName must be at most 50 characters' }),
+  ),
 }).pipe(Schema.brand('FullName'))
 
 export type FullName = typeof FullName.Type
