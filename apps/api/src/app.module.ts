@@ -4,6 +4,7 @@ import { BusinessModule } from './modules/business/business.module'
 import { CommonModule } from './modules/common/common.module'
 import { SecurityModule } from './modules/security/security.module'
 import { ServiceModule } from './modules/service/service.module'
+import { BreakModule } from './modules/break/break.module'
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ServiceModule } from './modules/service/service.module'
     UserModule,
     BusinessModule,
     ServiceModule,
+    BreakModule,
   ],
   controllers: [],
   providers: [],
