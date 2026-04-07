@@ -6,22 +6,34 @@
 	import ScissorsIcon from '@lucide/svelte/icons/scissors'
 	import CalendarIcon from '@lucide/svelte/icons/calendar'
 	import CoffeeIcon from '@lucide/svelte/icons/coffee'
-	import type { BusinessFormData, ServiceFormData, DaySchedule, BreakFormData } from '../types.js'
+	import CalendarOffIcon from '@lucide/svelte/icons/calendar-off'
+	import type { BusinessFormData, ServiceFormData, DaySchedule, BreakFormData, TimeOffFormData } from '../types.js'
 	import { DURATION_LABELS } from '../types.js'
 
 	let {
 		business,
 		services,
 		schedule,
-		breaks
+		breaks,
+		timeoffs
 	}: {
 		business: BusinessFormData
 		services: ServiceFormData[]
 		schedule: DaySchedule[]
 		breaks: BreakFormData[]
+		timeoffs: TimeOffFormData[]
 	} = $props()
 
-	let openDays = $derived(schedule.filter((d) => d.isOpen))
+		let openDays = $derived(schedule.filter((d) => d.isOpen))
+
+	function formatDate(dateStr: string): string {
+		const date = new Date(dateStr)
+		return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+	}
+
+	function formatCadence(cadence: string): string {
+		return cadence.charAt(0).toUpperCase() + cadence.slice(1)
+	}
 </script>
 
 <div class="space-y-4">
@@ -130,6 +142,42 @@
 									{dayBreaks.length === 1 ? 'break' : 'breaks'}
 								</div>
 							{/if}
+						</div>
+					{/each}
+				</div>
+			{/if}
+		</Card.Content>
+	</Card.Root>
+
+	<!-- Time Off -->
+	<Card.Root>
+		<Card.Header class="pb-2">
+			<div class="flex items-center gap-2">
+				<CalendarOffIcon class="size-4 text-muted-foreground" />
+				<Card.Title class="text-base">Time Off</Card.Title>
+				<Badge variant="secondary" class="ml-auto text-xs">{timeoffs.length}</Badge>
+			</div>
+		</Card.Header>
+		<Card.Content class="pt-0">
+			{#if timeoffs.length === 0}
+				<p class="text-sm text-muted-foreground">No time off scheduled.</p>
+			{:else}
+				<div class="space-y-1.5">
+					{#each timeoffs as t (t.id)}
+						<div class="flex flex-wrap items-center gap-2 text-sm">
+							<span class="flex-1 font-medium">{t.label}</span>
+							<Badge variant="secondary" class="text-xs">
+								{formatCadence(t.cadence)}
+							</Badge>
+							{#if t.allDay}
+								<Badge variant="outline" class="text-xs">All Day</Badge>
+							{/if}
+							<div class="w-full text-xs text-muted-foreground">
+								{formatDate(t.startDate)} – {formatDate(t.endDate)}
+								{#if !t.allDay && t.startTime && t.endTime}
+									<span> · {t.startTime} – {t.endTime}</span>
+								{/if}
+							</div>
 						</div>
 					{/each}
 				</div>

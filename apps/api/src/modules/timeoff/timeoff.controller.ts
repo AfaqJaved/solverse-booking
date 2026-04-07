@@ -13,7 +13,7 @@ import {
 import { ApiTags } from '@nestjs/swagger'
 import { Effect } from 'effect'
 import { TimeOffUsecaseFactory } from './usecases/timeoff.usecases.factory'
-import { ApiResponse, TimeOffApi } from '@solverse/shared'
+import { ApiResponse, TimeOffApi, APICONSTANTS } from '@solverse/shared'
 import { CreateTimeOffDto } from './dto/create-timeoff.dto'
 import { UpdateTimeOffDto } from './dto/update-timeoff.dto'
 import { TimeOffMapper } from './mapper/timeoff.mapper'
@@ -27,14 +27,14 @@ import {
 } from './docs/entry'
 
 @ApiTags('TimeOff')
-@Controller('businesses/:businessId/timeoff')
+@Controller(`${APICONSTANTS.BASE_PATHS.BUSINESSES}/:businessId/${APICONSTANTS.BASE_PATHS.TIMEOFF}`)
 export class TimeOffController {
   constructor(
     private readonly timeOffUsecaseFactory: TimeOffUsecaseFactory,
     private readonly timeOffMapper: TimeOffMapper,
   ) {}
 
-  @Post()
+  @Post(APICONSTANTS.ROUTES.TIMEOFF.CREATE)
   @HttpCode(HttpStatus.CREATED)
   @CreateTimeOffDoc()
   public async create(
@@ -58,7 +58,7 @@ export class TimeOffController {
     return ApiResponse.created(result)
   }
 
-  @Get()
+  @Get(APICONSTANTS.ROUTES.TIMEOFF.GET_ALL)
   @HttpCode(HttpStatus.OK)
   @GetTimeOffsDoc()
   public async findAll(
@@ -81,7 +81,7 @@ export class TimeOffController {
     )
   }
 
-  @Get(':id')
+  @Get(APICONSTANTS.ROUTES.TIMEOFF.GET_BY_ID)
   @HttpCode(HttpStatus.OK)
   @GetTimeOffDoc()
   public async findOne(
@@ -103,7 +103,7 @@ export class TimeOffController {
     return ApiResponse.ok(this.timeOffMapper.toApi(result.value))
   }
 
-  @Put(':id')
+  @Put(APICONSTANTS.ROUTES.TIMEOFF.UPDATE)
   @HttpCode(HttpStatus.OK)
   @UpdateTimeOffDoc()
   public async update(
@@ -127,7 +127,7 @@ export class TimeOffController {
     return ApiResponse.ok(undefined)
   }
 
-  @Delete(':id')
+  @Delete(APICONSTANTS.ROUTES.TIMEOFF.DELETE)
   @HttpCode(HttpStatus.NO_CONTENT)
   @DeleteTimeOffDoc()
   public async delete(
@@ -145,7 +145,7 @@ export class TimeOffController {
     return ApiResponse.ok(undefined)
   }
 
-  @Post(':id/cancel')
+  @Post(APICONSTANTS.ROUTES.TIMEOFF.CANCEL)
   @HttpCode(HttpStatus.OK)
   @CancelTimeOffDoc()
   public async cancel(

@@ -18,7 +18,7 @@ import { RegisterDto } from './dto/register.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { ChangeEmailDto } from './dto/change-email.dto'
 import { SuspendUserDto } from './dto/suspend-user.dto'
-import { ApiResponse, UserApi } from '@solverse/shared'
+import { ApiResponse, UserApi, APICONSTANTS } from '@solverse/shared'
 import { LoginDoc } from './docs/login.doc'
 import { RegisterDoc } from './docs/register.doc'
 import { VerifyEmailDoc } from './docs/verify-email.doc'
@@ -33,11 +33,11 @@ import { RoleGuard } from '../security/role.guard'
 import { Roles } from '../security/decorator/roles.decorator'
 
 @ApiTags('Users')
-@Controller('users')
+@Controller(APICONSTANTS.BASE_PATHS.USERS)
 export class UserController {
   constructor(private readonly userUsecaseFactory: UserUsecaseFactory) {}
 
-  @Post('login')
+  @Post(APICONSTANTS.ROUTES.AUTH.LOGIN)
   @HttpCode(HttpStatus.OK)
   @LoginDoc()
   public async login(
@@ -52,7 +52,7 @@ export class UserController {
     return ApiResponse.ok(result)
   }
 
-  @Post('register')
+  @Post(APICONSTANTS.ROUTES.USERS.REGISTER)
   @RegisterDoc()
   public async register(
     @Body() body: RegisterDto,
@@ -71,7 +71,7 @@ export class UserController {
     return ApiResponse.created(result)
   }
 
-  @Post(':userId/verify-email')
+  @Post(APICONSTANTS.ROUTES.AUTH.VERIFY_EMAIL)
   @HttpCode(HttpStatus.OK)
   @VerifyEmailDoc()
   public async verifyEmail(
@@ -83,7 +83,7 @@ export class UserController {
     return ApiResponse.ok(null)
   }
 
-  @Get(':userId')
+  @Get(APICONSTANTS.ROUTES.USERS.GET_BY_ID)
   @GetUserDoc()
   @UseGuards(RoleGuard)
   @Roles('superAdmin')
@@ -96,7 +96,7 @@ export class UserController {
     return ApiResponse.ok(UserMapper.userAggregateToResponse(user))
   }
 
-  @Patch(':userId/profile')
+  @Patch(APICONSTANTS.ROUTES.USERS.UPDATE_PROFILE)
   @HttpCode(HttpStatus.OK)
   @UpdateProfileDoc()
   public async updateProfile(
@@ -114,7 +114,7 @@ export class UserController {
     return ApiResponse.ok(null)
   }
 
-  @Patch(':userId/email')
+  @Patch(APICONSTANTS.ROUTES.USERS.CHANGE_EMAIL)
   @HttpCode(HttpStatus.OK)
   @ChangeEmailDoc()
   public async changeEmail(
@@ -130,7 +130,7 @@ export class UserController {
     return ApiResponse.ok(null)
   }
 
-  @Delete(':userId')
+  @Delete(APICONSTANTS.ROUTES.USERS.DEACTIVATE)
   @HttpCode(HttpStatus.OK)
   @DeactivateUserDoc()
   public async deactivateUser(
@@ -142,7 +142,7 @@ export class UserController {
     return ApiResponse.ok(null)
   }
 
-  @Patch(':userId/reactivate')
+  @Patch(APICONSTANTS.ROUTES.USERS.REACTIVATE)
   @HttpCode(HttpStatus.OK)
   @ReactivateUserDoc()
   public async reactivateUser(
@@ -154,7 +154,7 @@ export class UserController {
     return ApiResponse.ok(null)
   }
 
-  @Patch(':userId/suspend')
+  @Patch(APICONSTANTS.ROUTES.USERS.SUSPEND)
   @HttpCode(HttpStatus.OK)
   @SuspendUserDoc()
   public async suspendUser(

@@ -42,6 +42,17 @@ export interface BreakFormData {
 	endTime: string
 }
 
+export interface TimeOffFormData {
+	id: string
+	label: string
+	allDay: boolean
+	cadence: 'once' | 'daily' | 'weekly' | 'monthly' | 'yearly'
+	startDate: string
+	endDate: string
+	startTime: string | null
+	endTime: string | null
+}
+
 export interface StepConfig {
 	id: string
 	title: string

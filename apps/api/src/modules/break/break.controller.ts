@@ -17,7 +17,7 @@ import { BreakUsecasesFactory } from './usecases/break.usecases.factory'
 import { CreateBreakDto } from './dto/create-break.dto'
 import { UpdateBreakTimesDto } from './dto/update-break-times.dto'
 import { DeleteBreakDto } from './dto/delete-break.dto'
-import { ApiResponse, BreakApi } from '@solverse/shared'
+import { ApiResponse, BreakApi, APICONSTANTS } from '@solverse/shared'
 import { CreateBreakDoc } from './docs/create-break.doc'
 import { GetBreakDoc } from './docs/get-break.doc'
 import { GetBreaksByWorkingHoursDoc } from './docs/get-breaks-by-working-hours.doc'
@@ -28,11 +28,11 @@ import { RoleGuard } from '../security/role.guard'
 import { Roles } from '../security/decorator/roles.decorator'
 
 @ApiTags('Breaks')
-@Controller('breaks')
+@Controller(APICONSTANTS.BASE_PATHS.BREAKS)
 export class BreakController {
   constructor(private readonly breakUsecaseFactory: BreakUsecasesFactory) {}
 
-  @Post()
+  @Post(APICONSTANTS.ROUTES.BREAKS.CREATE)
   @CreateBreakDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner')
@@ -54,7 +54,7 @@ export class BreakController {
     )
   }
 
-  @Get(':id')
+  @Get(APICONSTANTS.ROUTES.BREAKS.GET_BY_ID)
   @GetBreakDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner', 'superAdmin')
@@ -67,7 +67,7 @@ export class BreakController {
     return ApiResponse.ok(BreakMapper.breakAggregateToGetResponse(breakEntity))
   }
 
-  @Get()
+  @Get(APICONSTANTS.ROUTES.BREAKS.GET_BY_WORKING_HOURS)
   @GetBreaksByWorkingHoursDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner', 'superAdmin')
@@ -84,7 +84,7 @@ export class BreakController {
     )
   }
 
-  @Patch(':id/times')
+  @Patch(APICONSTANTS.ROUTES.BREAKS.UPDATE_TIMES)
   @HttpCode(HttpStatus.OK)
   @UpdateBreakTimesDoc()
   @UseGuards(RoleGuard)
@@ -104,7 +104,7 @@ export class BreakController {
     return ApiResponse.ok(null)
   }
 
-  @Delete(':id')
+  @Delete(APICONSTANTS.ROUTES.BREAKS.DELETE)
   @HttpCode(HttpStatus.OK)
   @DeleteBreakDoc()
   @UseGuards(RoleGuard)

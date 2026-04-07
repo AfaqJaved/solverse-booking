@@ -16,7 +16,7 @@ import { WorkingHoursUsecasesFactory } from './usecases/working.hours.usecases.f
 import { CreateWorkingHoursDto } from './dto/create-working-hours.dto'
 import { UpdateWorkingHoursDto } from './dto/update-working-hours.dto'
 import { DeleteWorkingHoursDto } from './dto/delete-working-hours.dto'
-import { ApiResponse, WorkingHoursApi } from '@solverse/shared'
+import { ApiResponse, WorkingHoursApi, APICONSTANTS } from '@solverse/shared'
 import { CreateWorkingHoursDoc } from './docs/create-working-hours.doc'
 import { GetWorkingHoursDoc } from './docs/get-working-hours.doc'
 import { ListWorkingHoursByBusinessDoc } from './docs/list-working-hours-by-business.doc'
@@ -27,13 +27,13 @@ import { RoleGuard } from '../security/role.guard'
 import { Roles } from '../security/decorator/roles.decorator'
 
 @ApiTags('Working Hours')
-@Controller('working-hours')
+@Controller(APICONSTANTS.BASE_PATHS.WORKING_HOURS)
 export class WorkingHoursController {
   constructor(
     private readonly workingHoursUsecaseFactory: WorkingHoursUsecasesFactory,
   ) {}
 
-  @Post()
+  @Post(APICONSTANTS.ROUTES.WORKING_HOURS.CREATE)
   @CreateWorkingHoursDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner')
@@ -56,7 +56,7 @@ export class WorkingHoursController {
     )
   }
 
-  @Get(':workingHoursId')
+  @Get(APICONSTANTS.ROUTES.WORKING_HOURS.GET_BY_ID)
   @GetWorkingHoursDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner', 'superAdmin')
@@ -73,7 +73,7 @@ export class WorkingHoursController {
     )
   }
 
-  @Get('business/:businessId')
+  @Get(APICONSTANTS.ROUTES.WORKING_HOURS.GET_BY_BUSINESS)
   @ListWorkingHoursByBusinessDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner', 'superAdmin')
@@ -90,7 +90,7 @@ export class WorkingHoursController {
     )
   }
 
-  @Patch(':workingHoursId')
+  @Patch(APICONSTANTS.ROUTES.WORKING_HOURS.UPDATE)
   @HttpCode(HttpStatus.OK)
   @UpdateWorkingHoursDoc()
   @UseGuards(RoleGuard)
@@ -113,7 +113,7 @@ export class WorkingHoursController {
     )
   }
 
-  @Delete(':workingHoursId')
+  @Delete(APICONSTANTS.ROUTES.WORKING_HOURS.DELETE)
   @HttpCode(HttpStatus.OK)
   @DeleteWorkingHoursDoc()
   @UseGuards(RoleGuard)

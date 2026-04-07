@@ -18,7 +18,7 @@ import { UpdateBusinessSlugDto } from './dto/update-slug.dto'
 import { ChangePlanDto } from './dto/change-plan.dto'
 import { SuspendBusinessDto } from './dto/suspend-business.dto'
 import { ActorDto } from './dto/actor.dto'
-import { ApiResponse, BusinessApi } from '@solverse/shared'
+import { ApiResponse, BusinessApi, APICONSTANTS } from '@solverse/shared'
 import { RegisterBusinessDoc } from './docs/register-business.doc'
 import { GetBusinessDoc } from './docs/get-business.doc'
 import { GetBusinessesByOwnerDoc } from './docs/get-businesses-by-owner.doc'
@@ -33,13 +33,13 @@ import { DeleteBusinessDoc } from './docs/delete-business.doc'
 import { BusinessMapper } from './mapper/business.mapper'
 
 @ApiTags('Businesses')
-@Controller('businesses')
+@Controller(APICONSTANTS.BASE_PATHS.BUSINESSES)
 export class BusinessController {
   constructor(
     private readonly businessUsecasesFactory: BusinessUsecasesFactory,
   ) {}
 
-  @Post()
+  @Post(APICONSTANTS.ROUTES.BUSINESSES.CREATE)
   @RegisterBusinessDoc()
   public async register(
     @Body() body: RegisterBusinessDto,
@@ -59,7 +59,7 @@ export class BusinessController {
     return ApiResponse.created(result)
   }
 
-  @Get('owner/:ownerId')
+  @Get(APICONSTANTS.ROUTES.BUSINESSES.GET_BY_OWNER)
   @GetBusinessesByOwnerDoc()
   public async getByOwner(
     @Param('ownerId') ownerId: string,
@@ -72,7 +72,7 @@ export class BusinessController {
     return ApiResponse.ok(businesses.map(BusinessMapper.toResponse))
   }
 
-  @Get(':businessId')
+  @Get(APICONSTANTS.ROUTES.BUSINESSES.GET_BY_ID)
   @GetBusinessDoc()
   public async getById(
     @Param('businessId') businessId: string,
@@ -83,7 +83,7 @@ export class BusinessController {
     return ApiResponse.ok(BusinessMapper.toResponse(business))
   }
 
-  @Patch(':businessId/profile')
+  @Patch(APICONSTANTS.ROUTES.BUSINESSES.UPDATE_PROFILE)
   @HttpCode(HttpStatus.OK)
   @UpdateBusinessProfileDoc()
   public async updateProfile(

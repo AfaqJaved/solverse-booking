@@ -18,7 +18,7 @@ import { UpdateServiceDto } from './dto/update-service.dto'
 import { ActivateServiceDto } from './dto/activate-service.dto'
 import { DeactivateServiceDto } from './dto/deactivate-service.dto'
 import { DeleteServiceDto } from './dto/delete-service.dto'
-import { ApiResponse, ServiceApi } from '@solverse/shared'
+import { ApiResponse, ServiceApi, APICONSTANTS } from '@solverse/shared'
 import { CreateServiceDoc } from './docs/create-service.doc'
 import { GetServiceDoc } from './docs/get-service.doc'
 import { GetServicesByBusinessDoc } from './docs/get-services-by-business.doc'
@@ -31,11 +31,11 @@ import { RoleGuard } from '../security/role.guard'
 import { Roles } from '../security/decorator/roles.decorator'
 
 @ApiTags('Services')
-@Controller('services')
+@Controller(APICONSTANTS.BASE_PATHS.SERVICES)
 export class ServiceController {
   constructor(private readonly serviceUsecaseFactory: ServiceUsecasesFactory) {}
 
-  @Post()
+  @Post(APICONSTANTS.ROUTES.SERVICES.CREATE)
   @CreateServiceDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner')
@@ -62,7 +62,7 @@ export class ServiceController {
     )
   }
 
-  @Get(':serviceId')
+  @Get(APICONSTANTS.ROUTES.SERVICES.GET_BY_ID)
   @GetServiceDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner', 'superAdmin')
@@ -75,7 +75,7 @@ export class ServiceController {
     return ApiResponse.ok(ServiceMapper.serviceAggregateToGetResponse(service))
   }
 
-  @Get('business/:businessId')
+  @Get(APICONSTANTS.ROUTES.SERVICES.GET_BY_BUSINESS)
   @GetServicesByBusinessDoc()
   @UseGuards(RoleGuard)
   @Roles('businessOwner', 'locationOwner', 'superAdmin')
@@ -92,7 +92,7 @@ export class ServiceController {
     )
   }
 
-  @Patch(':serviceId')
+  @Patch(APICONSTANTS.ROUTES.SERVICES.UPDATE)
   @HttpCode(HttpStatus.OK)
   @UpdateServiceDoc()
   @UseGuards(RoleGuard)
@@ -117,7 +117,7 @@ export class ServiceController {
     return ApiResponse.ok(null)
   }
 
-  @Patch(':serviceId/activate')
+  @Patch(APICONSTANTS.ROUTES.SERVICES.ACTIVATE)
   @HttpCode(HttpStatus.OK)
   @ActivateServiceDoc()
   @UseGuards(RoleGuard)
@@ -135,7 +135,7 @@ export class ServiceController {
     return ApiResponse.ok(null)
   }
 
-  @Patch(':serviceId/deactivate')
+  @Patch(APICONSTANTS.ROUTES.SERVICES.DEACTIVATE)
   @HttpCode(HttpStatus.OK)
   @DeactivateServiceDoc()
   @UseGuards(RoleGuard)
@@ -153,7 +153,7 @@ export class ServiceController {
     return ApiResponse.ok(null)
   }
 
-  @Delete(':serviceId')
+  @Delete(APICONSTANTS.ROUTES.SERVICES.DELETE)
   @HttpCode(HttpStatus.OK)
   @DeleteServiceDoc()
   @UseGuards(RoleGuard)

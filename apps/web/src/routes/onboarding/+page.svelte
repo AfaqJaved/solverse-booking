@@ -8,6 +8,7 @@
 	import Building2Icon from '@lucide/svelte/icons/building-2'
 	import Clock3Icon from '@lucide/svelte/icons/clock-3'
 	import CoffeeIcon from '@lucide/svelte/icons/coffee'
+	import CalendarOffIcon from '@lucide/svelte/icons/calendar-off'
 	import SparklesIcon from '@lucide/svelte/icons/sparkles'
 
 	import * as Dialog from '$lib/components/ui/dialog/index.js'
@@ -20,6 +21,7 @@
 	import ServicesStep from '$lib/components/onboarding/steps/services-step.svelte'
 	import WorkingHoursStep from '$lib/components/onboarding/steps/working-hours-step.svelte'
 	import BreaksStep from '$lib/components/onboarding/steps/breaks-step.svelte'
+	import TimeOffsStep from '$lib/components/onboarding/steps/timeoffs-step.svelte'
 	import CompleteStep from '$lib/components/onboarding/steps/complete-step.svelte'
 
 	import OwnerStep from '$lib/components/onboarding/steps/owner-step.svelte'
@@ -30,7 +32,8 @@
 		BusinessFormData,
 		ServiceFormData,
 		DaySchedule,
-		BreakFormData
+		BreakFormData,
+		TimeOffFormData
 	} from '$lib/components/onboarding/types.js'
 
 	// ── Step definitions ─────────────────────────────────────────────────────
@@ -63,6 +66,13 @@
 			description: 'Block out breaks',
 			skippable: true,
 			icon: CoffeeIcon
+		},
+		{
+			id: 'timeoffs',
+			title: 'Time Off',
+			description: 'Schedule closures',
+			skippable: true,
+			icon: CalendarOffIcon
 		},
 		{
 			id: 'services',
@@ -115,6 +125,7 @@
 	])
 
 	let breaks = $state<BreakFormData[]>([])
+	let timeoffs = $state<TimeOffFormData[]>([])
 
 	// ── Derived ───────────────────────────────────────────────────────────────
 
@@ -150,8 +161,8 @@
 	}
 
 	function finish() {
-		// TODO: call API with { owner, business, services, schedule, breaks }
-		console.log('Onboarding complete', { owner, business, services, schedule, breaks })
+		// TODO: call API with { owner, business, services, schedule, breaks, timeoffs }
+		console.log('Onboarding complete', { owner, business, services, schedule, breaks, timeoffs })
 	}
 </script>
 
@@ -222,9 +233,11 @@
 				{:else if currentStep === 3}
 					<BreaksStep {schedule} bind:breaks />
 				{:else if currentStep === 4}
-					<ServicesStep bind:services />
+					<TimeOffsStep bind:timeoffs />
 				{:else if currentStep === 5}
-					<CompleteStep {business} {services} {schedule} {breaks} />
+					<ServicesStep bind:services />
+				{:else if currentStep === 6}
+					<CompleteStep {business} {services} {schedule} {breaks} {timeoffs} />
 				{/if}
 			</div>
 		</div>
