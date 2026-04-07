@@ -27,6 +27,7 @@
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/vite": "^4.1.18",
+		"@types/axios": "^0.14.4",
 		"@types/node": "^22",
 		"@vitest/browser-playwright": "^4.1.0",
 		"bits-ui": "^2.16.3",
@@ -53,6 +54,8 @@
 		"vitest-browser-svelte": "^2.0.2"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-node": "^5.5.4"
+		"@sveltejs/adapter-node": "^5.5.4",
+		"@solverse/shared": "workspace:*",
+		"effect": "*"
 	}
 }
