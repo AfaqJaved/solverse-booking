@@ -24,7 +24,10 @@ export class DeleteBusinessUsecaseImpl implements DeleteBusinessUsecase {
     actorId: string
   }): Effect.Effect<
     void,
-    InvalidInputError | BusinessNotFoundError | BusinessDeletedError | DatabaseFailure
+    | InvalidInputError
+    | BusinessNotFoundError
+    | BusinessDeletedError
+    | DatabaseFailure
   > {
     return Effect.gen(this, function* () {
       const decodedId = yield* decodeOrFail(BusinessId)(businessId)

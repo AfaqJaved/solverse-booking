@@ -16,7 +16,10 @@ export { BreakUsecasesFactory } from './break.usecases.factory'
 export const BREAK_USECASES: Provider[] = [
   { provide: ICreateBreakUsecase, useClass: CreateBreakUsecaseImpl },
   { provide: IGetBreakUsecase, useClass: GetBreakUsecaseImpl },
-  { provide: IGetBreaksByWorkingHoursUsecase, useClass: GetBreaksByWorkingHoursUsecaseImpl },
+  {
+    provide: IGetBreaksByWorkingHoursUsecase,
+    useClass: GetBreaksByWorkingHoursUsecaseImpl,
+  },
   { provide: IUpdateBreakTimesUsecase, useClass: UpdateBreakTimesUsecaseImpl },
   { provide: IDeleteBreakUsecase, useClass: DeleteBreakUsecaseImpl },
 ]

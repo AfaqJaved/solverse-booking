@@ -52,7 +52,10 @@ export class ChangePlanUsecaseImpl implements ChangePlanUsecase {
         )
       }
 
-      const updated = yield* maybeBusiness.value.changePlan(decodedPlan, decodedActorId)
+      const updated = yield* maybeBusiness.value.changePlan(
+        decodedPlan,
+        decodedActorId,
+      )
 
       yield* this.repositoryFactory.businessRepository.save(updated)
     })

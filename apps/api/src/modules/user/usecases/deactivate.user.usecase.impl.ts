@@ -21,7 +21,10 @@ export class DeactivateUserUsecaseImpl implements DeactivateUserUsecase {
     userId: string
   }): Effect.Effect<
     void,
-    InvalidInputError | UserNotFoundError | InvalidUserTransitionError | DatabaseFailure
+    | InvalidInputError
+    | UserNotFoundError
+    | InvalidUserTransitionError
+    | DatabaseFailure
   > {
     return Effect.gen(this, function* () {
       const decodedUserId = yield* decodeOrFail(UserId)(userId)

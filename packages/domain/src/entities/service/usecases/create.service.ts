@@ -23,4 +23,3 @@ export interface CreateServiceUsecase {
     InvalidInputError | DatabaseFailure | ServiceNameTakenError
   >
 }
-

@@ -63,7 +63,10 @@ export class UpdateBusinessSlugUsecaseImpl implements UpdateBusinessSlugUsecase 
         )
       }
 
-      const updated = yield* maybeBusiness.value.updateSlug(decodedSlug, decodedActorId)
+      const updated = yield* maybeBusiness.value.updateSlug(
+        decodedSlug,
+        decodedActorId,
+      )
 
       yield* this.repositoryFactory.businessRepository.save(updated)
     })

@@ -10,9 +10,7 @@ import { Effect } from 'effect'
 import { decodeOrFail } from '../../../lib/utils/decode.or.fail'
 
 @Injectable()
-export class GetServicesByBusinessUsecaseImpl
-  implements GetServicesByBusinessUsecase
-{
+export class GetServicesByBusinessUsecaseImpl implements GetServicesByBusinessUsecase {
   constructor(private readonly repositoryFactory: RepositoryFactory) {}
 
   execute({

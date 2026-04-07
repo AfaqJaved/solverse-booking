@@ -26,15 +26,18 @@ export class UpdateProfileUsecaseImpl implements UpdateProfileUsecase {
     timezone?: string
     phone?: string | null
     notificationPreferences?: { email?: boolean; sms?: boolean; push?: boolean }
-  }): Effect.Effect<void, InvalidInputError | UserNotFoundError | DatabaseFailure> {
+  }): Effect.Effect<
+    void,
+    InvalidInputError | UserNotFoundError | DatabaseFailure
+  > {
     return Effect.gen(this, function* () {
       const decodedUserId = yield* decodeOrFail(UserId)(userId)
-      const decodedTimezone = timezone != null
-        ? yield* decodeOrFail(UserTimezone)(timezone)
-        : undefined
-      const decodedPhone = phone != null
-        ? yield* decodeOrFail(UserPhoneNumber)(phone)
-        : phone
+      const decodedTimezone =
+        timezone != null
+          ? yield* decodeOrFail(UserTimezone)(timezone)
+          : undefined
+      const decodedPhone =
+        phone != null ? yield* decodeOrFail(UserPhoneNumber)(phone) : phone
 
       const maybeUser =
         yield* this.repositoryFactory.userRepository.findById(decodedUserId)

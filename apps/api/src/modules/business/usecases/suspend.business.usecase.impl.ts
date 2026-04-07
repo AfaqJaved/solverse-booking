@@ -49,7 +49,10 @@ export class SuspendBusinessUsecaseImpl implements SuspendBusinessUsecase {
         )
       }
 
-      const suspended = yield* maybeBusiness.value.suspend(reason, decodedActorId)
+      const suspended = yield* maybeBusiness.value.suspend(
+        reason,
+        decodedActorId,
+      )
 
       yield* this.repositoryFactory.businessRepository.save(suspended)
     })

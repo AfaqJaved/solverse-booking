@@ -54,4 +54,3 @@ export class DeactivateServiceUsecaseImpl implements DeactivateServiceUsecase {
     })
   }
 }
-

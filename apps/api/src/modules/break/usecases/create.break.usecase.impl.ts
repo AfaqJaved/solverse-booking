@@ -31,17 +31,22 @@ export class CreateBreakUsecaseImpl implements CreateBreakUsecase {
   > {
     return Effect.gen(this, function* () {
       const decodedId = yield* decodeOrFail(BreakId)(params.id)
-      const decodedWorkingHoursId = yield* decodeOrFail(WorkingHoursId)(params.workingHoursId)
-      const decodedStartTime = yield* decodeOrFail(BreakTimeOfDay)(params.startTime)
+      const decodedWorkingHoursId = yield* decodeOrFail(WorkingHoursId)(
+        params.workingHoursId,
+      )
+      const decodedStartTime = yield* decodeOrFail(BreakTimeOfDay)(
+        params.startTime,
+      )
       const decodedEndTime = yield* decodeOrFail(BreakTimeOfDay)(params.endTime)
       const createdByUserId = yield* decodeOrFail(UserId)(params.createdBy)
 
-      const hasConflict = yield* this.repositoryFactory.breakRepository.hasTimeConflict(
-        decodedWorkingHoursId,
-        decodedStartTime,
-        decodedEndTime,
-        decodedId
-      )
+      const hasConflict =
+        yield* this.repositoryFactory.breakRepository.hasTimeConflict(
+          decodedWorkingHoursId,
+          decodedStartTime,
+          decodedEndTime,
+          decodedId,
+        )
 
       if (hasConflict) {
         return yield* Effect.fail(

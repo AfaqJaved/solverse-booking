@@ -33,11 +33,14 @@ export class UpdateBreakTimesUsecaseImpl implements UpdateBreakTimesUsecase {
   > {
     return Effect.gen(this, function* () {
       const decodedId = yield* decodeOrFail(BreakId)(params.breakId)
-      const decodedStartTime = yield* decodeOrFail(BreakTimeOfDay)(params.startTime)
+      const decodedStartTime = yield* decodeOrFail(BreakTimeOfDay)(
+        params.startTime,
+      )
       const decodedEndTime = yield* decodeOrFail(BreakTimeOfDay)(params.endTime)
       const updatedByUserId = yield* decodeOrFail(UserId)(params.updatedBy)
 
-      const breakEntity = yield* this.repositoryFactory.breakRepository.findById(decodedId)
+      const breakEntity =
+        yield* this.repositoryFactory.breakRepository.findById(decodedId)
 
       if (Option.isNone(breakEntity)) {
         return yield* Effect.fail(
@@ -59,12 +62,13 @@ export class UpdateBreakTimesUsecaseImpl implements UpdateBreakTimesUsecase {
         )
       }
 
-      const hasConflict = yield* this.repositoryFactory.breakRepository.hasTimeConflict(
-        breakData.workingHoursId,
-        decodedStartTime,
-        decodedEndTime,
-        decodedId
-      )
+      const hasConflict =
+        yield* this.repositoryFactory.breakRepository.hasTimeConflict(
+          breakData.workingHoursId,
+          decodedStartTime,
+          decodedEndTime,
+          decodedId,
+        )
 
       if (hasConflict) {
         return yield* Effect.fail(

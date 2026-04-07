@@ -1,4 +1,4 @@
-import { Schema } from 'effect'
+import { Data } from 'effect'
 
 /**
  * Raised when input provided to a use case fails domain validation
@@ -7,9 +7,9 @@ import { Schema } from 'effect'
  * This is the domain-level equivalent of a 400 Bad Request — it signals
  * that the caller supplied data that cannot be decoded into a valid value object.
  */
-export class InvalidInputError extends Schema.TaggedError<InvalidInputError>()(
-  'InvalidInputError',
-  { message: Schema.String, cause: Schema.String },
-) {
+export class InvalidInputError extends Data.TaggedError('InvalidInputError')<{
+  message: string
+  cause: string
+}> {
   readonly sendToFrontEnd = true
 }

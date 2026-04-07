@@ -13,9 +13,14 @@ export const DeactivateBusinessDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Deactivate business',
-      description: 'Voluntarily pauses the business. Only allowed from the active state.',
+      description:
+        'Voluntarily pauses the business. Only allowed from the active state.',
     }),
-    ApiParam({ name: 'businessId', format: 'uuid', description: 'Target business ID' }),
+    ApiParam({
+      name: 'businessId',
+      format: 'uuid',
+      description: 'Target business ID',
+    }),
     ApiBody({ type: ActorDto }),
     ApiOkResponse({
       description: 'Business deactivated successfully',
@@ -33,8 +38,14 @@ export const DeactivateBusinessDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'BusinessNotFoundError' },
-          message: { type: 'string', example: 'Business not found: <businessId>' },
-          path: { type: 'string', example: '/businesses/:businessId/deactivate' },
+          message: {
+            type: 'string',
+            example: 'Business not found: <businessId>',
+          },
+          path: {
+            type: 'string',
+            example: '/businesses/:businessId/deactivate',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
@@ -44,9 +55,19 @@ export const DeactivateBusinessDoc = () =>
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidInputError | InvalidBusinessTransitionError' },
-          message: { type: 'string', example: 'Cannot deactivate a suspended business — lift the suspension first' },
-          path: { type: 'string', example: '/businesses/:businessId/deactivate' },
+          error: {
+            type: 'string',
+            example: 'InvalidInputError | InvalidBusinessTransitionError',
+          },
+          message: {
+            type: 'string',
+            example:
+              'Cannot deactivate a suspended business — lift the suspension first',
+          },
+          path: {
+            type: 'string',
+            example: '/businesses/:businessId/deactivate',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },

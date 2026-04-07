@@ -45,7 +45,10 @@ export const UpdateProfileDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: { type: 'string', example: 'InvalidInputError' },
-          message: { type: 'string', example: 'Invalid input: timezone must be a valid IANA timezone' },
+          message: {
+            type: 'string',
+            example: 'Invalid input: timezone must be a valid IANA timezone',
+          },
           path: { type: 'string', example: '/users/:userId/profile' },
           timestamp: { type: 'string', format: 'date-time' },
         },

@@ -87,7 +87,10 @@ export const GetUserDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: { type: 'string', example: 'InvalidInputError' },
-          message: { type: 'string', example: 'Invalid input: userId must be a valid UUID' },
+          message: {
+            type: 'string',
+            example: 'Invalid input: userId must be a valid UUID',
+          },
           path: { type: 'string', example: '/users/:userId' },
           timestamp: { type: 'string', format: 'date-time' },
         },

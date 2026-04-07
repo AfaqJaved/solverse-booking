@@ -13,9 +13,14 @@ export const ReactivateBusinessDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Reactivate business',
-      description: 'Restores an inactive or suspended business back to active status.',
+      description:
+        'Restores an inactive or suspended business back to active status.',
     }),
-    ApiParam({ name: 'businessId', format: 'uuid', description: 'Target business ID' }),
+    ApiParam({
+      name: 'businessId',
+      format: 'uuid',
+      description: 'Target business ID',
+    }),
     ApiBody({ type: ActorDto }),
     ApiOkResponse({
       description: 'Business reactivated successfully',
@@ -33,20 +38,37 @@ export const ReactivateBusinessDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'BusinessNotFoundError' },
-          message: { type: 'string', example: 'Business not found: <businessId>' },
-          path: { type: 'string', example: '/businesses/:businessId/reactivate' },
+          message: {
+            type: 'string',
+            example: 'Business not found: <businessId>',
+          },
+          path: {
+            type: 'string',
+            example: '/businesses/:businessId/reactivate',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
     }),
     ApiBadRequestResponse({
-      description: 'Invalid input, invalid state transition, or business is deleted',
+      description:
+        'Invalid input, invalid state transition, or business is deleted',
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidInputError | InvalidBusinessTransitionError | BusinessDeletedError' },
-          message: { type: 'string', example: 'Business is not inactive or suspended' },
-          path: { type: 'string', example: '/businesses/:businessId/reactivate' },
+          error: {
+            type: 'string',
+            example:
+              'InvalidInputError | InvalidBusinessTransitionError | BusinessDeletedError',
+          },
+          message: {
+            type: 'string',
+            example: 'Business is not inactive or suspended',
+          },
+          path: {
+            type: 'string',
+            example: '/businesses/:businessId/reactivate',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },

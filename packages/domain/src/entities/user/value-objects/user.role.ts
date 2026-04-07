@@ -17,14 +17,16 @@ import { Schema } from 'effect'
  */
 export type UserRoleType = 'superAdmin' | 'businessOwner' | 'locationOwner'
 
-const VALID_ROLES: readonly string[] = ['superAdmin', 'businessOwner', 'locationOwner']
+const VALID_ROLES: readonly string[] = [
+  'superAdmin',
+  'businessOwner',
+  'locationOwner',
+]
 
 export const UserRole = Schema.String.pipe(
-  Schema.filter(
-    (s): s is UserRoleType => VALID_ROLES.includes(s),
-    {
-      message: () => '@Solverse/User: role must be one of "superAdmin", "businessOwner", or "locationOwner"',
-    },
-  ),
+  Schema.filter((s): s is UserRoleType => VALID_ROLES.includes(s), {
+    message: () =>
+      '@Solverse/User: role must be one of "superAdmin", "businessOwner", or "locationOwner"',
+  }),
 )
 export type UserRole = typeof UserRole.Type

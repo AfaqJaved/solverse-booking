@@ -23,7 +23,10 @@ export class SuspendUserUsecaseImpl implements SuspendUserUsecase {
     reason: string
   }): Effect.Effect<
     void,
-    InvalidInputError | UserNotFoundError | InvalidUserTransitionError | DatabaseFailure
+    | InvalidInputError
+    | UserNotFoundError
+    | InvalidUserTransitionError
+    | DatabaseFailure
   > {
     return Effect.gen(this, function* () {
       const decodedUserId = yield* decodeOrFail(UserId)(userId)

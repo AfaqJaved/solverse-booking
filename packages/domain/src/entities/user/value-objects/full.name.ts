@@ -12,12 +12,20 @@ import { Schema } from 'effect'
  */
 export const FullName = Schema.Struct({
   firstName: Schema.String.pipe(
-    Schema.minLength(1, { message: () => '@Solverse/User: firstName must not be empty' }),
-    Schema.maxLength(50, { message: () => '@Solverse/User: firstName must be at most 50 characters' }),
+    Schema.minLength(1, {
+      message: () => '@Solverse/User: firstName must not be empty',
+    }),
+    Schema.maxLength(50, {
+      message: () => '@Solverse/User: firstName must be at most 50 characters',
+    }),
   ),
   lastName: Schema.String.pipe(
-    Schema.minLength(1, { message: () => '@Solverse/User: lastName must not be empty' }),
-    Schema.maxLength(50, { message: () => '@Solverse/User: lastName must be at most 50 characters' }),
+    Schema.minLength(1, {
+      message: () => '@Solverse/User: lastName must not be empty',
+    }),
+    Schema.maxLength(50, {
+      message: () => '@Solverse/User: lastName must be at most 50 characters',
+    }),
   ),
 }).pipe(Schema.brand('FullName'))
 

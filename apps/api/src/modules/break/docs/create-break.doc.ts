@@ -12,7 +12,8 @@ export const CreateBreakDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Create a new break',
-      description: 'Creates a new break for working hours. Break times must not conflict with existing breaks.',
+      description:
+        'Creates a new break for working hours. Break times must not conflict with existing breaks.',
     }),
     ApiBody({ type: CreateBreakDto }),
     ApiCreatedResponse({
@@ -52,7 +53,8 @@ export const CreateBreakDoc = () =>
           error: { type: 'string', example: 'BreakTimeConflictError' },
           message: {
             type: 'string',
-            example: 'Break time conflicts with existing break for working hours',
+            example:
+              'Break time conflicts with existing break for working hours',
           },
           path: { type: 'string', example: '/breaks' },
           timestamp: { type: 'string', format: 'date-time' },
@@ -65,7 +67,10 @@ export const CreateBreakDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: { type: 'string', example: 'InvalidInputError' },
-          message: { type: 'string', example: 'Invalid input: startTime must be in HH:MM 24-hour format' },
+          message: {
+            type: 'string',
+            example: 'Invalid input: startTime must be in HH:MM 24-hour format',
+          },
           path: { type: 'string', example: '/breaks' },
           timestamp: { type: 'string', format: 'date-time' },
         },

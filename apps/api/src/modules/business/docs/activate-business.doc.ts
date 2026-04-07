@@ -13,9 +13,14 @@ export const ActivateBusinessDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Activate business',
-      description: 'Transitions the business from pending_verification to active. Only valid from the pending_verification state.',
+      description:
+        'Transitions the business from pending_verification to active. Only valid from the pending_verification state.',
     }),
-    ApiParam({ name: 'businessId', format: 'uuid', description: 'Target business ID' }),
+    ApiParam({
+      name: 'businessId',
+      format: 'uuid',
+      description: 'Target business ID',
+    }),
     ApiBody({ type: ActorDto }),
     ApiOkResponse({
       description: 'Business activated successfully',
@@ -33,7 +38,10 @@ export const ActivateBusinessDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'BusinessNotFoundError' },
-          message: { type: 'string', example: 'Business not found: <businessId>' },
+          message: {
+            type: 'string',
+            example: 'Business not found: <businessId>',
+          },
           path: { type: 'string', example: '/businesses/:businessId/activate' },
           timestamp: { type: 'string', format: 'date-time' },
         },
@@ -44,8 +52,16 @@ export const ActivateBusinessDoc = () =>
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidInputError | BusinessAlreadyActiveError | InvalidBusinessTransitionError' },
-          message: { type: 'string', example: 'Cannot activate a suspended business — use reactivate() instead' },
+          error: {
+            type: 'string',
+            example:
+              'InvalidInputError | BusinessAlreadyActiveError | InvalidBusinessTransitionError',
+          },
+          message: {
+            type: 'string',
+            example:
+              'Cannot activate a suspended business — use reactivate() instead',
+          },
           path: { type: 'string', example: '/businesses/:businessId/activate' },
           timestamp: { type: 'string', format: 'date-time' },
         },

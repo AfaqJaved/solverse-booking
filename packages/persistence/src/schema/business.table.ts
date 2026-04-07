@@ -1,10 +1,4 @@
-import {
-  pgEnum,
-  pgTable,
-  text,
-  uuid,
-  varchar,
-} from 'drizzle-orm/pg-core'
+import { pgEnum, pgTable, text, uuid, varchar } from 'drizzle-orm/pg-core'
 import { usersTable } from './user.table'
 import { auditColumns } from './audit.columns'
 

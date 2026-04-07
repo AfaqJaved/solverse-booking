@@ -45,19 +45,19 @@ export class ServiceRepositoryImpl implements ServiceRepository {
     options?: {
       status?: ServiceStatus
       includeDeleted?: boolean
-    }
+    },
   ): Effect.Effect<Service[], DatabaseFailure> {
     return Effect.gen(this, function* () {
       const conditions = [eq(servicesTable.businessId, businessId)]
-      
+
       if (options?.status) {
         conditions.push(eq(servicesTable.status, options.status))
       }
-      
+
       if (options?.includeDeleted !== true) {
         conditions.push(eq(servicesTable.isDeleted, false))
       }
-      
+
       const rows = yield* dbEffect(
         db
           .select()
@@ -92,31 +92,31 @@ export class ServiceRepositoryImpl implements ServiceRepository {
     options?: {
       status?: ServiceStatus
       includeDeleted?: boolean
-    }
+    },
   ): Effect.Effect<number, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const conditions = [eq(servicesTable.businessId, businessId)]
-      
+
       if (options?.status) {
         conditions.push(eq(servicesTable.status, options.status))
       }
-      
+
       if (options?.includeDeleted !== true) {
         conditions.push(eq(servicesTable.isDeleted, false))
       }
-      
+
       const result = yield* dbEffect(
         db
           .select({ count: count() })
           .from(servicesTable)
           .where(and(...conditions)),
       )
-      
+
       const row = result[0]
       if (!row) {
         return 0
       }
-      
+
       return row.count
     })
   }
@@ -124,7 +124,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
   nameExistsForBusiness(
     businessId: BusinessId,
     name: ServiceName,
-    excludeServiceId?: ServiceId
+    excludeServiceId?: ServiceId,
   ): Effect.Effect<boolean, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const conditions = [
@@ -132,27 +132,29 @@ export class ServiceRepositoryImpl implements ServiceRepository {
         eq(servicesTable.name, name),
         eq(servicesTable.isDeleted, false),
       ]
-      
+
       if (excludeServiceId) {
         conditions.push(sql`${servicesTable.id} != ${excludeServiceId}`)
       }
-      
+
       const result = yield* dbEffect(
         db
-          .select({ exists: sql<boolean>`EXISTS (
+          .select({
+            exists: sql<boolean>`EXISTS (
             SELECT 1 FROM ${servicesTable}
             WHERE ${and(...conditions)}
             LIMIT 1
-          )` })
+          )`,
+          })
           .from(servicesTable)
           .limit(1),
       )
-      
+
       const row = result[0]
       if (!row) {
         return false
       }
-      
+
       return row.exists
     })
   }

@@ -1,6 +1,10 @@
 export namespace BusinessApi {
   export type PlanType = 'free' | 'starter' | 'pro' | 'enterprise'
-  export type StatusType = 'pending_verification' | 'active' | 'inactive' | 'suspended'
+  export type StatusType =
+    | 'pending_verification'
+    | 'active'
+    | 'inactive'
+    | 'suspended'
 
   export namespace Register {
     export interface Request {

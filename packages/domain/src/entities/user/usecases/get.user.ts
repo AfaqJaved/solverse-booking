@@ -8,5 +8,8 @@ export const IGetUserUsecase = Symbol('IGetUserUsecase')
 export interface GetUserUsecase {
   execute(params: {
     userId: string
-  }): Effect.Effect<User, InvalidInputError | UserNotFoundError | DatabaseFailure>
+  }): Effect.Effect<
+    User,
+    InvalidInputError | UserNotFoundError | DatabaseFailure
+  >
 }

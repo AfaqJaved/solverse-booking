@@ -8,5 +8,8 @@ export const IGetBusinessUsecase = Symbol('IGetBusinessUsecase')
 export interface GetBusinessUsecase {
   execute(params: {
     businessId: string
-  }): Effect.Effect<Business, InvalidInputError | BusinessNotFoundError | DatabaseFailure>
+  }): Effect.Effect<
+    Business,
+    InvalidInputError | BusinessNotFoundError | DatabaseFailure
+  >
 }

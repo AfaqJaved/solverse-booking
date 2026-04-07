@@ -57,7 +57,9 @@ export class ServiceController {
         status: body.status,
       }),
     )
-    return ApiResponse.created(ServiceMapper.serviceAggregateToCreateResponse(result))
+    return ApiResponse.created(
+      ServiceMapper.serviceAggregateToCreateResponse(result),
+    )
   }
 
   @Get(':serviceId')
@@ -81,9 +83,13 @@ export class ServiceController {
     @Param('businessId') businessId: string,
   ): Promise<ApiResponse<ServiceApi.GetServicesByBusiness.Response>> {
     const services = await Effect.runPromise(
-      this.serviceUsecaseFactory.getServicesByBusinessUsecase.execute({ businessId }),
+      this.serviceUsecaseFactory.getServicesByBusinessUsecase.execute({
+        businessId,
+      }),
     )
-    return ApiResponse.ok(ServiceMapper.serviceAggregatesToGetByBusinessResponse(services))
+    return ApiResponse.ok(
+      ServiceMapper.serviceAggregatesToGetByBusinessResponse(services),
+    )
   }
 
   @Patch(':serviceId')

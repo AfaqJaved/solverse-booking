@@ -13,9 +13,14 @@ export const UpdateBusinessProfileDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Update business profile',
-      description: 'Updates public-facing profile fields. Only provided fields are overwritten.',
+      description:
+        'Updates public-facing profile fields. Only provided fields are overwritten.',
     }),
-    ApiParam({ name: 'businessId', format: 'uuid', description: 'Target business ID' }),
+    ApiParam({
+      name: 'businessId',
+      format: 'uuid',
+      description: 'Target business ID',
+    }),
     ApiBody({ type: UpdateBusinessProfileDto }),
     ApiOkResponse({
       description: 'Profile updated successfully',
@@ -33,7 +38,10 @@ export const UpdateBusinessProfileDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'BusinessNotFoundError' },
-          message: { type: 'string', example: 'Business not found: <businessId>' },
+          message: {
+            type: 'string',
+            example: 'Business not found: <businessId>',
+          },
           path: { type: 'string', example: '/businesses/:businessId/profile' },
           timestamp: { type: 'string', format: 'date-time' },
         },
@@ -44,8 +52,14 @@ export const UpdateBusinessProfileDoc = () =>
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidInputError | BusinessDeletedError' },
-          message: { type: 'string', example: 'Cannot update a deleted business' },
+          error: {
+            type: 'string',
+            example: 'InvalidInputError | BusinessDeletedError',
+          },
+          message: {
+            type: 'string',
+            example: 'Cannot update a deleted business',
+          },
           path: { type: 'string', example: '/businesses/:businessId/profile' },
           timestamp: { type: 'string', format: 'date-time' },
         },

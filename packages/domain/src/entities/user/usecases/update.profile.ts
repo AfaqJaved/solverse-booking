@@ -14,5 +14,8 @@ export interface UpdateProfileUsecase {
       sms?: boolean
       push?: boolean
     }
-  }): Effect.Effect<void, InvalidInputError | UserNotFoundError | DatabaseFailure>
+  }): Effect.Effect<
+    void,
+    InvalidInputError | UserNotFoundError | DatabaseFailure
+  >
 }

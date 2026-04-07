@@ -19,7 +19,10 @@ export class GetBusinessUsecaseImpl implements GetBusinessUsecase {
     businessId,
   }: {
     businessId: string
-  }): Effect.Effect<Business, InvalidInputError | BusinessNotFoundError | DatabaseFailure> {
+  }): Effect.Effect<
+    Business,
+    InvalidInputError | BusinessNotFoundError | DatabaseFailure
+  > {
     return Effect.gen(this, function* () {
       const decodedId = yield* decodeOrFail(BusinessId)(businessId)
 

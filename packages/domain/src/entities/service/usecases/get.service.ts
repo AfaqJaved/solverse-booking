@@ -8,5 +8,8 @@ export const IGetServiceUsecase = Symbol('IGetServiceUsecase')
 export interface GetServiceUsecase {
   execute(params: {
     serviceId: string
-  }): Effect.Effect<Service, InvalidInputError | ServiceNotFoundError | DatabaseFailure>
+  }): Effect.Effect<
+    Service,
+    InvalidInputError | ServiceNotFoundError | DatabaseFailure
+  >
 }

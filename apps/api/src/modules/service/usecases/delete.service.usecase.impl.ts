@@ -54,4 +54,3 @@ export class DeleteServiceUsecaseImpl implements DeleteServiceUsecase {
     })
   }
 }
-

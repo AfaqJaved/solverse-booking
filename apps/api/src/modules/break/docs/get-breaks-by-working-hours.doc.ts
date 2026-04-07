@@ -1,15 +1,12 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common'
-import {
-  ApiOkResponse,
-  ApiOperation,
-  ApiQuery,
-} from '@nestjs/swagger'
+import { ApiOkResponse, ApiOperation, ApiQuery } from '@nestjs/swagger'
 
 export const GetBreaksByWorkingHoursDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Get breaks by working hours ID',
-      description: 'Retrieves all breaks for specific working hours with pagination.',
+      description:
+        'Retrieves all breaks for specific working hours with pagination.',
     }),
     ApiQuery({
       name: 'workingHoursId',

@@ -14,7 +14,8 @@ export const UpdateServiceDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Update service details',
-      description: 'Updates the details of an existing service. Service names must remain unique within the business.',
+      description:
+        'Updates the details of an existing service. Service names must remain unique within the business.',
     }),
     ApiParam({
       name: 'serviceId',
@@ -41,9 +42,13 @@ export const UpdateServiceDoc = () =>
           error: { type: 'string', example: 'ServiceNotFoundError' },
           message: {
             type: 'string',
-            example: 'Service with ID "f47ac10b-58cc-4372-a567-0e02b2c3d479" not found',
+            example:
+              'Service with ID "f47ac10b-58cc-4372-a567-0e02b2c3d479" not found',
           },
-          path: { type: 'string', example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
@@ -56,9 +61,13 @@ export const UpdateServiceDoc = () =>
           error: { type: 'string', example: 'ServiceNameTakenError' },
           message: {
             type: 'string',
-            example: 'Service name "Premium Haircut" is already taken for this business',
+            example:
+              'Service name "Premium Haircut" is already taken for this business',
           },
-          path: { type: 'string', example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
@@ -71,9 +80,13 @@ export const UpdateServiceDoc = () =>
           error: { type: 'string', example: 'InvalidInputError' },
           message: {
             type: 'string',
-            example: 'Invalid input: duration must be between 5 and 480 minutes',
+            example:
+              'Invalid input: duration must be between 5 and 480 minutes',
           },
-          path: { type: 'string', example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },

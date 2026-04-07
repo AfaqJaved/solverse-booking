@@ -10,7 +10,8 @@ export const GetBreakDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Get a break by ID',
-      description: 'Retrieves a break by its ID. Returns 404 if break not found or deleted.',
+      description:
+        'Retrieves a break by its ID. Returns 404 if break not found or deleted.',
     }),
     ApiParam({
       name: 'id',
@@ -58,9 +59,13 @@ export const GetBreakDoc = () =>
           error: { type: 'string', example: 'BreakNotFoundError' },
           message: {
             type: 'string',
-            example: 'Break with ID f47ac10b-58cc-4372-a567-0e02b2c3d479 not found',
+            example:
+              'Break with ID f47ac10b-58cc-4372-a567-0e02b2c3d479 not found',
           },
-          path: { type: 'string', example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },

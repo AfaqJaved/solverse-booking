@@ -58,7 +58,10 @@ export const ChangeEmailDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: { type: 'string', example: 'InvalidInputError' },
-          message: { type: 'string', example: 'Invalid input: newEmail must be a valid email address' },
+          message: {
+            type: 'string',
+            example: 'Invalid input: newEmail must be a valid email address',
+          },
           path: { type: 'string', example: '/users/:userId/email' },
           timestamp: { type: 'string', format: 'date-time' },
         },

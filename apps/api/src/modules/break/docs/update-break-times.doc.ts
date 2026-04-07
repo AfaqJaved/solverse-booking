@@ -14,7 +14,8 @@ export const UpdateBreakTimesDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Update break times',
-      description: 'Updates the start and end times of a break. Times must not conflict with existing breaks.',
+      description:
+        'Updates the start and end times of a break. Times must not conflict with existing breaks.',
     }),
     ApiParam({
       name: 'id',
@@ -63,9 +64,13 @@ export const UpdateBreakTimesDoc = () =>
           error: { type: 'string', example: 'BreakNotFoundError' },
           message: {
             type: 'string',
-            example: 'Break with ID f47ac10b-58cc-4372-a567-0e02b2c3d479 not found',
+            example:
+              'Break with ID f47ac10b-58cc-4372-a567-0e02b2c3d479 not found',
           },
-          path: { type: 'string', example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
@@ -78,9 +83,13 @@ export const UpdateBreakTimesDoc = () =>
           error: { type: 'string', example: 'BreakTimeConflictError' },
           message: {
             type: 'string',
-            example: 'Break time conflicts with existing break for working hours',
+            example:
+              'Break time conflicts with existing break for working hours',
           },
-          path: { type: 'string', example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
@@ -91,8 +100,14 @@ export const UpdateBreakTimesDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: { type: 'string', example: 'InvalidInputError' },
-          message: { type: 'string', example: 'Invalid input: startTime must be in HH:MM 24-hour format' },
-          path: { type: 'string', example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          message: {
+            type: 'string',
+            example: 'Invalid input: startTime must be in HH:MM 24-hour format',
+          },
+          path: {
+            type: 'string',
+            example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },

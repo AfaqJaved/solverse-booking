@@ -45,18 +45,28 @@ export class UpdateBusinessProfileUsecaseImpl implements UpdateBusinessProfileUs
     currency?: string
   }): Effect.Effect<
     void,
-    InvalidInputError | BusinessNotFoundError | BusinessDeletedError | DatabaseFailure
+    | InvalidInputError
+    | BusinessNotFoundError
+    | BusinessDeletedError
+    | DatabaseFailure
   > {
     return Effect.gen(this, function* () {
       const decodedId = yield* decodeOrFail(BusinessId)(businessId)
       const decodedActorId = yield* decodeOrFail(UserId)(actorId)
-      const decodedName = name != null ? yield* decodeOrFail(BusinessName)(name) : undefined
-      const decodedEmail = email != null ? yield* decodeOrFail(BusinessEmail)(email) : undefined
+      const decodedName =
+        name != null ? yield* decodeOrFail(BusinessName)(name) : undefined
+      const decodedEmail =
+        email != null ? yield* decodeOrFail(BusinessEmail)(email) : undefined
       const decodedTimezone =
-        timezone != null ? yield* decodeOrFail(BusinessTimezone)(timezone) : undefined
+        timezone != null
+          ? yield* decodeOrFail(BusinessTimezone)(timezone)
+          : undefined
       const decodedCurrency =
-        currency != null ? yield* decodeOrFail(BusinessCurrency)(currency) : undefined
-      const decodedPhone = phone != null ? yield* decodeOrFail(BusinessPhoneNumber)(phone) : phone
+        currency != null
+          ? yield* decodeOrFail(BusinessCurrency)(currency)
+          : undefined
+      const decodedPhone =
+        phone != null ? yield* decodeOrFail(BusinessPhoneNumber)(phone) : phone
 
       const maybeBusiness =
         yield* this.repositoryFactory.businessRepository.findById(decodedId)

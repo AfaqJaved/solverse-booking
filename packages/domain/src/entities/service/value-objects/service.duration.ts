@@ -10,7 +10,10 @@ import { Schema } from 'effect'
  * Invalid: 0, -1, 4 (below minimum), 481 (above maximum), 30.5 (non-integer)
  */
 export const ServiceDuration = Schema.Int.pipe(
-  Schema.between(5, 480, { message: () => '@Solverse/Service: duration must be an integer between 5 and 480 minutes' }),
+  Schema.between(5, 480, {
+    message: () =>
+      '@Solverse/Service: duration must be an integer between 5 and 480 minutes',
+  }),
   Schema.brand('ServiceDuration'),
 )
 

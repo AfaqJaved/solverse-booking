@@ -15,19 +15,19 @@ export interface ServiceRepository {
     options?: {
       status?: ServiceStatus
       includeDeleted?: boolean
-    }
+    },
   ): Effect.Effect<Service[], DatabaseFailure>
   countByBusinessId(
     businessId: BusinessId,
     options?: {
       status?: ServiceStatus
       includeDeleted?: boolean
-    }
+    },
   ): Effect.Effect<number, DatabaseFailure>
   nameExistsForBusiness(
     businessId: BusinessId,
     name: ServiceName,
-    excludeServiceId?: ServiceId
+    excludeServiceId?: ServiceId,
   ): Effect.Effect<boolean, DatabaseFailure>
   save(service: Service): Effect.Effect<void, DatabaseFailure>
   delete(id: ServiceId): Effect.Effect<void, DatabaseFailure>

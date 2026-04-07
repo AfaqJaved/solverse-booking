@@ -21,15 +21,13 @@ export class BreakRepositoryImpl implements BreakRepository {
   findById(id: BreakId): Effect.Effect<Option.Option<Break>, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const [row] = yield* dbEffect(
-        db
-          .select()
-          .from(breaksTable)
-          .where(eq(breaksTable.id, id))
-          .limit(1),
+        db.select().from(breaksTable).where(eq(breaksTable.id, id)).limit(1),
       )
       if (!row) return Option.none()
       const breakEntity =
-        yield* this.persistenceMapperFactory.breakPersistenceMapper.toDomain(row)
+        yield* this.persistenceMapperFactory.breakPersistenceMapper.toDomain(
+          row,
+        )
       return Option.some(breakEntity)
     })
   }
@@ -38,15 +36,15 @@ export class BreakRepositoryImpl implements BreakRepository {
     workingHoursId: WorkingHoursId,
     options?: {
       includeDeleted?: boolean
-    }
+    },
   ): Effect.Effect<Break[], DatabaseFailure> {
     return Effect.gen(this, function* () {
       const conditions = [eq(breaksTable.workingHoursId, workingHoursId)]
-      
+
       if (options?.includeDeleted !== true) {
         conditions.push(eq(breaksTable.isDeleted, false))
       }
-      
+
       const rows = yield* dbEffect(
         db
           .select()
@@ -65,27 +63,27 @@ export class BreakRepositoryImpl implements BreakRepository {
     workingHoursId: WorkingHoursId,
     options?: {
       includeDeleted?: boolean
-    }
+    },
   ): Effect.Effect<number, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const conditions = [eq(breaksTable.workingHoursId, workingHoursId)]
-      
+
       if (options?.includeDeleted !== true) {
         conditions.push(eq(breaksTable.isDeleted, false))
       }
-      
+
       const result = yield* dbEffect(
         db
           .select({ count: count() })
           .from(breaksTable)
           .where(and(...conditions)),
       )
-      
+
       const row = result[0]
       if (!row) {
         return 0
       }
-      
+
       return row.count
     })
   }
@@ -94,7 +92,7 @@ export class BreakRepositoryImpl implements BreakRepository {
     workingHoursId: WorkingHoursId,
     startTime: string,
     endTime: string,
-    excludeBreakId?: BreakId
+    excludeBreakId?: BreakId,
   ): Effect.Effect<boolean, DatabaseFailure> {
     return Effect.gen(this, function* () {
       const conditions = [
@@ -105,27 +103,29 @@ export class BreakRepositoryImpl implements BreakRepository {
           OR (${breaksTable.startTime} = ${startTime} AND ${breaksTable.endTime} = ${endTime})
         )`,
       ]
-      
+
       if (excludeBreakId) {
         conditions.push(sql`${breaksTable.id} != ${excludeBreakId}`)
       }
-      
+
       const result = yield* dbEffect(
         db
-          .select({ exists: sql<boolean>`EXISTS (
+          .select({
+            exists: sql<boolean>`EXISTS (
             SELECT 1 FROM ${breaksTable}
             WHERE ${and(...conditions)}
             LIMIT 1
-          )` })
+          )`,
+          })
           .from(breaksTable)
           .limit(1),
       )
-      
+
       const row = result[0]
       if (!row) {
         return false
       }
-      
+
       return row.exists
     })
   }

@@ -24,7 +24,11 @@ export const RegisterBusinessDoc = () =>
           data: {
             type: 'object',
             properties: {
-              id: { type: 'string', format: 'uuid', example: 'f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+              id: {
+                type: 'string',
+                format: 'uuid',
+                example: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
+              },
             },
           },
           timestamp: { type: 'string', format: 'date-time' },
@@ -37,7 +41,10 @@ export const RegisterBusinessDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.CONFLICT },
           error: { type: 'string', example: 'BusinessSlugTakenError' },
-          message: { type: 'string', example: 'Slug "acme-salon" is already taken' },
+          message: {
+            type: 'string',
+            example: 'Slug "acme-salon" is already taken',
+          },
           path: { type: 'string', example: '/businesses' },
           timestamp: { type: 'string', format: 'date-time' },
         },
@@ -49,7 +56,11 @@ export const RegisterBusinessDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: { type: 'string', example: 'InvalidInputError' },
-          message: { type: 'string', example: 'Invalid input: slug must contain only lowercase letters, digits, and hyphens' },
+          message: {
+            type: 'string',
+            example:
+              'Invalid input: slug must contain only lowercase letters, digits, and hyphens',
+          },
           path: { type: 'string', example: '/businesses' },
           timestamp: { type: 'string', format: 'date-time' },
         },

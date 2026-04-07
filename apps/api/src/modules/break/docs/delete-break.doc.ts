@@ -13,7 +13,8 @@ export const DeleteBreakDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Delete a break',
-      description: 'Soft deletes a break by marking it as deleted. The break record remains in the database.',
+      description:
+        'Soft deletes a break by marking it as deleted. The break record remains in the database.',
     }),
     ApiParam({
       name: 'id',
@@ -62,9 +63,13 @@ export const DeleteBreakDoc = () =>
           error: { type: 'string', example: 'BreakNotFoundError' },
           message: {
             type: 'string',
-            example: 'Break with ID f47ac10b-58cc-4372-a567-0e02b2c3d479 not found',
+            example:
+              'Break with ID f47ac10b-58cc-4372-a567-0e02b2c3d479 not found',
           },
-          path: { type: 'string', example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
@@ -77,9 +82,13 @@ export const DeleteBreakDoc = () =>
           error: { type: 'string', example: 'BreakDeletedError' },
           message: {
             type: 'string',
-            example: 'Break with ID f47ac10b-58cc-4372-a567-0e02b2c3d479 has already been deleted',
+            example:
+              'Break with ID f47ac10b-58cc-4372-a567-0e02b2c3d479 has already been deleted',
           },
-          path: { type: 'string', example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/breaks/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },

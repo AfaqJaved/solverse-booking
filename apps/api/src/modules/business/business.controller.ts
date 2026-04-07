@@ -35,7 +35,9 @@ import { BusinessMapper } from './mapper/business.mapper'
 @ApiTags('Businesses')
 @Controller('businesses')
 export class BusinessController {
-  constructor(private readonly businessUsecasesFactory: BusinessUsecasesFactory) {}
+  constructor(
+    private readonly businessUsecasesFactory: BusinessUsecasesFactory,
+  ) {}
 
   @Post()
   @RegisterBusinessDoc()
@@ -63,7 +65,9 @@ export class BusinessController {
     @Param('ownerId') ownerId: string,
   ): Promise<ApiResponse<BusinessApi.GetBusiness.Response[]>> {
     const businesses = await Effect.runPromise(
-      this.businessUsecasesFactory.getBusinessesByOwnerUsecase.execute({ ownerId }),
+      this.businessUsecasesFactory.getBusinessesByOwnerUsecase.execute({
+        ownerId,
+      }),
     )
     return ApiResponse.ok(businesses.map(BusinessMapper.toResponse))
   }

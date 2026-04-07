@@ -10,7 +10,10 @@ import { Schema } from 'effect'
  * Invalid: -1 (negative), 25.50 (non-integer)
  */
 export const ServicePrice = Schema.Int.pipe(
-  Schema.greaterThanOrEqualTo(0, { message: () => '@Solverse/Service: price must be a non-negative integer (smallest currency unit, e.g. cents)' }),
+  Schema.greaterThanOrEqualTo(0, {
+    message: () =>
+      '@Solverse/Service: price must be a non-negative integer (smallest currency unit, e.g. cents)',
+  }),
   Schema.brand('ServicePrice'),
 )
 

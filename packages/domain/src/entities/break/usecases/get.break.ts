@@ -8,5 +8,8 @@ export const IGetBreakUsecase = Symbol('IGetBreakUsecase')
 export interface GetBreakUsecase {
   execute(params: {
     breakId: string
-  }): Effect.Effect<Break, InvalidInputError | BreakNotFoundError | DatabaseFailure>
+  }): Effect.Effect<
+    Break,
+    InvalidInputError | BreakNotFoundError | DatabaseFailure
+  >
 }

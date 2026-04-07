@@ -54,7 +54,9 @@ export class RegisterBusinessUsecaseImpl implements RegisterBusinessUsecase {
       const decodedTimezone = yield* decodeOrFail(BusinessTimezone)(timezone)
       const decodedCurrency = yield* decodeOrFail(BusinessCurrency)(currency)
       const decodedPhone =
-        phone != null ? yield* decodeOrFail(BusinessPhoneNumber)(phone) : undefined
+        phone != null
+          ? yield* decodeOrFail(BusinessPhoneNumber)(phone)
+          : undefined
       const decodedPlan =
         plan != null ? yield* decodeOrFail(BusinessPlan)(plan) : undefined
 

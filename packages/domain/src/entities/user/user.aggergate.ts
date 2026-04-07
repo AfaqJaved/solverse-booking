@@ -147,7 +147,9 @@ export class User {
   static fromSchema(
     raw: Schema.Schema.Encoded<typeof UserSchema>,
   ): Effect.Effect<User, ParseError, never> {
-    return Schema.decode(UserSchema)(raw).pipe(Effect.map((data) => new User(data)))
+    return Schema.decode(UserSchema)(raw).pipe(
+      Effect.map((data) => new User(data)),
+    )
   }
 
   // ── Behavior ───────────────────────────────────────────────────────────────

@@ -13,9 +13,14 @@ export const DeleteBusinessDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Delete business',
-      description: 'Soft-deletes the business. Data is retained for audit purposes.',
+      description:
+        'Soft-deletes the business. Data is retained for audit purposes.',
     }),
-    ApiParam({ name: 'businessId', format: 'uuid', description: 'Target business ID' }),
+    ApiParam({
+      name: 'businessId',
+      format: 'uuid',
+      description: 'Target business ID',
+    }),
     ApiBody({ type: ActorDto }),
     ApiOkResponse({
       description: 'Business deleted successfully',
@@ -33,7 +38,10 @@ export const DeleteBusinessDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'BusinessNotFoundError' },
-          message: { type: 'string', example: 'Business not found: <businessId>' },
+          message: {
+            type: 'string',
+            example: 'Business not found: <businessId>',
+          },
           path: { type: 'string', example: '/businesses/:businessId' },
           timestamp: { type: 'string', format: 'date-time' },
         },
@@ -44,8 +52,14 @@ export const DeleteBusinessDoc = () =>
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidInputError | BusinessDeletedError' },
-          message: { type: 'string', example: 'Business has already been deleted' },
+          error: {
+            type: 'string',
+            example: 'InvalidInputError | BusinessDeletedError',
+          },
+          message: {
+            type: 'string',
+            example: 'Business has already been deleted',
+          },
           path: { type: 'string', example: '/businesses/:businessId' },
           timestamp: { type: 'string', format: 'date-time' },
         },

@@ -10,6 +10,9 @@ export interface DeleteServiceUsecase {
     deletedBy: string
   }): Effect.Effect<
     void,
-    InvalidInputError | ServiceNotFoundError | ServiceDeletedError | DatabaseFailure
+    | InvalidInputError
+    | ServiceNotFoundError
+    | ServiceDeletedError
+    | DatabaseFailure
   >
 }

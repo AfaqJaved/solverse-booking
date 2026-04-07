@@ -13,9 +13,14 @@ export const ChangePlanDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Change subscription plan',
-      description: 'Changes the business subscription plan. Not allowed when the business is suspended or deleted.',
+      description:
+        'Changes the business subscription plan. Not allowed when the business is suspended or deleted.',
     }),
-    ApiParam({ name: 'businessId', format: 'uuid', description: 'Target business ID' }),
+    ApiParam({
+      name: 'businessId',
+      format: 'uuid',
+      description: 'Target business ID',
+    }),
     ApiBody({ type: ChangePlanDto }),
     ApiOkResponse({
       description: 'Plan changed successfully',
@@ -33,7 +38,10 @@ export const ChangePlanDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'BusinessNotFoundError' },
-          message: { type: 'string', example: 'Business not found: <businessId>' },
+          message: {
+            type: 'string',
+            example: 'Business not found: <businessId>',
+          },
           path: { type: 'string', example: '/businesses/:businessId/plan' },
           timestamp: { type: 'string', format: 'date-time' },
         },
@@ -44,8 +52,15 @@ export const ChangePlanDoc = () =>
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidInputError | BusinessSuspendedError | BusinessDeletedError' },
-          message: { type: 'string', example: 'Cannot change the plan of a suspended business' },
+          error: {
+            type: 'string',
+            example:
+              'InvalidInputError | BusinessSuspendedError | BusinessDeletedError',
+          },
+          message: {
+            type: 'string',
+            example: 'Cannot change the plan of a suspended business',
+          },
           path: { type: 'string', example: '/businesses/:businessId/plan' },
           timestamp: { type: 'string', format: 'date-time' },
         },

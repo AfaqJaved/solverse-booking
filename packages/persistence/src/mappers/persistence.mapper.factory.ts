@@ -4,6 +4,7 @@ import { BusinessPersistenceMapper } from './business.persistence.mapper'
 import { ServicePersistenceMapper } from './service.persistence.mapper'
 import { WorkingHoursPersistenceMapper } from './working.hours.persistence.mapper'
 import { BreakPersistenceMapper } from './break.persistence.mapper'
+import { TimeOffPersistenceMapper } from './timeoff.persistence.mapper'
 
 @Injectable()
 export class PersistenceMapperFactory {
@@ -21,4 +22,7 @@ export class PersistenceMapperFactory {
 
   @Inject(BreakPersistenceMapper)
   public breakPersistenceMapper!: BreakPersistenceMapper
+
+  @Inject(TimeOffPersistenceMapper)
+  public timeOffPersistenceMapper!: TimeOffPersistenceMapper
 }

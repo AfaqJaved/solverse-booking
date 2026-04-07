@@ -25,13 +25,10 @@ export type DayOfWeekType =
   | 'sunday'
 
 export const DayOfWeek = Schema.String.pipe(
-  Schema.filter(
-    (s): s is DayOfWeekType => VALID_DAYS_OF_WEEK.includes(s),
-    {
-      message: () =>
-        '@Solverse/WorkingHours: dayOfWeek must be one of "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", or "sunday"',
-    },
-  ),
+  Schema.filter((s): s is DayOfWeekType => VALID_DAYS_OF_WEEK.includes(s), {
+    message: () =>
+      '@Solverse/WorkingHours: dayOfWeek must be one of "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", or "sunday"',
+  }),
 )
 
 export type DayOfWeek = typeof DayOfWeek.Type

@@ -27,7 +27,8 @@ export class DeleteBreakUsecaseImpl implements DeleteBreakUsecase {
       const decodedId = yield* decodeOrFail(BreakId)(params.breakId)
       const deletedByUserId = yield* decodeOrFail(UserId)(params.deletedBy)
 
-      const breakEntity = yield* this.repositoryFactory.breakRepository.findById(decodedId)
+      const breakEntity =
+        yield* this.repositoryFactory.breakRepository.findById(decodedId)
 
       if (Option.isNone(breakEntity)) {
         return yield* Effect.fail(

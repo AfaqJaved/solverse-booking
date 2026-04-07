@@ -18,14 +18,17 @@ export class GetBreaksByWorkingHoursUsecaseImpl implements GetBreaksByWorkingHou
     workingHoursId: string
   }): Effect.Effect<Break[], InvalidInputError | DatabaseFailure> {
     return Effect.gen(this, function* () {
-      const decodedWorkingHoursId = yield* decodeOrFail(WorkingHoursId)(params.workingHoursId)
-
-      const breaks = yield* this.repositoryFactory.breakRepository.findByWorkingHoursId(
-        decodedWorkingHoursId,
-        {
-          includeDeleted: false,
-        }
+      const decodedWorkingHoursId = yield* decodeOrFail(WorkingHoursId)(
+        params.workingHoursId,
       )
+
+      const breaks =
+        yield* this.repositoryFactory.breakRepository.findByWorkingHoursId(
+          decodedWorkingHoursId,
+          {
+            includeDeleted: false,
+          },
+        )
 
       return breaks
     })

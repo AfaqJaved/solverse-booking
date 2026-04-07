@@ -67,7 +67,9 @@ describe('BreakSchema — id', () => {
   })
 
   it('rejects a UUID v1', () => {
-    const messages = getMessages(with_({ id: '123e4567-e89b-12d3-a456-426614174000' }))
+    const messages = getMessages(
+      with_({ id: '123e4567-e89b-12d3-a456-426614174000' }),
+    )
     expect(messages).toContain(
       '@Solverse/Break: id must be a valid UUID v4 (e.g. "f47ac10b-58cc-4372-a567-0e02b2c3d479")',
     )

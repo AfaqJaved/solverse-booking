@@ -11,18 +11,27 @@ export class UpdateServiceDto implements ServiceApi.Update.Request {
   @ApiPropertyOptional({ example: 'Professional haircut with premium styling' })
   description?: string | null
 
-  @ApiPropertyOptional({ example: 45, description: 'Duration in minutes (5-480)' })
+  @ApiPropertyOptional({
+    example: 45,
+    description: 'Duration in minutes (5-480)',
+  })
   duration?: number
 
   @ApiPropertyOptional({ example: 15, description: 'Buffer time in minutes' })
   bufferTime?: number
 
-  @ApiPropertyOptional({ example: 6000, description: 'Price in smallest currency unit' })
+  @ApiPropertyOptional({
+    example: 6000,
+    description: 'Price in smallest currency unit',
+  })
   price?: number
 
   @ApiPropertyOptional({ example: '#3366FF' })
   color?: string | null
 
-  @ApiPropertyOptional({ example: 3, description: 'Maximum concurrent bookings per slot' })
+  @ApiPropertyOptional({
+    example: 3,
+    description: 'Maximum concurrent bookings per slot',
+  })
   maxBookingsPerSlot?: number
 }

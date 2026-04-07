@@ -1,6 +1,10 @@
 import { Effect } from 'effect'
 import { DatabaseFailure, InvalidInputError } from '../../../errors/entry'
-import { BreakNotFoundError, BreakDeletedError, BreakTimeConflictError } from '../errors/entry'
+import {
+  BreakNotFoundError,
+  BreakDeletedError,
+  BreakTimeConflictError,
+} from '../errors/entry'
 
 export const IUpdateBreakTimesUsecase = Symbol('IUpdateBreakTimesUsecase')
 

@@ -1,10 +1,4 @@
-import {
-  boolean,
-  pgEnum,
-  pgTable,
-  uuid,
-  varchar,
-} from 'drizzle-orm/pg-core'
+import { boolean, pgEnum, pgTable, uuid, varchar } from 'drizzle-orm/pg-core'
 import { businessesTable } from './business.table'
 import { auditColumns } from './audit.columns'
 

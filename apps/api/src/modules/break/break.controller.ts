@@ -49,7 +49,9 @@ export class BreakController {
         createdBy: body.createdBy,
       }),
     )
-    return ApiResponse.created(BreakMapper.breakAggregateToCreateResponse(result))
+    return ApiResponse.created(
+      BreakMapper.breakAggregateToCreateResponse(result),
+    )
   }
 
   @Get(':id')
@@ -77,7 +79,9 @@ export class BreakController {
         workingHoursId,
       }),
     )
-    return ApiResponse.ok(BreakMapper.breakAggregatesToGetByWorkingHoursResponse(breaks))
+    return ApiResponse.ok(
+      BreakMapper.breakAggregatesToGetByWorkingHoursResponse(breaks),
+    )
   }
 
   @Patch(':id/times')

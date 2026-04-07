@@ -10,7 +10,8 @@ export const GetServicesByBusinessDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Get services by business ID',
-      description: 'Retrieves all services for a specific business. Only returns non-deleted services.',
+      description:
+        'Retrieves all services for a specific business. Only returns non-deleted services.',
     }),
     ApiParam({
       name: 'businessId',
@@ -42,12 +43,24 @@ export const GetServicesByBusinessDoc = () =>
                       example: '550e8400-e29b-41d4-a716-446655440000',
                     },
                     name: { type: 'string', example: 'Haircut' },
-                    description: { type: 'string', example: 'Professional haircut with styling', nullable: true },
+                    description: {
+                      type: 'string',
+                      example: 'Professional haircut with styling',
+                      nullable: true,
+                    },
                     duration: { type: 'number', example: 30 },
                     bufferTime: { type: 'number', example: 10 },
                     price: { type: 'number', example: 5000 },
-                    status: { type: 'string', enum: ['active', 'inactive'], example: 'active' },
-                    color: { type: 'string', example: '#FF5733', nullable: true },
+                    status: {
+                      type: 'string',
+                      enum: ['active', 'inactive'],
+                      example: 'active',
+                    },
+                    color: {
+                      type: 'string',
+                      example: '#FF5733',
+                      nullable: true,
+                    },
                     maxBookingsPerSlot: { type: 'number', example: 2 },
                     isDeleted: { type: 'boolean', example: false },
                     createdAt: { type: 'string', format: 'date-time' },

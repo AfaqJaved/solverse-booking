@@ -22,12 +22,9 @@ export type UserStatusType =
   | 'suspended'
 
 export const UserStatus = Schema.String.pipe(
-  Schema.filter(
-    (s): s is UserStatusType => VALID_USER_STATUSES.includes(s),
-    {
-      message: () =>
-        '@Solverse/User: status must be one of "pending_verification", "active", "inactive", or "suspended"',
-    },
-  ),
+  Schema.filter((s): s is UserStatusType => VALID_USER_STATUSES.includes(s), {
+    message: () =>
+      '@Solverse/User: status must be one of "pending_verification", "active", "inactive", or "suspended"',
+  }),
 )
 export type UserStatus = typeof UserStatus.Type

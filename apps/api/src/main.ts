@@ -78,7 +78,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(SolverseApiModule, { cors: true })
   await installSwagger(app)
-app.useGlobalFilters(new GlobalExceptionFilter())
+  app.useGlobalFilters(new GlobalExceptionFilter())
   await app.listen(process.env.PORT ?? 3000)
 }
 

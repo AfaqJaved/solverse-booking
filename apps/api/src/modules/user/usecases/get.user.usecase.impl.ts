@@ -19,7 +19,10 @@ export class GetUserUsecaseImpl implements GetUserUsecase {
     userId,
   }: {
     userId: string
-  }): Effect.Effect<User, InvalidInputError | UserNotFoundError | DatabaseFailure> {
+  }): Effect.Effect<
+    User,
+    InvalidInputError | UserNotFoundError | DatabaseFailure
+  > {
     return Effect.gen(this, function* () {
       const decodedUserId = yield* decodeOrFail(UserId)(userId)
 

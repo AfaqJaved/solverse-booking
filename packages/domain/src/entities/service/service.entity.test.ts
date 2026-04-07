@@ -72,7 +72,9 @@ describe('ServiceSchema — id', () => {
   })
 
   it('rejects a UUID v1', () => {
-    const messages = getMessages(with_({ id: '123e4567-e89b-12d3-a456-426614174000' }))
+    const messages = getMessages(
+      with_({ id: '123e4567-e89b-12d3-a456-426614174000' }),
+    )
     expect(messages).toContain(
       '@Solverse/Service: id must be a valid UUID v4 (e.g. "f47ac10b-58cc-4372-a567-0e02b2c3d479")',
     )
@@ -99,12 +101,16 @@ describe('ServiceSchema — businessId', () => {
 describe('ServiceSchema — name', () => {
   it('rejects a name shorter than 2 characters', () => {
     const messages = getMessages(with_({ name: 'H' }))
-    expect(messages).toContain('@Solverse/Service: name must be at least 2 characters')
+    expect(messages).toContain(
+      '@Solverse/Service: name must be at least 2 characters',
+    )
   })
 
   it('rejects a name longer than 100 characters', () => {
     const messages = getMessages(with_({ name: 'H'.repeat(101) }))
-    expect(messages).toContain('@Solverse/Service: name must be at most 100 characters')
+    expect(messages).toContain(
+      '@Solverse/Service: name must be at most 100 characters',
+    )
   })
 })
 
@@ -118,7 +124,9 @@ describe('ServiceSchema — description', () => {
   })
 
   it('accepts a short description', () => {
-    expect(getMessages(with_({ description: 'A classic haircut.' }))).toEqual([])
+    expect(getMessages(with_({ description: 'A classic haircut.' }))).toEqual(
+      [],
+    )
   })
 
   it('rejects a description over 500 characters', () => {
@@ -200,7 +208,7 @@ describe('ServiceSchema — price', () => {
   })
 
   it('rejects a non-integer price', () => {
-    const messages = getMessages(with_({ price: 25.50 }))
+    const messages = getMessages(with_({ price: 25.5 }))
     expect(messages).toEqual(
       expect.arrayContaining([expect.stringContaining('integer')]),
     )

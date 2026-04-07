@@ -13,7 +13,8 @@ export const DeleteServiceDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Delete a service',
-      description: 'Soft-deletes a service. Data is retained for audit purposes but marked as deleted.',
+      description:
+        'Soft-deletes a service. Data is retained for audit purposes but marked as deleted.',
     }),
     ApiParam({
       name: 'serviceId',
@@ -40,9 +41,13 @@ export const DeleteServiceDoc = () =>
           error: { type: 'string', example: 'ServiceNotFoundError' },
           message: {
             type: 'string',
-            example: 'Service with ID "f47ac10b-58cc-4372-a567-0e02b2c3d479" not found',
+            example:
+              'Service with ID "f47ac10b-58cc-4372-a567-0e02b2c3d479" not found',
           },
-          path: { type: 'string', example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
@@ -57,7 +62,10 @@ export const DeleteServiceDoc = () =>
             type: 'string',
             example: 'Service "Haircut" has already been deleted',
           },
-          path: { type: 'string', example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479' },
+          path: {
+            type: 'string',
+            example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },

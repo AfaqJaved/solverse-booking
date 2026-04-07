@@ -6,6 +6,7 @@ import { WorkingHoursId, DayOfWeek } from './entry'
 import type { WorkingHoursData } from './working.hours.entity'
 import { WorkingHoursSchema } from './working.hours.entity'
 import { WorkingHoursTimeOfDay } from './value-objects/time.of.day'
+import { WorkingHoursDeletedError } from './errors/entry'
 
 /**
  * WorkingHours aggregate root.
@@ -116,15 +117,25 @@ export class WorkingHours {
     openTime: WorkingHoursTimeOfDay,
     closeTime: WorkingHoursTimeOfDay,
     updatedBy: UserId,
-  ): WorkingHours {
-    return new WorkingHours({
-      ...this.data,
-      isOpen: true,
-      openTime,
-      closeTime,
-      updatedAt: new Date(),
-      updatedBy,
-    })
+  ): Effect.Effect<WorkingHours, WorkingHoursDeletedError> {
+    if (this.data.isDeleted) {
+      return Effect.fail(
+        new WorkingHoursDeletedError({
+          message: 'Cannot update deleted working hours',
+          cause: `Working hours ${this.data.id} has been deleted`,
+        }),
+      )
+    }
+    return Effect.succeed(
+      new WorkingHours({
+        ...this.data,
+        isOpen: true,
+        openTime,
+        closeTime,
+        updatedAt: new Date(),
+        updatedBy,
+      }),
+    )
   }
 
   /**
@@ -132,15 +143,27 @@ export class WorkingHours {
    *
    * @param updatedBy - Actor making the change
    */
-  setClosed(updatedBy: UserId): WorkingHours {
-    return new WorkingHours({
-      ...this.data,
-      isOpen: false,
-      openTime: null,
-      closeTime: null,
-      updatedAt: new Date(),
-      updatedBy,
-    })
+  setClosed(
+    updatedBy: UserId,
+  ): Effect.Effect<WorkingHours, WorkingHoursDeletedError> {
+    if (this.data.isDeleted) {
+      return Effect.fail(
+        new WorkingHoursDeletedError({
+          message: 'Cannot update deleted working hours',
+          cause: `Working hours ${this.data.id} has been deleted`,
+        }),
+      )
+    }
+    return Effect.succeed(
+      new WorkingHours({
+        ...this.data,
+        isOpen: false,
+        openTime: null,
+        closeTime: null,
+        updatedAt: new Date(),
+        updatedBy,
+      }),
+    )
   }
 
   /**
@@ -148,16 +171,28 @@ export class WorkingHours {
    *
    * @param deletedBy - Actor performing the deletion
    */
-  softDelete(deletedBy: UserId): WorkingHours {
+  softDelete(
+    deletedBy: UserId,
+  ): Effect.Effect<WorkingHours, WorkingHoursDeletedError> {
+    if (this.data.isDeleted) {
+      return Effect.fail(
+        new WorkingHoursDeletedError({
+          message: 'Working hours already deleted',
+          cause: `Working hours ${this.data.id} has already been deleted`,
+        }),
+      )
+    }
     const now = new Date()
-    return new WorkingHours({
-      ...this.data,
-      isDeleted: true,
-      deletedAt: now,
-      deletedBy,
-      updatedAt: now,
-      updatedBy: deletedBy,
-    })
+    return Effect.succeed(
+      new WorkingHours({
+        ...this.data,
+        isDeleted: true,
+        deletedAt: now,
+        deletedBy,
+        updatedAt: now,
+        updatedBy: deletedBy,
+      }),
+    )
   }
 
   // ── Serialization ──────────────────────────────────────────────────────────

@@ -39,13 +39,15 @@ export const VerifyEmailDoc = () =>
       },
     }),
     ApiBadRequestResponse({
-      description: 'Invalid input, email not yet verified externally, or invalid transition',
+      description:
+        'Invalid input, email not yet verified externally, or invalid transition',
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: {
             type: 'string',
-            example: 'InvalidInputError | EmailNotVerifiedError | InvalidUserTransitionError',
+            example:
+              'InvalidInputError | EmailNotVerifiedError | InvalidUserTransitionError',
           },
           message: {
             type: 'string',

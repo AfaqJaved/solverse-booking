@@ -12,7 +12,8 @@ export const CreateServiceDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Create a new service',
-      description: 'Creates a new service for a business. Service names must be unique within a business.',
+      description:
+        'Creates a new service for a business. Service names must be unique within a business.',
     }),
     ApiBody({ type: CreateServiceDto }),
     ApiCreatedResponse({
@@ -34,11 +35,19 @@ export const CreateServiceDoc = () =>
                 example: '550e8400-e29b-41d4-a716-446655440000',
               },
               name: { type: 'string', example: 'Haircut' },
-              description: { type: 'string', example: 'Professional haircut with styling', nullable: true },
+              description: {
+                type: 'string',
+                example: 'Professional haircut with styling',
+                nullable: true,
+              },
               duration: { type: 'number', example: 30 },
               bufferTime: { type: 'number', example: 10 },
               price: { type: 'number', example: 5000 },
-              status: { type: 'string', enum: ['active', 'inactive'], example: 'active' },
+              status: {
+                type: 'string',
+                enum: ['active', 'inactive'],
+                example: 'active',
+              },
               color: { type: 'string', example: '#FF5733', nullable: true },
               maxBookingsPerSlot: { type: 'number', example: 2 },
               isDeleted: { type: 'boolean', example: false },
@@ -57,7 +66,8 @@ export const CreateServiceDoc = () =>
           error: { type: 'string', example: 'ServiceNameTakenError' },
           message: {
             type: 'string',
-            example: 'Service name "Haircut" is already taken for this business',
+            example:
+              'Service name "Haircut" is already taken for this business',
           },
           path: { type: 'string', example: '/services' },
           timestamp: { type: 'string', format: 'date-time' },
@@ -70,7 +80,11 @@ export const CreateServiceDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: { type: 'string', example: 'InvalidInputError' },
-          message: { type: 'string', example: 'Invalid input: duration must be between 5 and 480 minutes' },
+          message: {
+            type: 'string',
+            example:
+              'Invalid input: duration must be between 5 and 480 minutes',
+          },
           path: { type: 'string', example: '/services' },
           timestamp: { type: 'string', format: 'date-time' },
         },

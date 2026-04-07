@@ -28,13 +28,28 @@ export { BusinessUsecasesFactory } from './business.usecases.factory'
 export const BUSINESS_USECASES: Provider[] = [
   { provide: IRegisterBusinessUsecase, useClass: RegisterBusinessUsecaseImpl },
   { provide: IGetBusinessUsecase, useClass: GetBusinessUsecaseImpl },
-  { provide: IGetBusinessesByOwnerUsecase, useClass: GetBusinessesByOwnerUsecaseImpl },
+  {
+    provide: IGetBusinessesByOwnerUsecase,
+    useClass: GetBusinessesByOwnerUsecaseImpl,
+  },
   { provide: IActivateBusinessUsecase, useClass: ActivateBusinessUsecaseImpl },
-  { provide: IDeactivateBusinessUsecase, useClass: DeactivateBusinessUsecaseImpl },
-  { provide: IReactivateBusinessUsecase, useClass: ReactivateBusinessUsecaseImpl },
+  {
+    provide: IDeactivateBusinessUsecase,
+    useClass: DeactivateBusinessUsecaseImpl,
+  },
+  {
+    provide: IReactivateBusinessUsecase,
+    useClass: ReactivateBusinessUsecaseImpl,
+  },
   { provide: ISuspendBusinessUsecase, useClass: SuspendBusinessUsecaseImpl },
-  { provide: IUpdateBusinessProfileUsecase, useClass: UpdateBusinessProfileUsecaseImpl },
-  { provide: IUpdateBusinessSlugUsecase, useClass: UpdateBusinessSlugUsecaseImpl },
+  {
+    provide: IUpdateBusinessProfileUsecase,
+    useClass: UpdateBusinessProfileUsecaseImpl,
+  },
+  {
+    provide: IUpdateBusinessSlugUsecase,
+    useClass: UpdateBusinessSlugUsecaseImpl,
+  },
   { provide: IChangePlanUsecase, useClass: ChangePlanUsecaseImpl },
   { provide: IDeleteBusinessUsecase, useClass: DeleteBusinessUsecaseImpl },
 ]

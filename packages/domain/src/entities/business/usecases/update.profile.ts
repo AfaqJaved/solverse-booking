@@ -2,7 +2,9 @@ import { Effect } from 'effect'
 import { DatabaseFailure, InvalidInputError } from '../../../errors/entry'
 import { BusinessDeletedError, BusinessNotFoundError } from '../errors/entry'
 
-export const IUpdateBusinessProfileUsecase = Symbol('IUpdateBusinessProfileUsecase')
+export const IUpdateBusinessProfileUsecase = Symbol(
+  'IUpdateBusinessProfileUsecase',
+)
 
 export interface UpdateBusinessProfileUsecase {
   execute(params: {
@@ -18,6 +20,9 @@ export interface UpdateBusinessProfileUsecase {
     currency?: string
   }): Effect.Effect<
     void,
-    InvalidInputError | BusinessNotFoundError | BusinessDeletedError | DatabaseFailure
+    | InvalidInputError
+    | BusinessNotFoundError
+    | BusinessDeletedError
+    | DatabaseFailure
   >
 }

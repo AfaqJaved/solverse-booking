@@ -40,9 +40,13 @@ export const ActivateServiceDoc = () =>
           error: { type: 'string', example: 'ServiceNotFoundError' },
           message: {
             type: 'string',
-            example: 'Service with ID "f47ac10b-58cc-4372-a567-0e02b2c3d479" not found',
+            example:
+              'Service with ID "f47ac10b-58cc-4372-a567-0e02b2c3d479" not found',
           },
-          path: { type: 'string', example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479/activate' },
+          path: {
+            type: 'string',
+            example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479/activate',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },
@@ -57,7 +61,10 @@ export const ActivateServiceDoc = () =>
             type: 'string',
             example: 'Cannot activate a deleted service "Haircut"',
           },
-          path: { type: 'string', example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479/activate' },
+          path: {
+            type: 'string',
+            example: '/services/f47ac10b-58cc-4372-a567-0e02b2c3d479/activate',
+          },
           timestamp: { type: 'string', format: 'date-time' },
         },
       },

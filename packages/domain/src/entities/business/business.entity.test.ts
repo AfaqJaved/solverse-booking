@@ -76,7 +76,9 @@ describe('BusinessSchema — id', () => {
   })
 
   it('rejects a UUID v1', () => {
-    const messages = getMessages(with_({ id: '123e4567-e89b-12d3-a456-426614174000' }))
+    const messages = getMessages(
+      with_({ id: '123e4567-e89b-12d3-a456-426614174000' }),
+    )
     expect(messages).toContain(
       '@Solverse/Business: id must be a valid UUID v4 (e.g. "f47ac10b-58cc-4372-a567-0e02b2c3d479")',
     )
@@ -103,7 +105,9 @@ describe('BusinessSchema — ownerId', () => {
 describe('BusinessSchema — name', () => {
   it('rejects a name shorter than 2 characters', () => {
     const messages = getMessages(with_({ name: 'A' }))
-    expect(messages).toContain('@Solverse/Business: name must be at least 2 characters')
+    expect(messages).toContain(
+      '@Solverse/Business: name must be at least 2 characters',
+    )
   })
 
   it('rejects a name longer than 100 characters', () => {
@@ -289,11 +293,15 @@ describe('BusinessSchema — logoUrl', () => {
   })
 
   it('accepts a valid https URL', () => {
-    expect(getMessages(with_({ logoUrl: 'https://cdn.example.com/logo.png' }))).toEqual([])
+    expect(
+      getMessages(with_({ logoUrl: 'https://cdn.example.com/logo.png' })),
+    ).toEqual([])
   })
 
   it('rejects a non-http URL', () => {
-    const messages = getMessages(with_({ logoUrl: 'ftp://files.example.com/logo.png' }))
+    const messages = getMessages(
+      with_({ logoUrl: 'ftp://files.example.com/logo.png' }),
+    )
     // NullOr annotation does not override; raw pattern message surfaces
     expect(messages).toEqual(
       expect.arrayContaining([expect.stringContaining('matching the pattern')]),
@@ -354,7 +362,9 @@ describe('BusinessSchema — suspendedReason', () => {
   })
 
   it('accepts a string reason', () => {
-    expect(getMessages(with_({ suspendedReason: 'Violated terms' }))).toEqual([])
+    expect(getMessages(with_({ suspendedReason: 'Violated terms' }))).toEqual(
+      [],
+    )
   })
 
   it('rejects a number', () => {
@@ -372,12 +382,16 @@ describe('BusinessSchema — suspendedReason', () => {
 describe('BusinessSchema — createdAt', () => {
   it('rejects a date string instead of a Date instance', () => {
     const messages = getMessages(with_({ createdAt: '2024-01-01' }))
-    expect(messages).toContain('@Solverse/Business: createdAt must be a valid Date instance')
+    expect(messages).toContain(
+      '@Solverse/Business: createdAt must be a valid Date instance',
+    )
   })
 
   it('rejects null', () => {
     const messages = getMessages(with_({ createdAt: null }))
-    expect(messages).toContain('@Solverse/Business: createdAt must be a valid Date instance')
+    expect(messages).toContain(
+      '@Solverse/Business: createdAt must be a valid Date instance',
+    )
   })
 })
 
@@ -404,7 +418,9 @@ describe('BusinessSchema — createdBy', () => {
 describe('BusinessSchema — updatedAt', () => {
   it('rejects a date string instead of a Date instance', () => {
     const messages = getMessages(with_({ updatedAt: '2024-01-01' }))
-    expect(messages).toContain('@Solverse/Business: updatedAt must be a valid Date instance')
+    expect(messages).toContain(
+      '@Solverse/Business: updatedAt must be a valid Date instance',
+    )
   })
 })
 
@@ -446,11 +462,15 @@ describe('BusinessSchema — deletedBy', () => {
 describe('BusinessSchema — isDeleted', () => {
   it('rejects a string instead of boolean', () => {
     const messages = getMessages(with_({ isDeleted: 'false' }))
-    expect(messages).toContain('@Solverse/Business: isDeleted must be a boolean')
+    expect(messages).toContain(
+      '@Solverse/Business: isDeleted must be a boolean',
+    )
   })
 
   it('rejects a number instead of boolean', () => {
     const messages = getMessages(with_({ isDeleted: 0 }))
-    expect(messages).toContain('@Solverse/Business: isDeleted must be a boolean')
+    expect(messages).toContain(
+      '@Solverse/Business: isDeleted must be a boolean',
+    )
   })
 })

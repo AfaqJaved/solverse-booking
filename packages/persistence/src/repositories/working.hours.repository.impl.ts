@@ -1,5 +1,5 @@
 import { Effect, Option } from 'effect'
-import { and, eq } from 'drizzle-orm'
+import { and, eq, sql } from 'drizzle-orm'
 import {
   WorkingHours,
   WorkingHoursId,
@@ -19,6 +19,26 @@ export class WorkingHoursRepositoryImpl implements WorkingHoursRepository {
     private readonly persistenceMapperFactory: PersistenceMapperFactory,
   ) {}
 
+  findById(
+    id: WorkingHoursId,
+  ): Effect.Effect<Option.Option<WorkingHours>, DatabaseFailure> {
+    return Effect.gen(this, function* () {
+      const [row] = yield* dbEffect(
+        db
+          .select()
+          .from(workingHoursTable)
+          .where(eq(workingHoursTable.id, id))
+          .limit(1),
+      )
+      if (!row) return Option.none()
+      const workingHours =
+        yield* this.persistenceMapperFactory.workingHoursPersistenceMapper.toDomain(
+          row,
+        )
+      return Option.some(workingHours)
+    })
+  }
+
   findByBusinessId(
     businessId: BusinessId,
   ): Effect.Effect<WorkingHours[], DatabaseFailure> {
@@ -27,7 +47,12 @@ export class WorkingHoursRepositoryImpl implements WorkingHoursRepository {
         db
           .select()
           .from(workingHoursTable)
-          .where(eq(workingHoursTable.businessId, businessId)),
+          .where(
+            and(
+              eq(workingHoursTable.businessId, businessId),
+              eq(workingHoursTable.isDeleted, false),
+            ),
+          ),
       )
       return yield* Effect.all(
         rows.map((row) =>
@@ -52,6 +77,7 @@ export class WorkingHoursRepositoryImpl implements WorkingHoursRepository {
             and(
               eq(workingHoursTable.businessId, businessId),
               eq(workingHoursTable.dayOfWeek, day),
+              eq(workingHoursTable.isDeleted, false),
             ),
           )
           .limit(1),
@@ -107,6 +133,42 @@ export class WorkingHoursRepositoryImpl implements WorkingHoursRepository {
       yield* dbEffect(
         db.delete(workingHoursTable).where(eq(workingHoursTable.id, id)),
       )
+    })
+  }
+
+  dayExistsForBusiness(
+    businessId: BusinessId,
+    day: DayOfWeek,
+    excludeWorkingHoursId?: WorkingHoursId,
+  ): Effect.Effect<boolean, DatabaseFailure> {
+    return Effect.gen(this, function* () {
+      const conditions = [
+        eq(workingHoursTable.businessId, businessId),
+        eq(workingHoursTable.dayOfWeek, day),
+        eq(workingHoursTable.isDeleted, false),
+      ]
+
+      if (excludeWorkingHoursId) {
+        conditions.push(
+          sql`${workingHoursTable.id} != ${excludeWorkingHoursId}`,
+        )
+      }
+
+      const result = yield* dbEffect(
+        db
+          .select({
+            exists: sql<boolean>`EXISTS (
+            SELECT 1 FROM ${workingHoursTable}
+            WHERE ${and(...conditions)}
+            LIMIT 1
+          )`,
+          })
+          .from(workingHoursTable)
+          .limit(1),
+      )
+
+      const row = result[0]
+      return row?.exists ?? false
     })
   }
 }

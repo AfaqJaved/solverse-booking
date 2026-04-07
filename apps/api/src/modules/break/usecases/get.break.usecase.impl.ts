@@ -24,7 +24,8 @@ export class GetBreakUsecaseImpl implements GetBreakUsecase {
     return Effect.gen(this, function* () {
       const decodedId = yield* decodeOrFail(BreakId)(params.breakId)
 
-      const breakEntity = yield* this.repositoryFactory.breakRepository.findById(decodedId)
+      const breakEntity =
+        yield* this.repositoryFactory.breakRepository.findById(decodedId)
 
       if (Option.isNone(breakEntity)) {
         return yield* Effect.fail(

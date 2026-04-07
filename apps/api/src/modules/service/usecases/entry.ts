@@ -20,9 +20,15 @@ export { ServiceUsecasesFactory } from './service.usecases.factory'
 export const SERVICE_USECASES: Provider[] = [
   { provide: ICreateServiceUsecase, useClass: CreateServiceUsecaseImpl },
   { provide: IGetServiceUsecase, useClass: GetServiceUsecaseImpl },
-  { provide: IGetServicesByBusinessUsecase, useClass: GetServicesByBusinessUsecaseImpl },
+  {
+    provide: IGetServicesByBusinessUsecase,
+    useClass: GetServicesByBusinessUsecaseImpl,
+  },
   { provide: IUpdateServiceUsecase, useClass: UpdateServiceUsecaseImpl },
   { provide: IActivateServiceUsecase, useClass: ActivateServiceUsecaseImpl },
-  { provide: IDeactivateServiceUsecase, useClass: DeactivateServiceUsecaseImpl },
+  {
+    provide: IDeactivateServiceUsecase,
+    useClass: DeactivateServiceUsecaseImpl,
+  },
   { provide: IDeleteServiceUsecase, useClass: DeleteServiceUsecaseImpl },
 ]

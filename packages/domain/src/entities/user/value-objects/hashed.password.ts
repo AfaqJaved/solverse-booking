@@ -11,7 +11,10 @@ import { Schema } from 'effect'
  * Invalid: "mypassword123" (plaintext should never be stored)
  */
 export const HashedPassword = Schema.String.pipe(
-  Schema.minLength(1, { message: () => '@Solverse/User: password must be a non-empty hashed password string (bcrypt/argon2)' }),
+  Schema.minLength(1, {
+    message: () =>
+      '@Solverse/User: password must be a non-empty hashed password string (bcrypt/argon2)',
+  }),
   Schema.brand('HashedPassword'),
 )
 

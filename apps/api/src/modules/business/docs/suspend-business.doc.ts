@@ -13,9 +13,14 @@ export const SuspendBusinessDoc = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Suspend business',
-      description: 'Administratively suspends the business with a mandatory reason.',
+      description:
+        'Administratively suspends the business with a mandatory reason.',
     }),
-    ApiParam({ name: 'businessId', format: 'uuid', description: 'Target business ID' }),
+    ApiParam({
+      name: 'businessId',
+      format: 'uuid',
+      description: 'Target business ID',
+    }),
     ApiBody({ type: SuspendBusinessDto }),
     ApiOkResponse({
       description: 'Business suspended successfully',
@@ -33,7 +38,10 @@ export const SuspendBusinessDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.NOT_FOUND },
           error: { type: 'string', example: 'BusinessNotFoundError' },
-          message: { type: 'string', example: 'Business not found: <businessId>' },
+          message: {
+            type: 'string',
+            example: 'Business not found: <businessId>',
+          },
           path: { type: 'string', example: '/businesses/:businessId/suspend' },
           timestamp: { type: 'string', format: 'date-time' },
         },
@@ -44,8 +52,15 @@ export const SuspendBusinessDoc = () =>
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidInputError | InvalidBusinessTransitionError | BusinessDeletedError' },
-          message: { type: 'string', example: 'Cannot suspend a deleted business' },
+          error: {
+            type: 'string',
+            example:
+              'InvalidInputError | InvalidBusinessTransitionError | BusinessDeletedError',
+          },
+          message: {
+            type: 'string',
+            example: 'Cannot suspend a deleted business',
+          },
           path: { type: 'string', example: '/businesses/:businessId/suspend' },
           timestamp: { type: 'string', format: 'date-time' },
         },

@@ -4,9 +4,11 @@ import {
   IBreakRepository,
   IBusinessRepository,
   IServiceRepository,
+  ITimeOffRepository,
   IUserRepository,
   IWorkingHoursRepository,
   ServiceRepository,
+  TimeOffRepository,
   UserRepository,
   WorkingHoursRepository,
 } from '@solverse/domain'
@@ -24,4 +26,6 @@ export class RepositoryFactory {
   public readonly workingHoursRepository!: WorkingHoursRepository
   @Inject(IBreakRepository)
   public readonly breakRepository!: BreakRepository
+  @Inject(ITimeOffRepository)
+  public readonly timeOffRepository!: TimeOffRepository
 }

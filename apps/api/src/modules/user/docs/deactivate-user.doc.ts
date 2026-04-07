@@ -42,7 +42,10 @@ export const DeactivateUserDoc = () =>
       schema: {
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
-          error: { type: 'string', example: 'InvalidInputError | InvalidUserTransitionError' },
+          error: {
+            type: 'string',
+            example: 'InvalidInputError | InvalidUserTransitionError',
+          },
           message: {
             type: 'string',
             example: 'Cannot deactivate a user in current state',

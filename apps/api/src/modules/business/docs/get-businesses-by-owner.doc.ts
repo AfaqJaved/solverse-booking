@@ -27,8 +27,19 @@ export const GetBusinessesByOwnerDoc = () =>
                 email: { type: 'string', format: 'email' },
                 phone: { type: 'string', nullable: true },
                 timezone: { type: 'string', example: 'America/New_York' },
-                status: { type: 'string', enum: ['pending_verification', 'active', 'inactive', 'suspended'] },
-                plan: { type: 'string', enum: ['free', 'starter', 'pro', 'enterprise'] },
+                status: {
+                  type: 'string',
+                  enum: [
+                    'pending_verification',
+                    'active',
+                    'inactive',
+                    'suspended',
+                  ],
+                },
+                plan: {
+                  type: 'string',
+                  enum: ['free', 'starter', 'pro', 'enterprise'],
+                },
                 currency: { type: 'string', example: 'USD' },
                 logoUrl: { type: 'string', nullable: true },
                 description: { type: 'string', nullable: true },
@@ -48,7 +59,10 @@ export const GetBusinessesByOwnerDoc = () =>
         properties: {
           statusCode: { type: 'number', example: HttpStatus.BAD_REQUEST },
           error: { type: 'string', example: 'InvalidInputError' },
-          message: { type: 'string', example: 'Invalid input: ownerId must be a valid UUID' },
+          message: {
+            type: 'string',
+            example: 'Invalid input: ownerId must be a valid UUID',
+          },
           path: { type: 'string', example: '/businesses/owner/:ownerId' },
           timestamp: { type: 'string', format: 'date-time' },
         },

@@ -1,9 +1,6 @@
 import { Effect } from 'effect'
 import { DatabaseFailure, InvalidInputError } from '../../../errors/entry'
-import {
-  InvalidUserTransitionError,
-  UserNotFoundError,
-} from '../errors/entry'
+import { InvalidUserTransitionError, UserNotFoundError } from '../errors/entry'
 
 export const ISuspendUserUsecase = Symbol('ISuspendUserUsecase')
 

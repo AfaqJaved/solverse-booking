@@ -24,7 +24,10 @@ export class ChangeEmailUsecaseImpl implements ChangeEmailUsecase {
     newEmail: string
   }): Effect.Effect<
     void,
-    InvalidInputError | UserNotFoundError | EmailAlreadyTakenError | DatabaseFailure
+    | InvalidInputError
+    | UserNotFoundError
+    | EmailAlreadyTakenError
+    | DatabaseFailure
   > {
     return Effect.gen(this, function* () {
       const decodedUserId = yield* decodeOrFail(UserId)(userId)
