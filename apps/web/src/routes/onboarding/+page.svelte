@@ -10,20 +10,19 @@
 	import CoffeeIcon from '@lucide/svelte/icons/coffee'
 	import CalendarOffIcon from '@lucide/svelte/icons/calendar-off'
 	import SparklesIcon from '@lucide/svelte/icons/sparkles'
+	import PartyPopperIcon from '@lucide/svelte/icons/party-popper'
 
 	import * as Dialog from '$lib/components/ui/dialog/index.js'
 	import { Separator } from '$lib/components/ui/separator/index.js'
-	import { Badge } from '$lib/components/ui/badge/index.js'
 	import { Button } from '$lib/components/ui/button/index.js'
+	import { Progress } from '$lib/components/ui/progress/index.js'
 
-	import OnboardingProgress from '$lib/components/onboarding/onboarding-progress.svelte'
 	import BusinessStep from '$lib/components/onboarding/steps/business-step.svelte'
 	import ServicesStep from '$lib/components/onboarding/steps/services-step.svelte'
 	import WorkingHoursStep from '$lib/components/onboarding/steps/working-hours-step.svelte'
 	import BreaksStep from '$lib/components/onboarding/steps/breaks-step.svelte'
 	import TimeOffsStep from '$lib/components/onboarding/steps/timeoffs-step.svelte'
 	import CompleteStep from '$lib/components/onboarding/steps/complete-step.svelte'
-
 	import OwnerStep from '$lib/components/onboarding/steps/owner-step.svelte'
 
 	import type {
@@ -85,7 +84,8 @@
 			id: 'complete',
 			title: 'Done',
 			description: "You're all set",
-			skippable: false
+			skippable: false,
+			icon: PartyPopperIcon
 		}
 	]
 
@@ -132,6 +132,9 @@
 	let step = $derived(STEPS[currentStep])
 	let isFirst = $derived(currentStep === 0)
 	let isLast = $derived(currentStep === STEPS.length - 1)
+	let isSecondToLast = $derived(currentStep === STEPS.length - 2)
+	let progressPercent = $derived(Math.round((currentStep / (STEPS.length - 1)) * 100))
+
 	let canAdvance = $derived(
 		currentStep === 0
 			? owner.firstName.trim().length > 0 &&
@@ -144,7 +147,6 @@
 				? business.name.trim().length > 0
 				: true
 	)
-	let isSecondToLast = $derived(currentStep === STEPS.length - 2)
 
 	// ── Navigation ────────────────────────────────────────────────────────────
 
@@ -168,7 +170,7 @@
 
 <!-- Page background -->
 <div
-	class="fixed inset-0 bg-gradient-to-br from-primary/5 via-background to-muted/40"
+	class="fixed inset-0 bg-gradient-to-br from-primary/8 via-background to-muted/50"
 	aria-hidden="true"
 ></div>
 
@@ -179,51 +181,86 @@
 		onInteractOutside={(e) => e.preventDefault()}
 		onEscapeKeydown={(e) => e.preventDefault()}
 	>
-		<!-- Branding + step counter -->
-		<div class="flex shrink-0 items-center justify-between px-6 pt-5 pb-1">
-			<div class="flex items-center gap-2.5">
-				<div
-					class="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm"
-				>
-					<GalleryVerticalEndIcon class="size-4" />
+		<!-- ── Header: branding + progress ─────────────────────────────────── -->
+		<div class="shrink-0 space-y-3 px-6 pt-5 pb-4">
+			<!-- Branding row -->
+			<div class="flex items-center justify-between">
+				<div class="flex items-center gap-2.5">
+					<div
+						class="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm"
+					>
+						<GalleryVerticalEndIcon class="size-4" />
+					</div>
+					<span class="text-sm font-semibold tracking-tight">Solverse</span>
 				</div>
-				<span class="text-sm font-semibold tracking-tight">Solverse</span>
+				<span class="text-xs font-medium tabular-nums text-muted-foreground">
+					{#if isLast}
+						Setup complete!
+					{:else}
+						{progressPercent}% complete
+					{/if}
+				</span>
 			</div>
-			<Badge variant="secondary" class="text-xs font-normal tabular-nums">
-				Step {currentStep + 1} of {STEPS.length}
-			</Badge>
-		</div>
 
-		<!-- Step progress -->
-		<div class="shrink-0 px-4">
-			<OnboardingProgress steps={STEPS} {currentStep} />
+			<!-- Progress bar -->
+			<Progress value={progressPercent} class="h-1.5" />
+
+			<!-- Step mini-dots + label -->
+			<div class="flex items-center justify-between">
+				<span class="text-xs text-muted-foreground">
+					{#if isLast}
+						All steps done
+					{:else}
+						Step {currentStep + 1} of {STEPS.length - 1}
+					{/if}
+				</span>
+				<div class="flex items-center gap-1">
+					{#each STEPS as _, i}
+						{#if i < STEPS.length - 1}
+							<div
+								class="rounded-full transition-all duration-300 {i < currentStep
+									? 'size-1.5 bg-primary'
+									: i === currentStep
+										? 'h-1.5 w-3 bg-primary/70'
+										: 'size-1.5 bg-muted-foreground/25'}"
+							></div>
+						{/if}
+					{/each}
+				</div>
+			</div>
 		</div>
 
 		<Separator />
 
-		<!-- Scrollable step content -->
-		<div class="flex-1 overflow-y-auto px-6 py-5">
-			<div class="space-y-4">
-				{#if !isLast}
-					<div class="flex items-center gap-3">
-						{#if step.icon}
-							<div
-								class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10"
-							>
-								<step.icon class="size-5 text-primary" />
-							</div>
-						{/if}
-						<div>
-							<h2 class="text-lg font-semibold tracking-tight">{step.description}</h2>
-							{#if step.skippable}
-								<p class="text-xs text-muted-foreground">
-									Optional — set up later from your dashboard.
-								</p>
-							{/if}
+		<!-- ── Scrollable content ───────────────────────────────────────────── -->
+		<div class="flex-1 overflow-y-auto">
+			<!-- Step banner -->
+			{#if !isLast}
+				<div
+					class="flex items-center gap-4 border-b border-border/60 bg-gradient-to-r from-primary/5 via-primary/3 to-transparent px-6 py-4"
+				>
+					{#if step.icon}
+						<div
+							class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/15 shadow-sm"
+						>
+							<step.icon class="size-6 text-primary" />
 						</div>
+					{/if}
+					<div class="min-w-0">
+						<h2 class="text-lg font-semibold tracking-tight leading-tight">{step.description}</h2>
+						{#if step.skippable}
+							<p class="mt-0.5 text-xs text-muted-foreground">
+								Optional — set up later from your dashboard.
+							</p>
+						{:else}
+							<p class="mt-0.5 text-xs text-muted-foreground">Required to continue.</p>
+						{/if}
 					</div>
-				{/if}
+				</div>
+			{/if}
 
+			<!-- Form content -->
+			<div class="px-6 py-5">
 				{#if currentStep === 0}
 					<OwnerStep data={owner} />
 				{:else if currentStep === 1}
@@ -244,7 +281,7 @@
 
 		<Separator />
 
-		<!-- Footer navigation -->
+		<!-- ── Footer navigation ────────────────────────────────────────────── -->
 		<div class="flex shrink-0 items-center justify-between px-6 py-4">
 			<Button
 				variant="ghost"
@@ -258,7 +295,7 @@
 
 			<div class="flex items-center gap-2">
 				{#if step.skippable && !isLast}
-					<Button variant="outline" onclick={skip}>
+					<Button variant="outline" size="sm" onclick={skip}>
 						Skip
 						<ChevronsRightIcon class="size-4" />
 					</Button>

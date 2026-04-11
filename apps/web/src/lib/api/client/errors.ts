@@ -28,4 +28,3 @@ export const handleApiError = (error: unknown): never => {
 	console.error('Unknown Error:', error)
 	throw new Error('An unknown error occurred')
 }
-

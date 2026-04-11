@@ -56,4 +56,3 @@ export const createAxiosClient = (baseURL: string): AxiosInstance => {
 
 // Create default client instance
 export const apiClient = createAxiosClient(API_CONFIG.BASE_URL)
-

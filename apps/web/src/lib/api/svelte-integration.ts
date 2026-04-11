@@ -1,22 +1,22 @@
-import { 
-  authClient, 
-  userClient, 
-  businessClient, 
-  serviceClient, 
-  workingHoursClient, 
-  breakClient, 
-  timeoffClient 
+import {
+	authClient,
+	userClient,
+	businessClient,
+	serviceClient,
+	workingHoursClient,
+	breakClient,
+	timeoffClient
 } from './index'
 
 // Helper for Svelte components to access all API clients
 export const useApi = () => ({
-  auth: authClient,
-  users: userClient,
-  businesses: businessClient,
-  services: serviceClient,
-  workingHours: workingHoursClient,
-  breaks: breakClient,
-  timeoff: timeoffClient,
+	auth: authClient,
+	users: userClient,
+	businesses: businessClient,
+	services: serviceClient,
+	workingHours: workingHoursClient,
+	breaks: breakClient,
+	timeoff: timeoffClient
 })
 
 // Type-safe API usage

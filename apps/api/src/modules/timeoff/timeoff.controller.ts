@@ -27,7 +27,9 @@ import {
 } from './docs/entry'
 
 @ApiTags('TimeOff')
-@Controller(`${APICONSTANTS.BASE_PATHS.BUSINESSES}/:businessId/${APICONSTANTS.BASE_PATHS.TIMEOFF}`)
+@Controller(
+  `${APICONSTANTS.BASE_PATHS.BUSINESSES}/:businessId/${APICONSTANTS.BASE_PATHS.TIMEOFF}`,
+)
 export class TimeOffController {
   constructor(
     private readonly timeOffUsecaseFactory: TimeOffUsecaseFactory,

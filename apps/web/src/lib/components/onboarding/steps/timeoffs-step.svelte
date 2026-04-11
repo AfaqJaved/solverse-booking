@@ -34,13 +34,13 @@
 		draftLabel = ''
 		draftAllDay = true
 		draftCadence = 'once'
-		
+
 		// Set default dates (tomorrow to day after tomorrow)
 		const tomorrow = new Date()
 		tomorrow.setDate(tomorrow.getDate() + 1)
 		const dayAfter = new Date(tomorrow)
 		dayAfter.setDate(dayAfter.getDate() + 1)
-		
+
 		draftStartDate = tomorrow.toISOString().split('T')[0]
 		draftEndDate = dayAfter.toISOString().split('T')[0]
 		draftStartTime = '09:00'
@@ -49,7 +49,7 @@
 
 	function confirmAdd() {
 		if (!draftLabel.trim()) return
-		
+
 		timeoffs = [
 			...timeoffs,
 			{
@@ -102,9 +102,9 @@
 		{#each timeoffs as timeoff (timeoff.id)}
 			<div class="flex items-center gap-3 rounded-lg border border-border bg-muted/20 px-3 py-2">
 				<CalendarIcon class="size-4 shrink-0 text-muted-foreground" />
-				<div class="flex-1 min-w-0">
+				<div class="min-w-0 flex-1">
 					<div class="flex items-center gap-2">
-						<span class="text-sm font-medium truncate">{timeoff.label}</span>
+						<span class="truncate text-sm font-medium">{timeoff.label}</span>
 						<Badge variant="secondary" class="text-xs">
 							{formatCadence(timeoff.cadence)}
 						</Badge>
@@ -138,7 +138,9 @@
 					<CalendarIcon class="size-7 text-muted-foreground" />
 					<div>
 						<p class="text-sm font-medium">No time off scheduled</p>
-						<p class="text-xs text-muted-foreground">Add holidays, vacations, or maintenance days.</p>
+						<p class="text-xs text-muted-foreground">
+							Add holidays, vacations, or maintenance days.
+						</p>
 					</div>
 				</div>
 			{/if}
@@ -157,7 +159,7 @@
 
 			<div class="flex items-center gap-2">
 				<Checkbox id="all-day" bind:checked={draftAllDay} />
-				<label for="all-day" class="text-sm font-medium cursor-pointer select-none">All Day</label>
+				<label for="all-day" class="cursor-pointer text-sm font-medium select-none">All Day</label>
 			</div>
 
 			<div class="grid grid-cols-2 gap-2">

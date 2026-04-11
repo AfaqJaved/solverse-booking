@@ -120,7 +120,8 @@ export const APICONSTANTS = {
   WORKING_HOURS: {
     CREATE: '/working-hours',
     GET_BY_ID: (workingHoursId: string) => `/working-hours/${workingHoursId}`,
-    GET_BY_BUSINESS: (businessId: string) => `/working-hours/business/${businessId}`,
+    GET_BY_BUSINESS: (businessId: string) =>
+      `/working-hours/business/${businessId}`,
     UPDATE: (workingHoursId: string) => `/working-hours/${workingHoursId}`,
     DELETE: (workingHoursId: string) => `/working-hours/${workingHoursId}`,
   },
@@ -136,9 +137,13 @@ export const APICONSTANTS = {
   TIMEOFF: {
     CREATE: (businessId: string) => `/businesses/${businessId}/timeoff`,
     GET_ALL: (businessId: string) => `/businesses/${businessId}/timeoff`,
-    GET_BY_ID: (businessId: string, timeoffId: string) => `/businesses/${businessId}/timeoff/${timeoffId}`,
-    UPDATE: (businessId: string, timeoffId: string) => `/businesses/${businessId}/timeoff/${timeoffId}`,
-    DELETE: (businessId: string, timeoffId: string) => `/businesses/${businessId}/timeoff/${timeoffId}`,
-    CANCEL: (businessId: string, timeoffId: string) => `/businesses/${businessId}/timeoff/${timeoffId}/cancel`,
+    GET_BY_ID: (businessId: string, timeoffId: string) =>
+      `/businesses/${businessId}/timeoff/${timeoffId}`,
+    UPDATE: (businessId: string, timeoffId: string) =>
+      `/businesses/${businessId}/timeoff/${timeoffId}`,
+    DELETE: (businessId: string, timeoffId: string) =>
+      `/businesses/${businessId}/timeoff/${timeoffId}`,
+    CANCEL: (businessId: string, timeoffId: string) =>
+      `/businesses/${businessId}/timeoff/${timeoffId}/cancel`,
   },
 }

@@ -11,7 +11,7 @@
 		value?: number
 		max?: number
 	} = $props()
-	
+
 	let ref: HTMLDivElement | undefined = $state()
 </script>
 

@@ -16,11 +16,11 @@ export * from './breaks/break.client'
 export * from './timeoff/timeoff.client'
 
 // Re-export shared types for convenience
-export type { 
-  UserApi, 
-  BusinessApi, 
-  ServiceApi, 
-  WorkingHoursApi, 
-  BreakApi, 
-  TimeOffApi 
+export type {
+	UserApi,
+	BusinessApi,
+	ServiceApi,
+	WorkingHoursApi,
+	BreakApi,
+	TimeOffApi
 } from '@solverse/shared'

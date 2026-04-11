@@ -4,17 +4,20 @@ import { apiClient } from '../client/axios.client'
 import { setTokenInMemory, clearTokenFromMemory } from './token.manager'
 
 export const authClient = {
-  login: async (credentials: UserApi.Login.Request): Promise<UserApi.Login.Response> => {
-    const response = await apiClient.post<UserApi.Login.Response>(APICONSTANTS.AUTH.LOGIN, credentials)
-    setTokenInMemory(response.data.token)
-    return response.data
-  },
+	login: async (credentials: UserApi.Login.Request): Promise<UserApi.Login.Response> => {
+		const response = await apiClient.post<UserApi.Login.Response>(
+			APICONSTANTS.AUTH.LOGIN,
+			credentials
+		)
+		setTokenInMemory(response.data.token)
+		return response.data
+	},
 
-  logout: (): void => {
-    clearTokenFromMemory()
-  },
+	logout: (): void => {
+		clearTokenFromMemory()
+	},
 
-  verifyEmail: async (userId: string): Promise<void> => {
-    await apiClient.post(APICONSTANTS.AUTH.VERIFY_EMAIL(userId))
-  },
+	verifyEmail: async (userId: string): Promise<void> => {
+		await apiClient.post(APICONSTANTS.AUTH.VERIFY_EMAIL(userId))
+	}
 }

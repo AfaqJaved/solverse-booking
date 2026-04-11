@@ -7,7 +7,13 @@
 	import CalendarIcon from '@lucide/svelte/icons/calendar'
 	import CoffeeIcon from '@lucide/svelte/icons/coffee'
 	import CalendarOffIcon from '@lucide/svelte/icons/calendar-off'
-	import type { BusinessFormData, ServiceFormData, DaySchedule, BreakFormData, TimeOffFormData } from '../types.js'
+	import type {
+		BusinessFormData,
+		ServiceFormData,
+		DaySchedule,
+		BreakFormData,
+		TimeOffFormData
+	} from '../types.js'
 	import { DURATION_LABELS } from '../types.js'
 
 	let {
@@ -24,7 +30,7 @@
 		timeoffs: TimeOffFormData[]
 	} = $props()
 
-		let openDays = $derived(schedule.filter((d) => d.isOpen))
+	let openDays = $derived(schedule.filter((d) => d.isOpen))
 
 	function formatDate(dateStr: string): string {
 		const date = new Date(dateStr)
