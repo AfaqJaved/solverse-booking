@@ -22,7 +22,7 @@
     "eslint": "^9.18.0",
     "typescript": "^5.8.2"
   },
-   "dependencies": {
+  "dependencies": {
     "@solverse/typescript-config": "workspace:*",
     "@solverse/eslint-config": "workspace:*"
   }

@@ -1,1 +1,1 @@
-export * from './working.hours.api'
+export * from './working.hours.api.js'

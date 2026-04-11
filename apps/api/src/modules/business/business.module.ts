@@ -7,5 +7,6 @@ import { BUSINESS_USECASES, BusinessUsecasesFactory } from './usecases/entry'
   imports: [CommonModule],
   controllers: [BusinessController],
   providers: [...BUSINESS_USECASES, BusinessUsecasesFactory],
+  exports: [BusinessUsecasesFactory],
 })
 export class BusinessModule {}

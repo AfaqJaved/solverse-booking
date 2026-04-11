@@ -7,6 +7,7 @@ import { ServiceModule } from './modules/service/service.module'
 import { BreakModule } from './modules/break/break.module'
 import { WorkingHoursModule } from './modules/working-hours/working.hours.module'
 import { TimeOffModule } from './modules/timeoff/timeoff.module'
+import { OnboardingModule } from './modules/onboarding/onboarding.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TimeOffModule } from './modules/timeoff/timeoff.module'
     BreakModule,
     WorkingHoursModule,
     TimeOffModule,
+    OnboardingModule,
   ],
   controllers: [],
   providers: [],

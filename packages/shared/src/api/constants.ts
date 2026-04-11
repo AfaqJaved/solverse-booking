@@ -6,6 +6,7 @@ export const APICONSTANTS = {
     WORKING_HOURS: 'working-hours',
     BREAKS: 'breaks',
     TIMEOFF: 'timeoff',
+    ONBOARDING: 'onboarding',
   },
 
   // Route paths for controllers (relative to base path)
@@ -73,6 +74,10 @@ export const APICONSTANTS = {
       UPDATE: ':timeoffId',
       DELETE: ':timeoffId',
       CANCEL: ':timeoffId/cancel',
+    },
+
+    ONBOARDING: {
+      REGISTER: 'register',
     },
   },
 
@@ -145,5 +150,8 @@ export const APICONSTANTS = {
       `/businesses/${businessId}/timeoff/${timeoffId}`,
     CANCEL: (businessId: string, timeoffId: string) =>
       `/businesses/${businessId}/timeoff/${timeoffId}/cancel`,
+  },
+  ONBOARDING: {
+    REGISTER: '/onboarding/register',
   },
 }

@@ -8,5 +8,6 @@ import { UserUsecaseFactory } from './usecases/user.usecases.factory'
   imports: [CommonModule],
   controllers: [UserController],
   providers: [...USER_USECASES, UserUsecaseFactory],
+  exports: [UserUsecaseFactory],
 })
 export class UserModule {}

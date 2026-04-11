@@ -34,7 +34,8 @@
 		BreakFormData,
 		TimeOffFormData
 	} from '$lib/components/onboarding/types.js'
-
+	import { onboardingClient } from '$lib/api/onboarding/onboarding.client'
+	import { APICONSTANTS } from '@solverse/shared'
 	// ── Step definitions ─────────────────────────────────────────────────────
 
 	const STEPS: StepConfig[] = [
@@ -193,7 +194,7 @@
 					</div>
 					<span class="text-sm font-semibold tracking-tight">Solverse</span>
 				</div>
-				<span class="text-xs font-medium tabular-nums text-muted-foreground">
+				<span class="text-xs font-medium text-muted-foreground tabular-nums">
 					{#if isLast}
 						Setup complete!
 					{:else}
@@ -241,13 +242,13 @@
 				>
 					{#if step.icon}
 						<div
-							class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/15 shadow-sm"
+							class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 shadow-sm ring-1 ring-primary/15"
 						>
 							<step.icon class="size-6 text-primary" />
 						</div>
 					{/if}
 					<div class="min-w-0">
-						<h2 class="text-lg font-semibold tracking-tight leading-tight">{step.description}</h2>
+						<h2 class="text-lg leading-tight font-semibold tracking-tight">{step.description}</h2>
 						{#if step.skippable}
 							<p class="mt-0.5 text-xs text-muted-foreground">
 								Optional — set up later from your dashboard.

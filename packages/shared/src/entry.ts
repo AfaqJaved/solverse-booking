@@ -1,2 +1,2 @@
-export * from './response/entry'
-export * from './api/entry'
+export * from './response/entry.js'
+export * from './api/entry.js'
