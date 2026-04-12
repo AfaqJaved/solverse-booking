@@ -5,6 +5,7 @@ export * from './working-hours/entry'
 export * from './break/entry'
 export * from './timeoff/entry'
 export * from './common/entry'
+export * from './onboarding/entry'
 
 export type DomainEntityName =
   | 'User'

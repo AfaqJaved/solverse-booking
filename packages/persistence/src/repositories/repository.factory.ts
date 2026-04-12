@@ -3,10 +3,12 @@ import {
   BusinessRepository,
   IBreakRepository,
   IBusinessRepository,
+  IOnboardingRepository,
   IServiceRepository,
   ITimeOffRepository,
   IUserRepository,
   IWorkingHoursRepository,
+  OnboardingRepository,
   ServiceRepository,
   TimeOffRepository,
   UserRepository,
@@ -28,4 +30,6 @@ export class RepositoryFactory {
   public readonly breakRepository!: BreakRepository
   @Inject(ITimeOffRepository)
   public readonly timeOffRepository!: TimeOffRepository
+  @Inject(IOnboardingRepository)
+  public readonly onboardingRepository!: OnboardingRepository
 }

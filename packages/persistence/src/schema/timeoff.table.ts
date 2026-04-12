@@ -3,7 +3,6 @@ import {
   pgTable,
   uuid,
   varchar,
-  timestamp,
   boolean,
   date,
 } from 'drizzle-orm/pg-core'

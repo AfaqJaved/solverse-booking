@@ -2,6 +2,9 @@
   "name": "solverse",
   "private": true,
   "packageManager": "bun@1.3.9",
+  "scripts": {
+    "studio": "bun run --filter=@solverse/persistence db:studio"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "turbo": "^2.8.21"
@@ -9,7 +12,10 @@
   "peerDependencies": {
     "typescript": "^5"
   },
-  "workspaces": ["packages/*", "apps/*"],
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "dependencies": {
     "effect": "^3.21.0"
   }
