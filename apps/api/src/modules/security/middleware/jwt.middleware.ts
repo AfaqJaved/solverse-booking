@@ -8,7 +8,11 @@ import { Effect } from 'effect'
 import { JwtUtils } from 'src/lib/jwt/jwt.utils'
 import { LoginJwtPayload } from 'src/lib/jwt/payload/login.jwt.payload'
 
-const PUBLIC_URLS: string[] = ['/users/login', '/users/register']
+const PUBLIC_URLS: string[] = [
+  '/api/users/login',
+  '/api/users/register',
+  '/api/onboarding/register',
+]
 
 @Injectable()
 export class JwtMiddleware implements NestMiddleware {

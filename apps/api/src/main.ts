@@ -12,7 +12,7 @@ function validateEnv(): Effect.Effect<void, never, never> {
   const requiredEnvVars = [
     'DATABASE_URL',
     'JWT_ACCESS_SECRET',
-    'JWT_REFRESH_SECRTE',
+    'JWT_REFRESH_SECRET',
     'NODE_ENV',
   ] as const
   return Effect.gen(function* () {
@@ -63,7 +63,7 @@ async function installSwagger(app: INestApplication): Promise<void> {
 
   if (NODE_ENV !== 'production')
     app.use(
-      '/api',
+      '/docs',
       apiReference({
         content: document,
       }),
@@ -82,6 +82,7 @@ async function bootstrap() {
   }
 
   const app = await NestFactory.create(SolverseApiModule, { cors: true })
+  app.setGlobalPrefix('api')
   await installSwagger(app)
   app.useGlobalFilters(new GlobalExceptionFilter())
   await app.listen(process.env.PORT ?? 3000)
