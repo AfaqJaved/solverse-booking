@@ -36,6 +36,13 @@
       "when": 1775406477724,
       "tag": "0004_breaks_table",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1775988297251,
+      "tag": "0005_timeoff_table",
+      "breakpoints": true
     }
   ]
 }
