@@ -5,7 +5,8 @@ export namespace UserApi {
       password: string
     }
     export interface Response {
-      token: string
+      accessToken: string
+      refreshToken: string
     }
   }
 
@@ -79,6 +80,15 @@ export namespace UserApi {
   export namespace SuspendUser {
     export interface Request {
       reason: string
+    }
+  }
+
+  export namespace RefreshToken {
+    export interface Request {
+      refreshToken: string
+    }
+    export interface Response {
+      accessToken: string
     }
   }
 }

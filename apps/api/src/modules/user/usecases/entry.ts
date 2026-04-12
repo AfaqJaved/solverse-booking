@@ -9,6 +9,7 @@ import {
   IDeactivateUserUsecase,
   IReactivateUserUsecase,
   ISuspendUserUsecase,
+  IRefreshTokenUsecase,
 } from '@solverse/domain'
 import { LoginUserUsecaseImpl } from './login.user.usecase.impl'
 import { RegisterUserUsecaseImpl } from './register.user.usecase.impl'
@@ -19,6 +20,7 @@ import { ChangeEmailUsecaseImpl } from './change.email.usecase.impl'
 import { DeactivateUserUsecaseImpl } from './deactivate.user.usecase.impl'
 import { ReactivateUserUsecaseImpl } from './reactivate.user.usecase.impl'
 import { SuspendUserUsecaseImpl } from './suspend.user.usecase.impl'
+import { RefreshTokenUsecaseImpl } from './refresh.token.usecase.impl'
 
 export const USER_USECASES: Provider[] = [
   { provide: ILoginUserUsecase, useClass: LoginUserUsecaseImpl },
@@ -30,4 +32,5 @@ export const USER_USECASES: Provider[] = [
   { provide: IDeactivateUserUsecase, useClass: DeactivateUserUsecaseImpl },
   { provide: IReactivateUserUsecase, useClass: ReactivateUserUsecaseImpl },
   { provide: ISuspendUserUsecase, useClass: SuspendUserUsecaseImpl },
+  { provide: IRefreshTokenUsecase, useClass: RefreshTokenUsecaseImpl },
 ]

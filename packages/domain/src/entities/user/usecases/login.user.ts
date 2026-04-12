@@ -17,7 +17,7 @@ export interface LoginUserUsecase {
     userNameOrEmail: string
     password: string
   }): Effect.Effect<
-    { token: string },
+    { accessToken: string; refreshToken: string },
     | UserNotFoundError
     | UserSuspendedError
     | UserInactiveError

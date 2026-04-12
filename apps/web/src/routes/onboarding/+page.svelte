@@ -34,8 +34,10 @@
 		BreakFormData,
 		TimeOffFormData
 	} from '$lib/components/onboarding/types.js'
+	import { goto } from '$app/navigation'
+	import type { OnboardingApi } from '@solverse/shared'
 	import { onboardingClient } from '$lib/api/onboarding/onboarding.client'
-	import { APICONSTANTS } from '@solverse/shared'
+	import { isApiError } from '$lib/api/client/errors'
 	// ── Step definitions ─────────────────────────────────────────────────────
 
 	const STEPS: StepConfig[] = [
@@ -128,6 +130,9 @@
 	let breaks = $state<BreakFormData[]>([])
 	let timeoffs = $state<TimeOffFormData[]>([])
 
+	let isSubmitting = $state(false)
+	let submitError = $state<string | null>(null)
+
 	// ── Derived ───────────────────────────────────────────────────────────────
 
 	let step = $derived(STEPS[currentStep])
@@ -163,9 +168,68 @@
 		if (step.skippable && !isLast) currentStep++
 	}
 
-	function finish() {
-		// TODO: call API with { owner, business, services, schedule, breaks, timeoffs }
-		console.log('Onboarding complete', { owner, business, services, schedule, breaks, timeoffs })
+	async function finish() {
+		isSubmitting = true
+		submitError = null
+
+		const payload: OnboardingApi.Register.Request = {
+			owner: {
+				firstName: owner.firstName,
+				lastName: owner.lastName,
+				username: owner.username,
+				email: owner.email,
+				phone: owner.phone || undefined,
+				password: owner.password,
+				timezone: business.timezone
+			},
+			business: {
+				name: business.name,
+				slug: business.slug,
+				description: business.description || null,
+				timezone: business.timezone,
+				phone: business.phone || undefined,
+				email: business.email,
+				currency: 'USD'
+			},
+			workingHours: schedule.map((s) => ({
+				day: s.day as OnboardingApi.Register.DaySchedule['day'],
+				isOpen: s.isOpen,
+				openTime: s.openTime || null,
+				closeTime: s.closeTime || null
+			})),
+			breaks: breaks.map((b) => ({
+				id: b.id,
+				day: b.day as OnboardingApi.Register.DaySchedule['day'],
+				startTime: b.startTime,
+				endTime: b.endTime,
+				label: b.label
+			})),
+			timeOffs: timeoffs.map((t) => ({
+				label: t.label,
+				allDay: t.allDay,
+				cadence: t.cadence,
+				startDate: t.startDate,
+				endDate: t.endDate,
+				startTime: t.startTime,
+				endTime: t.endTime
+			})),
+			services: services.map((s) => ({
+				id: s.id,
+				name: s.name,
+				duration: Number(s.duration),
+				price: Number(s.price),
+				description: s.description || null
+			}))
+		}
+
+		try {
+			await onboardingClient.register(payload)
+			await goto('/home')
+		} catch (err) {
+			submitError = isApiError(err) ? err.message : 'Something went wrong. Please try again.'
+		} finally {
+			isSubmitting = false
+		}
 	}
 </script>
 
@@ -283,36 +347,41 @@
 		<Separator />
 
 		<!-- ── Footer navigation ────────────────────────────────────────────── -->
-		<div class="flex shrink-0 items-center justify-between px-6 py-4">
-			<Button
-				variant="ghost"
-				onclick={back}
-				disabled={isFirst}
-				class={isFirst ? 'pointer-events-none opacity-0' : ''}
-			>
-				<ArrowLeftIcon class="size-4" />
-				Back
-			</Button>
+		<div class="shrink-0 space-y-2 px-6 py-4">
+			{#if submitError}
+				<p class="text-center text-sm text-destructive">{submitError}</p>
+			{/if}
+			<div class="flex items-center justify-between">
+				<Button
+					variant="ghost"
+					onclick={back}
+					disabled={isFirst || isSubmitting}
+					class={isFirst ? 'pointer-events-none opacity-0' : ''}
+				>
+					<ArrowLeftIcon class="size-4" />
+					Back
+				</Button>
 
-			<div class="flex items-center gap-2">
-				{#if step.skippable && !isLast}
-					<Button variant="outline" size="sm" onclick={skip}>
-						Skip
-						<ChevronsRightIcon class="size-4" />
-					</Button>
-				{/if}
+				<div class="flex items-center gap-2">
+					{#if step.skippable && !isLast}
+						<Button variant="outline" size="sm" onclick={skip} disabled={isSubmitting}>
+							Skip
+							<ChevronsRightIcon class="size-4" />
+						</Button>
+					{/if}
 
-				{#if isLast}
-					<Button onclick={finish} href="/home">
-						Go to Dashboard
-						<CheckIcon class="size-4" />
-					</Button>
-				{:else}
-					<Button onclick={next} disabled={!canAdvance}>
-						{isSecondToLast ? 'Finish Setup' : 'Continue'}
-						<ArrowRightIcon class="size-4" />
-					</Button>
-				{/if}
+					{#if isLast}
+						<Button onclick={finish} disabled={isSubmitting}>
+							{isSubmitting ? 'Setting up…' : 'Go to Dashboard'}
+							<CheckIcon class="size-4" />
+						</Button>
+					{:else}
+						<Button onclick={next} disabled={!canAdvance}>
+							{isSecondToLast ? 'Finish Setup' : 'Continue'}
+							<ArrowRightIcon class="size-4" />
+						</Button>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</Dialog.Content>

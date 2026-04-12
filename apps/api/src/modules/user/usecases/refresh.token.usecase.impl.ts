@@ -1,48 +1,54 @@
 import { Injectable } from '@nestjs/common'
 import {
   DatabaseFailure,
-  LoginUserUsecase,
+  RefreshTokenUsecase,
   User,
-  UserInvalidCredentialsError,
+  UserInactiveError,
+  UserInvalidTokenError,
   UserNotFoundError,
   UserSuspendedError,
-  UserInactiveError,
 } from '@solverse/domain'
 import { RepositoryFactory } from '@solverse/persistence'
 import { Effect, Option } from 'effect'
 import { JwtUtils } from '../../../lib/jwt/entry'
-import { HashUtils } from '../../../lib/hash/entry'
-import { LoginJwtPayload } from 'src/lib/jwt/payload/login.jwt.payload'
+import { LoginJwtPayload } from '../../../lib/jwt/payload/login.jwt.payload'
+import { UserId } from '@solverse/domain'
 
 @Injectable()
-export class LoginUserUsecaseImpl implements LoginUserUsecase {
+export class RefreshTokenUsecaseImpl implements RefreshTokenUsecase {
   constructor(private readonly repositoryFactory: RepositoryFactory) {}
 
-  execute({
-    userNameOrEmail,
-    password,
-  }: {
-    userNameOrEmail: string
-    password: string
-  }): Effect.Effect<
-    { accessToken: string; refreshToken: string },
+  execute({ refreshToken }: { refreshToken: string }): Effect.Effect<
+    { accessToken: string },
     | UserNotFoundError
     | UserSuspendedError
     | UserInactiveError
-    | UserInvalidCredentialsError
+    | UserInvalidTokenError
     | DatabaseFailure
   > {
     return Effect.gen(this, function* () {
-      const maybeUser =
-        yield* this.repositoryFactory.userRepository.findByUsernameOrEmail(
-          userNameOrEmail,
-        )
+      const payload = yield* JwtUtils.verifyToken<LoginJwtPayload>(
+        refreshToken,
+        { issuer: 'solverse', secretEnvKey: 'JWT_REFRESH_SECRET' },
+      ).pipe(
+        Effect.mapError(
+          () =>
+            new UserInvalidTokenError({
+              message: 'Invalid or expired refresh token',
+              cause: 'Invalid or expired refresh token',
+            }),
+        ),
+      )
+
+      const maybeUser = yield* this.repositoryFactory.userRepository.findById(
+        payload.userId as UserId,
+      )
 
       if (Option.isNone(maybeUser)) {
         return yield* Effect.fail(
           new UserNotFoundError({
-            message: `User not found against ${userNameOrEmail} `,
-            cause: `User not found against ${userNameOrEmail} `,
+            message: `User not found for id ${payload.userId}`,
+            cause: `User not found for id ${payload.userId}`,
           }),
         )
       }
@@ -59,24 +65,11 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
         )
       }
 
-      if (raw.status === 'inactive')
+      if (raw.status === 'inactive') {
         return yield* Effect.fail(
           new UserInactiveError({
             message: 'User account is inactive',
             cause: 'User account is inactive',
-          }),
-        )
-
-      const isPasswordValid = yield* HashUtils.verify(
-        password,
-        raw.password,
-      ).pipe(Effect.orDie)
-
-      if (!isPasswordValid) {
-        return yield* Effect.fail(
-          new UserInvalidCredentialsError({
-            message: 'Invalid credentials',
-            cause: 'Invalid credentials',
           }),
         )
       }
@@ -86,12 +79,7 @@ export class LoginUserUsecaseImpl implements LoginUserUsecase {
         { expiresIn: '1h', issuer: 'solverse', secretEnvKey: 'JWT_ACCESS_SECRET' },
       ).pipe(Effect.orDie)
 
-      const refreshToken = yield* JwtUtils.createToken<LoginJwtPayload>(
-        { userId: raw.id, role: raw.role },
-        { expiresIn: '7h', issuer: 'solverse', secretEnvKey: 'JWT_REFRESH_SECRET' },
-      ).pipe(Effect.orDie)
-
-      return { accessToken, refreshToken }
+      return { accessToken }
     })
   }
 }

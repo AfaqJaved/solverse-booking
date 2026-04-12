@@ -9,6 +9,7 @@ import {
   IDeactivateUserUsecase,
   IReactivateUserUsecase,
   ISuspendUserUsecase,
+  IRefreshTokenUsecase,
   LoginUserUsecase,
   RegisterUserUsecase,
   VerifyEmailUsecase,
@@ -18,6 +19,7 @@ import {
   DeactivateUserUsecase,
   ReactivateUserUsecase,
   SuspendUserUsecase,
+  RefreshTokenUsecase,
 } from '@solverse/domain'
 
 @Injectable()
@@ -48,4 +50,7 @@ export class UserUsecaseFactory {
 
   @Inject(ISuspendUserUsecase)
   public readonly suspendUserUsecase!: SuspendUserUsecase
+
+  @Inject(IRefreshTokenUsecase)
+  public readonly refreshTokenUsecase!: RefreshTokenUsecase
 }

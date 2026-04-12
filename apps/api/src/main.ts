@@ -9,7 +9,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { apiReference } from '@scalar/nestjs-api-reference'
 
 function validateEnv(): Effect.Effect<void, never, never> {
-  const requiredEnvVars = ['DATABASE_URL', 'JWT_SECRET', 'NODE_ENV'] as const
+  const requiredEnvVars = [
+    'DATABASE_URL',
+    'JWT_ACCESS_SECRET',
+    'JWT_REFRESH_SECRTE',
+    'NODE_ENV',
+  ] as const
   return Effect.gen(function* () {
     const missing: string[] = []
 

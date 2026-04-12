@@ -14,11 +14,14 @@ export type JwtPayload<
 export interface TokenOptions {
   expiresIn: `${number}h`
   issuer: string
+  secretEnvKey?: string
 }
 
 export class JwtUtils {
-  private static getSecret(): Effect.Effect<string, never, never> {
-    return Config.nonEmptyString('JWT_SECRET').pipe(Effect.orDie)
+  private static getSecret(
+    secretEnvKey: string = 'JWT_SECRET',
+  ): Effect.Effect<string, never, never> {
+    return Config.nonEmptyString(secretEnvKey).pipe(Effect.orDie)
   }
 
   static createToken<T extends Record<string, unknown>>(
@@ -26,7 +29,7 @@ export class JwtUtils {
     options: TokenOptions,
   ): Effect.Effect<string, JwtSignError> {
     return Effect.gen(function* () {
-      const secret = yield* JwtUtils.getSecret()
+      const secret = yield* JwtUtils.getSecret(options.secretEnvKey)
       return yield* Effect.try({
         try: () =>
           jwt.sign(payload, secret, {
@@ -41,13 +44,13 @@ export class JwtUtils {
 
   static verifyToken<T extends Record<string, unknown>>(
     token: string,
-    options: Pick<TokenOptions, 'issuer'>,
+    options: Pick<TokenOptions, 'issuer' | 'secretEnvKey'>,
   ): Effect.Effect<
     JwtPayload<T>,
     JwtExpiredError | JwtMalformedError | JwtVerifyError
   > {
     return Effect.gen(function* () {
-      const secret = yield* JwtUtils.getSecret()
+      const secret = yield* JwtUtils.getSecret(options.secretEnvKey)
       return yield* Effect.try({
         try: () => {
           const decoded = jwt.verify(token, secret, {

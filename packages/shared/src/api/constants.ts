@@ -15,6 +15,7 @@ export const APICONSTANTS = {
       LOGIN: 'login',
       LOGOUT: 'logout',
       VERIFY_EMAIL: ':userId/verify-email',
+      REFRESH_TOKEN: 'refresh-token',
     },
 
     USERS: {

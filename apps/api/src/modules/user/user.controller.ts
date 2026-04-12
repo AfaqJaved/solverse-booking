@@ -18,6 +18,7 @@ import { RegisterDto } from './dto/register.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { ChangeEmailDto } from './dto/change-email.dto'
 import { SuspendUserDto } from './dto/suspend-user.dto'
+import { RefreshTokenDto } from './dto/refresh-token.dto'
 import { ApiResponse, UserApi, APICONSTANTS } from '@solverse/shared'
 import { LoginDoc } from './docs/login.doc'
 import { RegisterDoc } from './docs/register.doc'
@@ -28,6 +29,7 @@ import { ChangeEmailDoc } from './docs/change-email.doc'
 import { DeactivateUserDoc } from './docs/deactivate-user.doc'
 import { ReactivateUserDoc } from './docs/reactivate-user.doc'
 import { SuspendUserDoc } from './docs/suspend-user.doc'
+import { RefreshTokenDoc } from './docs/refresh-token.doc'
 import { UserMapper } from './mapper/user.mapper'
 import { RoleGuard } from '../security/role.guard'
 import { Roles } from '../security/decorator/roles.decorator'
@@ -152,6 +154,20 @@ export class UserController {
       this.userUsecaseFactory.reactivateUserUsecase.execute({ userId }),
     )
     return ApiResponse.ok(null)
+  }
+
+  @Post(APICONSTANTS.ROUTES.AUTH.REFRESH_TOKEN)
+  @HttpCode(HttpStatus.OK)
+  @RefreshTokenDoc()
+  public async refreshToken(
+    @Body() body: RefreshTokenDto,
+  ): Promise<ApiResponse<UserApi.RefreshToken.Response>> {
+    const result = await Effect.runPromise(
+      this.userUsecaseFactory.refreshTokenUsecase.execute({
+        refreshToken: body.refreshToken,
+      }),
+    )
+    return ApiResponse.ok(result)
   }
 
   @Patch(APICONSTANTS.ROUTES.USERS.SUSPEND)
