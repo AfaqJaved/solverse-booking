@@ -87,6 +87,7 @@ export const APICONSTANTS = {
     LOGIN: '/users/login',
     LOGOUT: '/users/logout',
     VERIFY_EMAIL: (userId: string) => `/users/${userId}/verify-email`,
+    REFRESH_TOKEN: '/users/refresh-token',
   },
 
   USERS: {

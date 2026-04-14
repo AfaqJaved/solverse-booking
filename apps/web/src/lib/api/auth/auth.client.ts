@@ -1,7 +1,7 @@
 import type { UserApi } from '@solverse/shared'
 import { APICONSTANTS } from '@solverse/shared'
 import { apiClient } from '../client/axios.client'
-import { setTokenInMemory, clearTokenFromMemory } from './token.manager'
+import { setTokenInMemory, setRefreshToken, clearAllTokens } from './token.manager'
 
 export const authClient = {
 	login: async (credentials: UserApi.Login.Request): Promise<UserApi.Login.Response> => {
@@ -9,12 +9,13 @@ export const authClient = {
 			APICONSTANTS.AUTH.LOGIN,
 			credentials
 		)
-		setTokenInMemory(response.data.token)
+		setTokenInMemory(response.data.accessToken)
+		setRefreshToken(response.data.refreshToken)
 		return response.data
 	},
 
 	logout: (): void => {
-		clearTokenFromMemory()
+		clearAllTokens()
 	},
 
 	verifyEmail: async (userId: string): Promise<void> => {

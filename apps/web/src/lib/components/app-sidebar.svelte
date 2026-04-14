@@ -1,141 +1,97 @@
 <script lang="ts" module>
-	import AudioWaveformIcon from '@lucide/svelte/icons/audio-waveform'
-	import BookOpenIcon from '@lucide/svelte/icons/book-open'
-	import BotIcon from '@lucide/svelte/icons/bot'
-	import ChartPieIcon from '@lucide/svelte/icons/chart-pie'
-	import CommandIcon from '@lucide/svelte/icons/command'
-	import FrameIcon from '@lucide/svelte/icons/frame'
+	import BriefcaseIcon from '@lucide/svelte/icons/briefcase'
+	import CalendarCheckIcon from '@lucide/svelte/icons/calendar-check'
+	import ClockIcon from '@lucide/svelte/icons/clock'
+	import ExternalLinkIcon from '@lucide/svelte/icons/external-link'
 	import GalleryVerticalEndIcon from '@lucide/svelte/icons/gallery-vertical-end'
-	import MapIcon from '@lucide/svelte/icons/map'
+	import LayoutDashboardIcon from '@lucide/svelte/icons/layout-dashboard'
+	import RocketIcon from '@lucide/svelte/icons/rocket'
 	import Settings2Icon from '@lucide/svelte/icons/settings-2'
-	import SquareTerminalIcon from '@lucide/svelte/icons/square-terminal'
+	import UsersIcon from '@lucide/svelte/icons/users'
 
-	// This is sample data.
 	const data = {
 		user: {
-			name: 'shadcn',
-			email: 'm@example.com',
-			avatar: '/avatars/shadcn.jpg'
+			name: 'Business Owner',
+			email: 'owner@example.com',
+			avatar: ''
 		},
 		teams: [
 			{
-				name: 'Acme Inc',
+				name: 'My Business',
 				logo: GalleryVerticalEndIcon,
-				plan: 'Enterprise'
-			},
-			{
-				name: 'Acme Corp.',
-				logo: AudioWaveformIcon,
-				plan: 'Startup'
-			},
-			{
-				name: 'Evil Corp.',
-				logo: CommandIcon,
-				plan: 'Free'
+				plan: 'Starter'
 			}
 		],
 		navMain: [
 			{
-				title: 'Playground',
-				url: '#',
-				icon: SquareTerminalIcon,
+				title: 'Dashboard',
+				url: '/dashboard',
+				icon: LayoutDashboardIcon,
 				isActive: true,
 				items: [
-					{
-						title: 'History',
-						url: '#'
-					},
-					{
-						title: 'Starred',
-						url: '#'
-					},
-					{
-						title: 'Settings',
-						url: '#'
-					}
+					{ title: 'Overview', url: '/dashboard' },
+					{ title: 'Analytics', url: '/dashboard/analytics' }
 				]
 			},
 			{
-				title: 'Models',
-				url: '#',
-				icon: BotIcon,
+				title: 'Bookings',
+				url: '/bookings',
+				icon: CalendarCheckIcon,
 				items: [
-					{
-						title: 'Genesis',
-						url: '#'
-					},
-					{
-						title: 'Explorer',
-						url: '#'
-					},
-					{
-						title: 'Quantum',
-						url: '#'
-					}
+					{ title: 'Upcoming', url: '/bookings/upcoming' },
+					{ title: 'Past', url: '/bookings/past' },
+					{ title: 'All Bookings', url: '/bookings' }
 				]
 			},
 			{
-				title: 'Documentation',
-				url: '#',
-				icon: BookOpenIcon,
+				title: 'Services',
+				url: '/services',
+				icon: BriefcaseIcon,
 				items: [
-					{
-						title: 'Introduction',
-						url: '#'
-					},
-					{
-						title: 'Get Started',
-						url: '#'
-					},
-					{
-						title: 'Tutorials',
-						url: '#'
-					},
-					{
-						title: 'Changelog',
-						url: '#'
-					}
+					{ title: 'All Services', url: '/services' },
+					{ title: 'Add Service', url: '/services/new' }
+				]
+			},
+			{
+				title: 'Schedule',
+				url: '/schedule',
+				icon: ClockIcon,
+				items: [
+					{ title: 'Working Hours', url: '/schedule/working-hours' },
+					{ title: 'Breaks', url: '/schedule/breaks' },
+					{ title: 'Time Off', url: '/schedule/time-off' }
+				]
+			},
+			{
+				title: 'Team',
+				url: '/team',
+				icon: UsersIcon,
+				items: [
+					{ title: 'Members', url: '/team/members' },
+					{ title: 'Roles & Permissions', url: '/team/roles' }
 				]
 			},
 			{
 				title: 'Settings',
-				url: '#',
+				url: '/settings',
 				icon: Settings2Icon,
 				items: [
-					{
-						title: 'General',
-						url: '#'
-					},
-					{
-						title: 'Team',
-						url: '#'
-					},
-					{
-						title: 'Billing',
-						url: '#'
-					},
-					{
-						title: 'Limits',
-						url: '#'
-					}
+					{ title: 'Business Profile', url: '/settings/business' },
+					{ title: 'Notifications', url: '/settings/notifications' },
+					{ title: 'Billing', url: '/settings/billing' }
 				]
 			}
 		],
 		projects: [
 			{
-				name: 'Design Engineering',
-				url: '#',
-				icon: FrameIcon
+				name: 'Booking Page',
+				url: '/book',
+				icon: ExternalLinkIcon
 			},
 			{
-				name: 'Sales & Marketing',
-				url: '#',
-				icon: ChartPieIcon
-			},
-			{
-				name: 'Travel',
-				url: '#',
-				icon: MapIcon
+				name: 'Onboarding',
+				url: '/onboarding',
+				icon: RocketIcon
 			}
 		]
 	}

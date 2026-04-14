@@ -1,20 +1,38 @@
-// Memory-only token storage
-let authToken: string | null = null
+const REFRESH_TOKEN_KEY = 'refreshToken'
+
+// Access token — memory only (cleared on page refresh)
+let accessToken: string | null = null
 
 export const getTokenFromMemory = (): string | null => {
-	return authToken
+	return accessToken
 }
 
 export const setTokenInMemory = (token: string): void => {
-	authToken = token
-	console.log('Token stored in memory')
+	accessToken = token
 }
 
 export const clearTokenFromMemory = (): void => {
-	authToken = null
-	console.log('Token cleared from memory')
+	accessToken = null
 }
 
 export const hasToken = (): boolean => {
-	return authToken !== null
+	return accessToken !== null
+}
+
+// Refresh token — localStorage (survives page refresh)
+export const getRefreshToken = (): string | null => {
+	return localStorage.getItem(REFRESH_TOKEN_KEY)
+}
+
+export const setRefreshToken = (token: string): void => {
+	localStorage.setItem(REFRESH_TOKEN_KEY, token)
+}
+
+export const clearRefreshToken = (): void => {
+	localStorage.removeItem(REFRESH_TOKEN_KEY)
+}
+
+export const clearAllTokens = (): void => {
+	clearTokenFromMemory()
+	clearRefreshToken()
 }
