@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	import BriefcaseIcon from '@lucide/svelte/icons/briefcase'
-	import CalendarCheckIcon from '@lucide/svelte/icons/calendar-check'
+	import CalendarIcon from '@lucide/svelte/icons/calendar'
 	import ClockIcon from '@lucide/svelte/icons/clock'
 	import ExternalLinkIcon from '@lucide/svelte/icons/external-link'
 	import GalleryVerticalEndIcon from '@lucide/svelte/icons/gallery-vertical-end'
@@ -22,6 +22,13 @@
 				plan: 'Starter'
 			}
 		],
+		navCalendar: [
+			{
+				title: 'Calendar',
+				url: '/bookings',
+				icon: CalendarIcon
+			}
+		],
 		navMain: [
 			{
 				title: 'Dashboard',
@@ -31,16 +38,6 @@
 				items: [
 					{ title: 'Overview', url: '/dashboard' },
 					{ title: 'Analytics', url: '/dashboard/analytics' }
-				]
-			},
-			{
-				title: 'Bookings',
-				url: '/bookings',
-				icon: CalendarCheckIcon,
-				items: [
-					{ title: 'Upcoming', url: '/bookings/upcoming' },
-					{ title: 'Past', url: '/bookings/past' },
-					{ title: 'All Bookings', url: '/bookings' }
 				]
 			},
 			{
@@ -117,6 +114,7 @@
 		<TeamSwitcher teams={data.teams} />
 	</Sidebar.Header>
 	<Sidebar.Content>
+		<NavMain items={data.navCalendar} label="Bookings" />
 		<NavMain items={data.navMain} />
 		<NavProjects projects={data.projects} />
 	</Sidebar.Content>

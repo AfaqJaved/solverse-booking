@@ -54,8 +54,13 @@
 		"vitest-browser-svelte": "^2.0.2"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-node": "^5.5.4",
+		"@fullcalendar/core": "^6.1.20",
+		"@fullcalendar/daygrid": "^6.1.20",
+		"@fullcalendar/interaction": "^6.1.20",
+		"@fullcalendar/list": "^6.1.20",
+		"@fullcalendar/timegrid": "^6.1.20",
 		"@solverse/shared": "workspace:*",
+		"@sveltejs/adapter-node": "^5.5.4",
 		"effect": "*"
 	}
 }
